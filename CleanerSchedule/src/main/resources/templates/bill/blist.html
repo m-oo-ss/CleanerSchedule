@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+
+
+<title>ビル一覧</title>
+</head>
+<body>
+	<div th:fragment="blist_contents">
+
+		<h1>ビル一覧</h1>
+		<a class="btn btn-primary" th:href="@{'/bill/bnew'}">新規ビル登録</a>
+
+		<table class="table table-bordered table-hover table-striped">
+			<!--  each：繰り返し-->
+			<tr th:each="bill : ${billList}">
+				<!-- 				<td th:text="${bill.billId}"></td>  -->
+				<td><a th:href="@{'/bill/bdetail/'+${bill.billId}}"><p
+							th:text="${bill.billName}"></p></a></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
+

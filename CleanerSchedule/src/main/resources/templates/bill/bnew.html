@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+
+<title>ビル新規登録</title>
+</head>
+<body>
+	<div th:fragment="bnew_contents">
+		<h1>ビル新規登録</h1>
+
+		<form method="post" th:action="@{/bill/bcomp}"
+			th:object="${signupForm}">
+			<table class="table table-bordered table-hover table-striped">
+
+				<!-- 追加ビルID(6以降)： <input type="text" th:field="*{billId}">  -->
+				<tr>
+					<th class="active col-sm-2">追加ビル名</th>
+					<td><input type="text" th:field="*{billName}"></td>
+
+				</tr>
+				<tr>
+					<th class="active col-sm-2">住所</th>
+					<td><input type="text" th:field="*{billAddress}"></td>
+				</tr>
+				<tr>
+
+					<th class="active col-sm-2">電話番号</th>
+					<td><input type="text" th:field="*{billTel}"></td>
+				</tr>
+				<tr>
+
+					<th class="active col-sm-2">オーナー氏名</th>
+					<td><input type="text" th:field="*{ownerName}"></td>
+				</tr>
+				<tr>
+					<th class="active col-sm-2">オーナー電話番号</th>
+					<td><input type="text" th:field="*{ownerTel}"></td>
+				</tr>
+			</table>
+			<button type="submit" name="new">登録する</button>
+
+
+		</form>
+
+		<a th:href="@{'/bill/blist'}">一覧に戻る</a>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+x<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<title>ビル情報変更画面</title>
+
+</head>
+
+<body>
+	<div th:fragment="bchange_contents">
+		<form method="post" th:action="@{/bill/bcomp}" th:object="${bill}">
+			<table>
+				<table class="table table-bordered table-hover table-striped">
+
+					<caption>ビル情報</caption>
+					<tr>
+					    <th>項目</th>
+						<th>変更前</th>
+						<th>変更後</th>
+					</tr>
+					<input type="hidden" class="form-control" th:field="*{billId}"
+						readonly="readonly" />
+					<tr>
+					<th>ビル名</th>
+						<td th:text="${name}"></td>
+						<td><input type="text" th:field="*{billName}"></td>
+					</tr>
+					<tr>
+                    <th>ビル住所</th>
+						<td th:text="${address}"></td>
+						<td><input type="text" th:field="*{billAddress}"></td>
+					</tr>
+				</table>
+				<button type="submit" name="update">変更</button>
+				</form>
+
+				</div>
+</body>
+
+</html>
+
+

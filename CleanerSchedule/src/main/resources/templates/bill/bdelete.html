@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ビル消去</title>
+</head>
+<body>
+<div th:fragment="schange_contents">
+	消去フォームがくる
+	<td th:text="${name}"></td>
+
+	<form method="post" action="/bcomp">
+
+		<input type="submit" name="id" th:value="${id}">
+
+
+	</form>
+
+	<a th:href="@{'/bill/bdetail/'+${id}}">戻る</a>
+	</div>
+</body>
+</html>

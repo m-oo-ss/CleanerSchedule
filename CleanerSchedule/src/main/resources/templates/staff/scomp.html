@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>完了</title>
+</head>
+<body>
+<div th:fragment="scomp_contents">
+<h2>処理が完了</h2>
+
+            <td th:text="${result}"></td>
+            <a th:href="@{'/staff/ssearch'}">一覧に戻る</a>
+            </div>
+</body>
+</html>

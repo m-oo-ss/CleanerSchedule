@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="UTF-8">
+<title>マネージャートップ：スケジュール一覧</title>
+</head>
+<body>
+	<div th:fragment="mtop_contents">
+		<button>Change color</button>
+
+
+
+		<button id="prev" type="button">前の月</button>
+		<button id="next" type="button">次の月</button>
+		<div id="calendar"></div>
+
+
+		<script th:inline="javascript" charset="utf-8">
+/*<![CDATA[*/
+	let planList= /*[[ ${planList} ]]*/
+	let billList= /*[[ ${billList} ]]*/
+	let staffList= /*[[ ${staffList} ]]*/
+
+		for(var bill of staffList){
+			n = bill.staffMail;
+			document.write("<a href=\"mailto:" +n+ "\"> "+n+ "</a>");
+		}
+
+
+		//スケジュールテーブル要素の取得
+		let scheduleTable = document.getElementById("calendar");
+	var week = ['日', '月', '火', '水', '木', '金', '土']
+	var items = ["ビル名","人数"]
+
+
+	//日付関係
+	var date = new Date();	//現在
+	var monthLastDay = new Date(date.getFullYear(),date.getMonth()+2,0);	//今月末日
+	var monthFirstDay = new Date(date.getFullYear(),date.getMonth()+1,1);	//今月初日
+	var DAY_OF_MONTH = monthLastDay.getDate();	//今月の日数
+	var DAY_OF_THE_WEEK = monthFirstDay.getDay();	//今月初日の曜日
+
+
+	//tr要素の生成
+	var tr = document.createElement('tr');
+	//固定要素
+	for(var i = 0; i < 2; i++){
+		var th = document.createElement('th');
+		th.setAttribute("rowspan","2");
+		th.textContent = items[i];
+		th.style.backgroundColor="lightgray";
+
+
+		tr.appendChild(th)
+	}
+
+
+	//曜日
+	for(var i = DAY_OF_THE_WEEK; i < (DAY_OF_MONTH+DAY_OF_THE_WEEK); i++){
+		var th = document.createElement('th');
+		th.textContent = week[i%7];
+
+		tr.appendChild(th);
+
+	}
+	scheduleTable.appendChild(tr);
+
+	//日付
+	var tr = document.createElement('tr');
+	for(var i = 1; i <= (DAY_OF_MONTH); i++){
+		var th = document.createElement('th');
+		th.textContent = i;
+		tr.appendChild(th);
+	}
+	//親要素に子要素を追加
+	scheduleTable.appendChild(tr);
+
+	for(var bill of billList){
+
+		var billweek= [
+			bill.billSun,
+			bill.billMon,
+			bill.billTue,
+			bill.billWed,
+			bill.billThu,
+			bill.billFri,
+			bill.billSat,
+		]
+
+
+		//要素の生成
+		var tr = document.createElement('tr');
+		var td = document.createElement('td');
+		td.setAttribute("rowspan",bill.billPeople)
+		td.textContent= bill.billName;
+		tr.appendChild(td);
+
+		var td = document.createElement('td');
+		td.setAttribute("rowspan",bill.billPeople)
+		td.textContent= bill.billPeople;
+		tr.appendChild(td);
+
+
+
+			for(var j = 1; j <= bill.billPeople; j++){
+				//td追加（日毎）
+				for(var k = 1; k <= DAY_OF_MONTH; k++){
+
+					for(var plan of planList){
+					//曜日によってデータを格納できるか変更する
+					if(billweek[k%7] ==0){
+						var td = document.createElement('td');
+						td.style.backgroundColor="lightgray";
+						tr.appendChild(td);
+						continue;
+					}
+
+
+
+					if(k == plan.dateId
+							&& j == plan.staffNumber
+							&& bill.billId == plan.billId){
+
+					var td = document.createElement('td');
+					td.textContent=plan.planId;
+					tr.appendChild(td);
+					}scheduleTable.appendChild(tr);
+				}
+
+			}
+
+		}
+
+
+	}
+
+
+
+/*
+for (let plan of planList){
+	document.write(plan.planDate );
+
+
+const weeks = ['日', '月', '火', '水', '木', '金', '土']
+const date = new Date()
+let year = date.getFullYear()
+let month = date.getMonth() + 1
+const config = {
+    show: 1,
+}
+
+
+
+function showCalendar(year, month) {
+    for ( i = 0; i < config.show; i++) {
+        const calendarHtml = createCalendar(year, month)
+        const sec = document.createElement('section')
+        sec.innerHTML = calendarHtml
+        document.querySelector('#calendar').appendChild(sec)
+
+        month++
+        if (month > 12) {
+            year++
+            month = 1
+        }
+    }
+}
+
+function createCalendar(year, month) {
+    const startDate = new Date(year, month - 1, 1) // 月の最初の日を取得
+    const endDate = new Date(year, month,  0) // 月の最後の日を取得
+    const endDayCount = endDate.getDate() // 月の末日
+    const lastMonthEndDate = new Date(year, month - 2, 0) // 前月の最後の日の情報
+    const lastMonthendDayCount = lastMonthEndDate.getDate() // 前月の末日
+    const startDay = startDate.getDay() // 月の最初の日の曜日を取得
+    let dayCount = 1 // 日にちのカウント
+    let calendarHtml = '' // HTMLを組み立てる変数
+
+    calendarHtml += '<h1>' + year  + '/' + month + '</h1>'
+    calendarHtml += '<table>'
+
+
+
+
+
+ //曜日の行を作成
+    for (let i = 1; i < endDayCount + 1 ; i++) {
+        calendarHtml += '<td>' + i + '</td>'
+    }
+       for (let plan of planList){
+
+            calendarHtml += '<td><a href="/staff/sdetail/'+ plan.staffId + ' ">' +plan.planDate + '</a></td>'
+
+    }
+    calendarHtml += '<tr></tr>'
+ // 曜日の行を作成
+    for (let i = 1; i < endDayCount + 1 ; i++) {
+    	if(i == 0){
+            calendarHtml += '<td></td>'
+    	}else{
+        calendarHtml += '<td>' + i + '</td>'
+    	}
+    }        calendarHtml += '</tr>'
+
+  	for (let plan of planList){
+    		document.write(plan.dateId)
+    	}
+
+		for(let a = 1 ; a<8 ; a ++){ && plan.dateId == a
+
+
+
+
+    for(let b = 1 ; b<6 ; b ++){
+
+    	calendarHtml += '<tr>'
+
+					for(let c = 1 ; c<3 ; c ++){
+
+				    	calendarHtml += '<tr>'
+					for(let a = 1 ; a<8 ; a ++){
+
+
+
+						for(let plan of planList){
+
+    		if (plan.billId == b && plan.dateId == a && plan.staffNumber == c){
+
+
+    			 calendarHtml += '<td>'
+    			 + plan.staffName + '</td>'
+
+    		}
+
+    	}
+					}calendarHtml += '</tr>'
+  		}calendarHtml += '</tr>'
+
+    }
+
+
+
+    for (let w = 0; w < 6; w++) {
+        calendarHtml += '<tr>'
+
+        for (let d = 0; d < 7; d++) {
+            if (w == 0 && d < startDay) {
+                // 1行目で1日の曜日の前
+                let num = lastMonthendDayCount - startDay + d + 1
+                calendarHtml += '<td class="is-disabled">' + num + '</td>'
+            } else if (dayCount > endDayCount) {
+                // 末尾の日数を超えた
+                let num = dayCount - endDayCount
+                calendarHtml += '<td class="is-disabled">' + num + '</td>'
+                dayCount++
+            } else {
+                calendarHtml += `<td class="calendar_td" data-date="${year}/${month}/${dayCount}">${dayCount}</td>`
+                dayCount++
+            }
+        }
+        calendarHtml += '</tr>'
+    }
+    calendarHtml += '</table>'
+
+    return calendarHtml
+}
+
+function moveCalendar(e) {
+    document.querySelector('#calendar').innerHTML = ''
+
+    if (e.target.id === 'prev') {
+        month--
+
+        if (month < 1) {
+            year--
+            month = 12
+        }
+    }
+
+    if (e.target.id === 'next') {
+        month++
+
+        if (month > 12) {
+            year++
+            month = 1
+        }
+    }
+
+    showCalendar(year, month)
+}
+
+document.querySelector('#prev').addEventListener('click', moveCalendar)
+document.querySelector('#next').addEventListener('click', moveCalendar)
+
+document.addEventListener("click", function(e) {
+    if(e.target.classList.contains("calendar_td")) {
+        alert('クリックした日付は' + e.target.dataset.date + 'です')
+    }
+})
+
+showCalendar(year, month)
+*/
+
+/*]]>*/
+
+</script>
+
+	</div>
+</body>
+</html>

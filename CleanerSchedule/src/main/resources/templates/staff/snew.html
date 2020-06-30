@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<title>社員新規</title>
+</head>
+<body>
+	​
+	<div th:fragment="snew_contents">		​
+		<h1>従業員新規登録</h1>
+
+      <form method="post" th:action="@{/staff/scomp}"
+         th:object="${staffForm}">
+      <table class="table table-bordered table-hover table-striped">
+
+		<!-- 追加ビルID(12以降)： <input type="text" th:field="*{staffId}">  -->
+		<tr>
+	        <th class="active col-sm-2">​ ​従業員名​</th>
+	        <td> <input type="text" th:field="*{staffName}">​ </td> ​</tr>
+         <tr>
+	       <th class="active col-sm-2">​ ​住所​</th>
+	       <td><input type="text" th:field="*{staffAddress}">​</td>​</tr>
+         <tr>
+		   <th class="active col-sm-2">​ ​メールアドレス</th>
+		   <td><input type="text" th:field="*{staffMail}">​</td>​</tr>
+        <tr>
+		  <th class="active col-sm-2">​ ​電話番号</th>
+		  <td><input type="text" th:field="*{staffTel}"></td>​​</tr>
+        <tr>
+		  <th class="active col-sm-2">​ ​勤務開始日</th>
+		  <td><input type="text" th:field="*{staffStart}">​ </td>​</tr>
+        <tr>
+		  <th class="active col-sm-2">​ ​勤務終了日</th>
+		  <td> <input type="text" th:field="*{staffStop}">​ </td>​</tr>
+</table>
+		<button type="submit"  name="new">登録する</button>
+			​ ​
+         </form>
+
+		​​ <a th:href="@{'/staff/ssearch'}">一覧に戻る</a>​ ​
+	</div>​
+</body>
+</html>
