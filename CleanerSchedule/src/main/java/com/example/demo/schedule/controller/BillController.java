@@ -29,7 +29,7 @@ public class BillController {
 	private OwnerService ownerService;
 	@Autowired
 	private PlanService planService;
-
+ｚ
 
 	//サンプルページの表示
 	@GetMapping("/sample")
