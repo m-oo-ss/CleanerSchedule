@@ -31,7 +31,7 @@ public class BillController {
 	private PlanService planService;
 
 
-	//サンプルページの表示
+	//サンプルページの
 	@GetMapping("/sample")
 	public String getSample(Model model) {
 		model.addAttribute("contents", "sample :: sample_contents");
