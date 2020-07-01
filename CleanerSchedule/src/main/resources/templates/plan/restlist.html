@@ -1,0 +1,32 @@
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+ <div th:fragment="restlist_contents">
+ <table class="table table-bordered table-hover table-striped">
+<th>名前</th>
+<th>休み申請をしたい日</th>
+<th>ビルの名前</th>
+    <tr th:each="plan : ${planList}">
+
+            <td th:text="${plan.staffName}">
+                </td>
+                <td th:text="${plan.planDate}">
+                </td>
+                <td th:text="${plan.billName}">
+                </td>
+            </tr>
+        </table>
+
+<p th:unless="${planList} != null">新着申請はありません</p>
+<form method="post" th:action="@{/plan/restlist}">
+ <button type="submit" > スケジュール編集</button>
+</form>
+
+	​​ <a th:href="@{'/plan/mtop'}">戻る</a>
+</div>
+
+​
+</body>
+</html>
