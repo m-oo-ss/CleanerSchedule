@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -50,6 +51,29 @@ public class PlanRepository {
 		}
 
 		return planList;
+
+
 	}
+
+	//ビル情報更新を行う（bchange.html）
+
+			public int updateOne(Plan plan) throws DataAccessException {
+				//１件更新
+				int rowNumber = jdbcTemplate.update(
+						"UPDATE plan"
+								+ " SET"
+								+ " staff_id = ?"
+								+ " WHERE bill_id = ?"
+								+ " and plan_date = ?"
+								+ " and staff_number = ?",
+						plan.getStaffId(),
+						plan.getBillId(),
+						plan.getPlanDate(),
+						plan.getStaffNumber()
+
+				);
+
+				return rowNumber;
+			}
 
 }

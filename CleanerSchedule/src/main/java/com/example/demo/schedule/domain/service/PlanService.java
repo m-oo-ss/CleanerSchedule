@@ -19,5 +19,20 @@ public class PlanService {
 		return planRepository.findAll();
 	}
 
+	//1件更新
+		public boolean updateOne(Plan plan) {
+
+				// 判定用変数
+				boolean result = false;
+
+				// １件更新
+				int rowNumber = planRepository.updateOne(plan);
+				if (rowNumber > 0) {
+					// update成功
+					result = true;
+				}
+				return result;
+		}
+
 
 }
