@@ -95,14 +95,13 @@ public class PlanController {
 		/**
 		 * POST用の処理
 		 */
-		@PostMapping("/plan/restlist")
+		@PostMapping(value="/plan/edit", params ="restcheck")
 		public String postDeleatePlan(@ModelAttribute Plan plan ,Model model) {
 			// コンテンツ部分にユーザー詳細を表示するための文字列を登録
-			model.addAttribute("contents", "plan/restlist :: restlist_contents");
-
+			model.addAttribute("contents", "plan/edit :: edit_contents");
 
 			//書き換えて返ってきた結果の判定
-			boolean result=planService.deleatePlan(plan);
+			boolean result=planService.deleatePlan();
 
 			if(result==true) {
 				model.addAttribute("result","変更成功");
