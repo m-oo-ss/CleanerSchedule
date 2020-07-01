@@ -51,7 +51,52 @@ public class PlanRepository {
 		}
 
 		return planList;
+
+
 	}
+	//idをもとに1件検索
+	public Plan findOne(int planId) {
+
+		// Staffテーブルのデータを全件取得
+		Map<String, Object> map = jdbcTemplate.queryForMap("select "
+                + "p.PLAN_ID ,p.PLAN_DATE , b.BILL_NAME , s.STAFF_NAME , p.staff_id, p.bill_id , b.bill_starttime , b.bill_stoptime "
+                + "from plan p "
+                + "inner join staff s on p.staff_id = s. staff_id "
+                + "inner join bill b on b.bill_id = p.bill_id"
+                + " WHERE plan_id = ?", planId);
+		//Staffインスタンスの生成
+		Plan plan = new Plan();
+
+		// Staffインスタンスに取得したデータをセットする
+		plan.setPlanId((Integer) map.get("plan_id")); //プランID
+		plan.setPlanDate((Date) map.get("plan_date")); //勤務日
+		plan.setBillId((Integer) map.get("bill_id")); //ビルID
+		plan.setStaffId((Integer) map.get("staff_id"));//スタッフID
+		plan.setStaffName((String) map.get("staff_name"));//スタッフ名
+		plan.setBillName((String) map.get("bill_name"));//ビル名
+		plan.setBillStartTime((java.sql.Time) map.get("bill_starttime"));//勤務開始時間
+		plan.setBillStopTime((java.sql.Time) map.get("bill_stoptime"));//勤務終了時間
+		//plan.setRestCheck((boolean) map.get("rest_check"));//休暇申請判定
+
+		return plan;
+	}
+
+//rest_checkの値をfalseに変換
+//public int updateOne(Plan plan) throws DataAccessException {
+//
+//	int rowNumber = jdbcTemplate.update(
+//				"UPDATE plan"
+//						+ " SET"
+//						+ " rest_check = false"
+//						+ " WHERE plan_id = ?",
+//				plan.getRestCheck()
+//
+//		);
+//
+//		return rowNumber;
+//	}
+
+
 
 	//休み希望のひとを検索
     public List<Plan> getRestList() {
@@ -112,5 +157,26 @@ public class PlanRepository {
 	 		return rowNumber; //check_restのfalseのひとを書き換えて書き換えたという結果を次の画面に渡すための判定を返す
 
 }
+
+	//ビル情報更新を行う（bchange.html）
+
+			public int updateOne(Plan plan) throws DataAccessException {
+				//１件更新
+				int rowNumber = jdbcTemplate.update(
+						"UPDATE plan"
+								+ " SET"
+								+ " staff_id = ?"
+								+ " WHERE bill_id = ?"
+								+ " and plan_date = ?"
+								+ " and staff_number = ?",
+						plan.getStaffId(),
+						plan.getBillId(),
+						plan.getPlanDate(),
+						plan.getStaffNumber()
+
+				);
+
+				return rowNumber;
+			}
 
 }

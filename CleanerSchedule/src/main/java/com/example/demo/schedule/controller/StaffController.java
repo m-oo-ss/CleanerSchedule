@@ -273,7 +273,34 @@ public class StaffController {
         return "homelayout";
     }
 
+    //個人詳細画面に移動
+    @GetMapping("/user/udetail/{pid}")
+    public String getUdetail(Model model,
+            //PathVariableをつけると渡されてきたパス(URL)の値を引数の変数に入れられる
+            @PathVariable("pid") int planId) {
+        // コンテンツ部分にユーザー詳細を表示するための文字列を登録
+        model.addAttribute("contents", "user/udetail :: udetail_contents");
 
+        //1件検索
+  //      PlanService planService = new PlanService();
+        Plan plan = planService.findOne(planId);
+
+        // 検索結果をModelに登録
+        model.addAttribute("pid", plan.getPlanId());
+        model.addAttribute("date", plan.getPlanDate());
+        model.addAttribute("bid", plan.getBillId());
+        model.addAttribute("sid", plan.getStaffId());
+        model.addAttribute("sname", plan.getStaffName());
+        model.addAttribute("bname", plan.getBillName());
+        model.addAttribute("starttime", plan.getBillStartTime());
+        model.addAttribute("stoptime", plan.getBillStopTime());
+        //model.addAttribute("bid", plan.getRestCheck());
+
+
+
+        // sdetail.htmlに画面遷移
+        return "homelayout";
+    }
 
 
 

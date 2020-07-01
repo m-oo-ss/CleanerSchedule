@@ -19,28 +19,63 @@ public class PlanService {
 		return planRepository.findAll();
 	}
 
+	// 1件取得
+	public Plan findOne(int planId) {
+
+
+		return planRepository.findOne(planId);
+	}
+
+	//1件更新
+	//	public boolean updateFalse(Plan plan) {
+	//
+	//		// 判定用変数
+	//		boolean result = false;
+	//
+	//		// １件更新
+	//		int rowNumber = planRepository.updateOne(plan);
+	//		if (rowNumber > 0) {
+	//			// update成功
+	//			result = true;
+	//		}
+	//		return result;
+	//	}
 
 	//休み申請者取得
 
-		public List<Plan> getRestList() {
+	public List<Plan> getRestList() {
 
-			return planRepository.getRestList();
+		return planRepository.getRestList();
 
+	}
 
+	//restcheckをfalseに書き換えた結果を返す
+
+	public boolean updateOne(Plan plan) {
+
+		// 判定用変数
+		boolean result = false;
+
+		// １件更新
+		int rowNumber = planRepository.updateOne(plan);
+		if (rowNumber > 0) {
+			// update成功
+			result = true;
 		}
+		return result;
+	}
 
+	//nullのひとを書き換えている。
 
-	//スタッフIDをnullに書き換えた結果を返す
-
-		public boolean deleatePlan(Plan plan) {
-			// 判定用変数
-			boolean result = false;
-			// １件更新
-			int rowNumber = planRepository.deleatePlan(plan);
-			if (rowNumber > 0) {
-				// update成功
-				result = true;
-			}
-			return result;
-}
+	public boolean deleatePlan(Plan plan) {
+		// 判定用変数
+		boolean result = false;
+		// １件更新
+		int rowNumber = planRepository.deleatePlan(plan);
+		if (rowNumber > 0) {
+			// update成功
+			result = true;
+		}
+		return result;
+	}
 }
