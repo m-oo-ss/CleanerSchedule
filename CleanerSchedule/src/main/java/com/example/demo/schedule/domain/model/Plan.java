@@ -11,16 +11,10 @@ public class Plan {
 	private int planId; //プランID
 	private Date planDate; //勤務日
 	private int billId; //ビルID
-<<<<<<< HEAD
-	private boolean restCheck;//休み申請
-
-	private int StaffNumber; //ビルID
-=======
 	private int staffId; //スタッフID
 	private String staffName;//スタッフ名
 	private String billName;//ビル名
 	private Time billStartTime;//勤務開始時間
 	private Time billStopTime;//勤務終了時間
 	private boolean restCheck;//休暇申請判定用
->>>>>>> wannomiya
 }
