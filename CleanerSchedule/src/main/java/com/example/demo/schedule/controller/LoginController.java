@@ -20,7 +20,7 @@ public class LoginController {
     @GetMapping("/login")
     public String getLogin(Model model) {
 
-        //login.htmlに画面遷移
+        //login.htmlへ画面遷移
         return "login";
     }
 
