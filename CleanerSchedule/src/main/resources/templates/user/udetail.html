@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>個人スケジュール詳細</title>
+</head>
+<body>
+aaaaa
+	<div th:fragment="udetail_contents">
+
+
+	  <h1>勤務詳細</h1>
+
+  <h2 th:text="${date}"></h2>
+
+
+
+       <h4 th:text="${sname}"></h4><br>
+       <h4 th:text="${bname}"></h4><br>
+       <h4 th:text="${starttime}"></h4>
+       <h4 th:text="${stoptime}"></h4>
+
+
+    <tr>
+	   <td><a th:href="@{'/staff/sdetail/'+ ${pid}}">スケジュール画面に戻る</a></td>
+	</tr>
+
+	<tr>
+	   <td><input type="submit" formmethod="get" value="休暇申請"></a></td>
+	</tr>
+
+	</table>
+
+
+
+<script>
+//休暇申請ボタンがクリックされた時、確認のポップアップを表示する
+function check() {
+
+    	var result = window.confirm("休暇申請してもよろしいですか？");
+		//ポップアップ内のボタンクリック後の分岐処理
+		if(result == true){
+			//trueの処理
+
+      }
+      else{
+    	  //falseの処理
+
+      }
+ }
+
+</script>
+	</div>
+ -->
+</body>
+</html>
+

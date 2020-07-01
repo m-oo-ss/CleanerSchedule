@@ -66,6 +66,56 @@ public class PlanController {
 
 	}
 
+<<<<<<< HEAD
+	//休み申請者を取得する
+
+   @GetMapping("/plan/restlist")
+		public String getRestList(Model model) {
+			// コンテンツ部分にユーザー詳細を表示するための文字列を登録
+ 			model.addAttribute("contents", "plan/restlist :: restlist_contents");
+			// スタッフ一覧の生成
+			try {
+
+ 			List<Plan> planList = planService.getRestList();
+ 			model.addAttribute("planList", planList);
+		} catch (NullPointerException e) {
+
+	 		System.out.println("入っていない");
+
+			}
+
+			// homelayout.htmlに画面遷移
+			return "homelayout";
+
+   }
+
+
+
+  //休み申請の処理(falseになったひとのidをnullに書き換えて次の画面に渡す)
+		/**
+		 * POST用の処理
+		 */
+		@PostMapping("/plan/restlist")
+		public String postDeleatePlan(@ModelAttribute Plan plan ,Model model) {
+			// コンテンツ部分にユーザー詳細を表示するための文字列を登録
+			model.addAttribute("contents", "plan/restlist :: restlist_contents");
+
+
+			//書き換えて返ってきた結果の判定
+			boolean result=planService.deleatePlan(plan);
+
+			if(result==true) {
+				model.addAttribute("result","変更成功");
+			}else {
+				model.addAttribute("result","変更失敗");
+			}
+
+			// homelayout.htmlに画面遷移
+			return "homelayout";
+
+		}
+
+=======
 	//schedule,bill.staffのリストを取得
 	@GetMapping("/plan/edit")
 	public String getList3(Model model) {
@@ -137,4 +187,5 @@ public class PlanController {
 		return "homelayout";
 	}
 
+>>>>>>> ka-28
 }
