@@ -28,11 +28,19 @@
 		  <th class="active col-sm-2">​ ​電話番号</th>
 		  <td><input type="text" th:field="*{staffTel}"></td>​​</tr>
         <tr>
-		  <th class="active col-sm-2">​ ​勤務開始日</th>
-		  <td><input type="text" th:field="*{staffStart}">​ </td>​</tr>
-        <tr>
-		  <th class="active col-sm-2">​ ​勤務終了日</th>
-		  <td> <input type="text" th:field="*{staffStop}">​ </td>​</tr>
+		 <th class="active col-sm-2">​ ​勤務開始日</th>
+<!--デートピッカー -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	 <script src="https://rawgit.com/jquery/jquery-ui/master/ui/i18n/datepicker-ja.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <td><input type="text" id="datepicker"  placeholder="日付を選択してください" th:field="*{staffStart}">​ </td>​
+     <script>
+        $("#datepicker").datepicker({
+
+            dateFormat: 'yy-mm-dd',
+        });
+    </script>
 </table>
 		<button type="submit"  name="new">登録する</button>
 			​ ​
