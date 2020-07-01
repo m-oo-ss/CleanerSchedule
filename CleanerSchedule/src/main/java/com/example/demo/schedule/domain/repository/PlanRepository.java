@@ -51,6 +51,8 @@ public class PlanRepository {
 		}
 
 		return planList;
+
+
 	}
 	//idをもとに1件検索
 	public Plan findOne(int planId) {
@@ -155,5 +157,26 @@ public class PlanRepository {
 	 		return rowNumber; //check_restのfalseのひとを書き換えて書き換えたという結果を次の画面に渡すための判定を返す
 
 }
+
+	//ビル情報更新を行う（bchange.html）
+
+			public int updateOne(Plan plan) throws DataAccessException {
+				//１件更新
+				int rowNumber = jdbcTemplate.update(
+						"UPDATE plan"
+								+ " SET"
+								+ " staff_id = ?"
+								+ " WHERE bill_id = ?"
+								+ " and plan_date = ?"
+								+ " and staff_number = ?",
+						plan.getStaffId(),
+						plan.getBillId(),
+						plan.getPlanDate(),
+						plan.getStaffNumber()
+
+				);
+
+				return rowNumber;
+			}
 
 }

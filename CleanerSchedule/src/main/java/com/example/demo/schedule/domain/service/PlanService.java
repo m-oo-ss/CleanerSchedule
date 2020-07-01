@@ -21,6 +21,7 @@ public class PlanService {
 	// 1件取得
 	public Plan findOne(int planId) {
 
+<<<<<<< HEAD
 		return planRepository.findOne(planId);
 	}
 
@@ -50,6 +51,23 @@ public class PlanService {
 
 
 	//スタッフIDをnullに書き換えた結果を返す
+=======
+	//1件更新
+		public boolean updateOne(Plan plan) {
+
+				// 判定用変数
+				boolean result = false;
+
+				// １件更新
+				int rowNumber = planRepository.updateOne(plan);
+				if (rowNumber > 0) {
+					// update成功
+					result = true;
+				}
+				return result;
+		}
+
+>>>>>>> ka-28
 
 		public boolean deleatePlan(Plan plan) {
 			// 判定用変数
