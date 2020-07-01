@@ -14,7 +14,7 @@ public class Plan {
 	private int dateId; //ビルID
 	private int staffId; //ビルID
 	private int billId; //ビルID
-
+	private boolean restCheck;//休み申請
 
 	private int StaffNumber; //ビルID
 }

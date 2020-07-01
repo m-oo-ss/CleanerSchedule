@@ -164,6 +164,8 @@ date_id int,
 staff_number int,
 /*op varchar(50),*/
 
+rest_check boolean DEFAULT true ,
+
 PRIMARY KEY (plan_id),
 
 FOREIGN KEY(bill_id) REFERENCES  bill(bill_id),
