@@ -20,4 +20,27 @@ public class PlanService {
 	}
 
 
+	//休み申請者取得
+
+		public List<Plan> getRestList() {
+
+			return planRepository.getRestList();
+
+
+		}
+
+
+	//スタッフIDをnullに書き換えた結果を返す
+
+		public boolean deleatePlan(Plan plan) {
+			// 判定用変数
+			boolean result = false;
+			// １件更新
+			int rowNumber = planRepository.deleatePlan(plan);
+			if (rowNumber > 0) {
+				// update成功
+				result = true;
+			}
+			return result;
+}
 }
