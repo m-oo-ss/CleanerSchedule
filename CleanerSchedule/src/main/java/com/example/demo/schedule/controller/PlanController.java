@@ -66,7 +66,7 @@ public class PlanController {
 
 	}
 
-<<<<<<< HEAD
+
 	//休み申請者を取得する
 
    @GetMapping("/plan/restlist")
@@ -115,7 +115,7 @@ public class PlanController {
 
 		}
 
-=======
+
 	//schedule,bill.staffのリストを取得
 	@GetMapping("/plan/edit")
 	public String getList3(Model model) {
@@ -187,5 +187,4 @@ public class PlanController {
 		return "homelayout";
 	}
 
->>>>>>> ka-28
 }
