@@ -14,6 +14,11 @@ import com.example.demo.schedule.domain.service.LoginService;
 public class LoginController {
 @Autowired
     private LoginService loginService;
+@Autowired
+private PlanController planController;
+@Autowired
+private StaffController staffController;
+
    /**
      * ログイン画面のGETメソッド用処理.
      */
@@ -30,11 +35,6 @@ public class LoginController {
 
     @PostMapping("/sample")
     public String postDbRequest(@RequestParam("staffname") String name, @RequestParam("staffpass") String pass,Model model) {
-
-
- // コンテンツ部分にユーザー詳細を表示するための文字列を登録
-        model.addAttribute("contents", "sample :: sample_contents");
-
 
  // コンテンツ部分にユーザー詳細を表示するための文字列を登録
 
@@ -57,11 +57,11 @@ public class LoginController {
 
         if(id == 1) {
         // mdetail.html(管理側スケジュール詳細)に画面遷移
-        return "homelayout";
+        return planController.getList(model);
 
         }else
-        // sdetail.html(従業員側スケジュール詳細)に画面遷移
-        return "homelayout";
+       // sdetail.html(従業員側スケジュール詳細)に画面遷移
+        return staffController.getUdetail(model,id);
     }
 
 
