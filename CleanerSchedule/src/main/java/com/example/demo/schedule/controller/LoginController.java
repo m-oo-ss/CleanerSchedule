@@ -61,7 +61,7 @@ private StaffController staffController;
 
         }else
        // sdetail.html(従業員側スケジュール詳細)に画面遷移
-        return staffController.getUdetail(model,id);
+        return staffController.getDetail(model,id);
     }
 
 
