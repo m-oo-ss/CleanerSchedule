@@ -144,13 +144,16 @@ public class PlanRepository {
 						+ " WHERE REST_CHECK=false");
 
 		return rowNumber; //check_restのfalseのひとを書き換えて書き換えたという結果を次の画面に渡すための判定を返す
-
 	}
 
+
+	//planテーブルの書き換え
 	public int updateOne(SelectForm selectform) throws DataAccessException {
 		//１件更新
 		int rowNumber = 0;
-		for (String select : selectform.getSelectform()) {
+		//selectformに入っている要素を取り出して変数selectに格納：なくなるまで繰り返し
+		for (String select : selectform.getSelectForm()) {
+			//String型配列contentsに"1,2020-01-01,2,3"をカンマ区切りで格納
 			String[] contents = select.split(",", 0);
 
 			rowNumber = jdbcTemplate.update(
@@ -160,10 +163,10 @@ public class PlanRepository {
 							+ " WHERE bill_id = ?"
 							+ " and plan_date = ?"
 							+ " and staff_number = ?",
-					contents[3],
-					contents[0],
-					contents[1],
-					contents[2]);
+					contents[3],//セレクトボックスで選んだ人
+					contents[0],//ビルid
+					contents[1],//日付
+					contents[2]);//何人目のスタッフか:j
 		}
 			return rowNumber;
 		}

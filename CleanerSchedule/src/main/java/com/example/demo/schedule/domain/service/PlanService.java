@@ -51,7 +51,6 @@ public class PlanService {
 	}
 
 	//plan変更
-
 	public boolean updateOne(SelectForm selectform) {
 
 		// 判定用変数
@@ -67,7 +66,6 @@ public class PlanService {
 	}
 
 	//スタッフIDをnullに書き換えている。
-
 	public boolean deleatePlan() {
 		// 判定用変数
 		boolean result = false;

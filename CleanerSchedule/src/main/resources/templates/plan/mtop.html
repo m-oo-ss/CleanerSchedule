@@ -9,13 +9,13 @@
 <body>
 	<div th:fragment="mtop_contents">
 
-
+<p th:text=${result}></p>
 		<button id="prev" type="button">前の月</button>
 		<button id="next" type="button">次の月</button>
 		<div id="calendar" class="table-responsive"></div>
 
 
-		<script th:inline="javascript" charset="utf-8">
+<script th:inline="javascript" charset="utf-8">
 /*<![CDATA[*/
 	let planList= /*[[ ${planList} ]]*/
 	let billList= /*[[ ${billList} ]]*/
@@ -114,7 +114,7 @@
 							&& j == plan.staffNumber
 							&& bill.billId == plan.billId){
 						if(plan.staffId == 1){
-         					console.log("nullです");
+
         	 				html +=  '<td style="background-color:red;">勤務者が居ません</td>'
 
 						}else{

@@ -75,14 +75,12 @@ public class PlanController {
 
 
 
-  //休み申請の処理(falseになったひとのidをnullに書き換えて次の画面に渡す)
+  //休み申請の処理(falseになったひとのidを1に書き換えて次の画面に渡す)
 		/**
 		 * POST用の処理
 		 */
 		@PostMapping(value="/plan/edit", params ="restcheck")
-		public String postDeleatePlan(@ModelAttribute Plan plan ,Model model) {
-			// コンテンツ部分にユーザー詳細を表示するための文字列を登録
-			model.addAttribute("contents", "plan/edit :: edit_contents");
+		public String postDeleatePlan(Model model) {
 
 			//書き換えて返ってきた結果の判定
 			boolean result=planService.deleatePlan();
@@ -94,21 +92,17 @@ public class PlanController {
 			}
 
 			// homelayout.htmlに画面遷移
-			return "homelayout";
+			return getList3(model);
 
 		}
 
 
 	//schedule,bill.staffのリストを取得
 	@GetMapping("/plan/edit")
-	public String getList3(@ModelAttribute SelectForm selectform,Model model) {
-
+	public String getList3(Model model) {
 
 		// コンテンツ部分にユーザー詳細を表示するための文字列を登録
 		model.addAttribute("contents", "plan/edit :: edit_contents");
-
-		// Stringからint型に変換
-		//       int id = Integer.parseInt(str);
 
 		// ビル一覧の生成
 		List<Bill> billList = billService.findAll();
@@ -121,6 +115,7 @@ public class PlanController {
 		model.addAttribute("staffList", staffList);
 		model.addAttribute("planList", planList);
 
+
 		// helloResponseDB.htmlに画面遷移
 		return "homelayout";
 	}
@@ -130,28 +125,7 @@ public class PlanController {
 
 	public String postPlanChangeUpdate(	@ModelAttribute SelectForm selectform, Model model) {
 
-
-		// コンテンツ部分にユーザー詳細を表示するための文字列を登録
-		model.addAttribute("contents", "plan/mtop :: mtop_contents");
-
-//		Plan plan = new Plan();
-//		Bill bill = new Bill();
-//
-//		// 変更した値をplanクラスにセット
-//		plan.setBillId(bill.getBillId());//	ビルIdをプランクラスにセット
-////		plan.setPlanDate//日付をプランクラスにセット
-//		plan.setStaffNumber(bill.getBillPeople());//ビル清掃人数をプランクラスにセット
-//
-////		plan.setPlanId(form.getPlanId()); //プランID
-////		plan.setPlanDate(form.getPlanDate());
-////		plan.setStaffName(form.getStaffName()); //従業員名
-////		plan.setBillName(form.getBillName());
-////		plan.setStaffId(form.getStaffId());
-////		plan.setDateId(form.getDateId());
-////		plan.setStaffNumber(form.getStaffNumber());
-////		plan.setPlanWeek(form.getPlanWeek());
-////		plan.setPlanDay(form.getPlanDay());
-		String select[] = selectform.getSelectform();
+		String select[] = selectform.getSelectForm();
 		System.out.println(select[0]);
 		try {
 			//更新実行
@@ -166,9 +140,8 @@ public class PlanController {
 			model.addAttribute("result", "更新失敗(トランザクションテスト)");
 		}
 
-		//ビル一一覧画面を表示
-		//
-		return "homelayout";
+		//mtopに戻る
+		return getList(model);
 	}
 
 }
