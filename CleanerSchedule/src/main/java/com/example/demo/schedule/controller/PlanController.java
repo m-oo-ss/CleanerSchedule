@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.schedule.domain.model.Bill;
 import com.example.demo.schedule.domain.model.Plan;
+import com.example.demo.schedule.domain.model.SelectForm;
 import com.example.demo.schedule.domain.model.Staff;
 import com.example.demo.schedule.domain.service.BillService;
 import com.example.demo.schedule.domain.service.PlanService;
@@ -74,18 +75,15 @@ public class PlanController {
 
 
 
-  //休み申請の処理(falseになったひとのidをnullに書き換えて次の画面に渡す)
+  //休み申請の処理(falseになったひとのidを1に書き換えて次の画面に渡す)
 		/**
 		 * POST用の処理
 		 */
-		@PostMapping("/plan/restlist")
-		public String postDeleatePlan(@ModelAttribute Plan plan ,Model model) {
-			// コンテンツ部分にユーザー詳細を表示するための文字列を登録
-			model.addAttribute("contents", "plan/restlist :: restlist_contents");
-
+		@PostMapping(value="/plan/edit", params ="restcheck")
+		public String postDeleatePlan(Model model) {
 
 			//書き換えて返ってきた結果の判定
-			boolean result=planService.deleatePlan(plan);
+			boolean result=planService.deleatePlan();
 
 			if(result==true) {
 				model.addAttribute("result","変更成功");
@@ -94,7 +92,7 @@ public class PlanController {
 			}
 
 			// homelayout.htmlに画面遷移
-			return "homelayout";
+			return getList3(model);
 
 		}
 
@@ -103,12 +101,8 @@ public class PlanController {
 	@GetMapping("/plan/edit")
 	public String getList3(Model model) {
 
-
 		// コンテンツ部分にユーザー詳細を表示するための文字列を登録
 		model.addAttribute("contents", "plan/edit :: edit_contents");
-
-		// Stringからint型に変換
-		//       int id = Integer.parseInt(str);
 
 		// ビル一覧の生成
 		List<Bill> billList = billService.findAll();
@@ -129,32 +123,13 @@ public class PlanController {
 	//変更を実行
 	@PostMapping(value = "/plan/mtop", params = "update")
 
-	public String postPlanChangeUpdate(@ModelAttribute Plan form, Model model) {
+	public String postPlanChangeUpdate(	@ModelAttribute SelectForm selectform, Model model) {
 
-		// コンテンツ部分にユーザー詳細を表示するための文字列を登録
-		model.addAttribute("contents", "plan/mtop :: mtop_contents");
-
-		Plan plan = new Plan();
-		Bill bill = new Bill();
-
-		// 変更した値をplanクラスにセット
-		plan.setBillId(bill.getBillId());//	ビルIdをプランクラスにセット
-//		plan.setPlanDate//日付をプランクラスにセット
-		plan.setStaffNumber(bill.getBillPeople());//ビル清掃人数をプランクラスにセット
-
-//		plan.setPlanId(form.getPlanId()); //プランID
-//		plan.setPlanDate(form.getPlanDate());
-//		plan.setStaffName(form.getStaffName()); //従業員名
-//		plan.setBillName(form.getBillName());
-//		plan.setStaffId(form.getStaffId());
-//		plan.setDateId(form.getDateId());
-//		plan.setStaffNumber(form.getStaffNumber());
-//		plan.setPlanWeek(form.getPlanWeek());
-//		plan.setPlanDay(form.getPlanDay());
-
+		String select[] = selectform.getSelectForm();
+		System.out.println(select[0]);
 		try {
 			//更新実行
-			boolean result = planService.updateOne(plan);
+			boolean result = planService.updateOne(selectform);
 			if (result == true) {
 				model.addAttribute("result", "更新成功");
 			} else {
@@ -165,9 +140,8 @@ public class PlanController {
 			model.addAttribute("result", "更新失敗(トランザクションテスト)");
 		}
 
-		//ビル一一覧画面を表示
-		//
-		return "homelayout";
+		//mtopに戻る
+		return getList(model);
 	}
 
 }

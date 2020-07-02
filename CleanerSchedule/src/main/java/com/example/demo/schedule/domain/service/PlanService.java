@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.schedule.domain.model.Plan;
+import com.example.demo.schedule.domain.model.SelectForm;
 import com.example.demo.schedule.domain.repository.PlanRepository;
 
 @Service
@@ -49,15 +50,14 @@ public class PlanService {
 
 	}
 
-	//restcheckをfalseに書き換えた結果を返す
-
-	public boolean updateOne(Plan plan) {
+	//plan変更
+	public boolean updateOne(SelectForm selectform) {
 
 		// 判定用変数
 		boolean result = false;
 
 		// １件更新
-		int rowNumber = planRepository.updateOne(plan);
+		int rowNumber = planRepository.updateOne(selectform);
 		if (rowNumber > 0) {
 			// update成功
 			result = true;
@@ -65,13 +65,12 @@ public class PlanService {
 		return result;
 	}
 
-	//nullのひとを書き換えている。
-
-	public boolean deleatePlan(Plan plan) {
+	//スタッフIDをnullに書き換えている。
+	public boolean deleatePlan() {
 		// 判定用変数
 		boolean result = false;
 		// １件更新
-		int rowNumber = planRepository.deleatePlan(plan);
+		int rowNumber = planRepository.deleatePlan();
 		if (rowNumber > 0) {
 			// update成功
 			result = true;
