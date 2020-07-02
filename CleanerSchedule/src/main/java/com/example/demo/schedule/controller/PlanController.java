@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.schedule.domain.model.Bill;
 import com.example.demo.schedule.domain.model.Plan;
+import com.example.demo.schedule.domain.model.SelectForm;
 import com.example.demo.schedule.domain.model.Staff;
 import com.example.demo.schedule.domain.service.BillService;
 import com.example.demo.schedule.domain.service.PlanService;
@@ -101,7 +102,7 @@ public class PlanController {
 
 	//schedule,bill.staffのリストを取得
 	@GetMapping("/plan/edit")
-	public String getList3(Model model) {
+	public String getList3(@ModelAttribute SelectForm selectform,Model model) {
 
 
 		// コンテンツ部分にユーザー詳細を表示するための文字列を登録
@@ -122,6 +123,8 @@ public class PlanController {
 		model.addAttribute("planList", planList);
 
 
+
+
 		// helloResponseDB.htmlに画面遷移
 		return "homelayout";
 	}
@@ -129,32 +132,34 @@ public class PlanController {
 	//変更を実行
 	@PostMapping(value = "/plan/mtop", params = "update")
 
-	public String postPlanChangeUpdate(@ModelAttribute Plan form, Model model) {
+	public String postPlanChangeUpdate(	@ModelAttribute SelectForm selectform, Model model) {
+
 
 		// コンテンツ部分にユーザー詳細を表示するための文字列を登録
 		model.addAttribute("contents", "plan/mtop :: mtop_contents");
 
-		Plan plan = new Plan();
-		Bill bill = new Bill();
-
-		// 変更した値をplanクラスにセット
-		plan.setBillId(bill.getBillId());//	ビルIdをプランクラスにセット
-//		plan.setPlanDate//日付をプランクラスにセット
-		plan.setStaffNumber(bill.getBillPeople());//ビル清掃人数をプランクラスにセット
-
-//		plan.setPlanId(form.getPlanId()); //プランID
-//		plan.setPlanDate(form.getPlanDate());
-//		plan.setStaffName(form.getStaffName()); //従業員名
-//		plan.setBillName(form.getBillName());
-//		plan.setStaffId(form.getStaffId());
-//		plan.setDateId(form.getDateId());
-//		plan.setStaffNumber(form.getStaffNumber());
-//		plan.setPlanWeek(form.getPlanWeek());
-//		plan.setPlanDay(form.getPlanDay());
-
+//		Plan plan = new Plan();
+//		Bill bill = new Bill();
+//
+//		// 変更した値をplanクラスにセット
+//		plan.setBillId(bill.getBillId());//	ビルIdをプランクラスにセット
+////		plan.setPlanDate//日付をプランクラスにセット
+//		plan.setStaffNumber(bill.getBillPeople());//ビル清掃人数をプランクラスにセット
+//
+////		plan.setPlanId(form.getPlanId()); //プランID
+////		plan.setPlanDate(form.getPlanDate());
+////		plan.setStaffName(form.getStaffName()); //従業員名
+////		plan.setBillName(form.getBillName());
+////		plan.setStaffId(form.getStaffId());
+////		plan.setDateId(form.getDateId());
+////		plan.setStaffNumber(form.getStaffNumber());
+////		plan.setPlanWeek(form.getPlanWeek());
+////		plan.setPlanDay(form.getPlanDay());
+		String select[] = selectform.getSelectform();
+		System.out.println(select[0]);
 		try {
 			//更新実行
-			boolean result = planService.updateOne(plan);
+			boolean result = planService.updateOne(selectform);
 			if (result == true) {
 				model.addAttribute("result", "更新成功");
 			} else {

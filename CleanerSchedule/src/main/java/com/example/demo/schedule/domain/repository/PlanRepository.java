@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.schedule.domain.model.Plan;
+import com.example.demo.schedule.domain.model.SelectForm;
 
 @Repository
 public class PlanRepository {
@@ -160,21 +161,27 @@ public class PlanRepository {
 
 	//ビル情報更新を行う（bchange.html）
 
-			public int updateOne(Plan plan) throws DataAccessException {
+			public int updateOne(SelectForm selectform) throws DataAccessException {
 				//１件更新
-				int rowNumber = jdbcTemplate.update(
+				int rowNumber = 0;
+				for(String select : selectform.getSelectform()) {
+					String[] contents = select.split(",",0);
+
+				 rowNumber = jdbcTemplate.update(
 						"UPDATE plan"
 								+ " SET"
 								+ " staff_id = ?"
 								+ " WHERE bill_id = ?"
 								+ " and plan_date = ?"
 								+ " and staff_number = ?",
-						plan.getStaffId(),
-						plan.getBillId(),
-						plan.getPlanDate(),
-						plan.getStaffNumber()
-
+						contents[3],
+						contents[0],
+						contents[1],
+						contents[2]
 				);
+
+
+				}
 
 				return rowNumber;
 			}
