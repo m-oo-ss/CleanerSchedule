@@ -1,5 +1,6 @@
 package com.example.demo.schedule.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +127,9 @@ public class PlanController {
 	public String postPlanChangeUpdate(	@ModelAttribute SelectForm selectform, Model model) {
 
 		String select[] = selectform.getSelectForm();
-		System.out.println(select[0]);
+		System.out.println(Arrays.toString(select));
+		System.out.println(select[1]);
+
 		try {
 			//更新実行
 			boolean result = planService.updateOne(selectform);
