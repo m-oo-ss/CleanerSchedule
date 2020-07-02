@@ -5,7 +5,7 @@
 <title>個人スケジュール詳細</title>
 </head>
 <body>
-aaaaa
+
 	<div th:fragment="udetail_contents">
 
 
@@ -22,12 +22,12 @@ aaaaa
 
 
     <tr>
-	   <td><a th:href="@{'/staff/sdetail/'+ ${pid}}">スケジュール画面に戻る</a></td>
+	   <td><INPUT type="button" onclick="history.back()" value="スケジュール一覧に戻る"></td>
 	</tr>
 
-	<tr>
-	   <td><input type="submit" formmethod="get" value="休暇申請"></a></td>
-	</tr>
+	<form method="post" th:action="@{'/staff/sdetail/'+${sid}+'/'+${pid}}" onsubmit="return check()">
+	<button type="submit">休暇申請</button></form>
+
 
 	</table>
 
@@ -45,13 +45,13 @@ function check() {
       }
       else{
     	  //falseの処理
-
+		alert("休暇申請をキャンセルしました。");
       }
- }
+}
 
 </script>
 	</div>
- -->
+
 </body>
 </html>
 

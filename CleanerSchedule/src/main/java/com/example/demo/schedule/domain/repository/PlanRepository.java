@@ -59,7 +59,7 @@ public class PlanRepository {
 
 		// Staffテーブルのデータを全件取得
 		Map<String, Object> map = jdbcTemplate.queryForMap("select "
-                + "p.PLAN_ID ,p.PLAN_DATE , b.BILL_NAME , s.STAFF_NAME , p.staff_id, p.bill_id , b.bill_starttime , b.bill_stoptime "
+                + "p.PLAN_ID , p.PLAN_DATE , b.BILL_NAME , s.STAFF_NAME , p.staff_id , p.bill_id , b.bill_starttime , b.bill_stoptime , p.rest_check "
                 + "from plan p "
                 + "inner join staff s on p.staff_id = s. staff_id "
                 + "inner join bill b on b.bill_id = p.bill_id"
@@ -76,25 +76,28 @@ public class PlanRepository {
 		plan.setBillName((String) map.get("bill_name"));//ビル名
 		plan.setBillStartTime((java.sql.Time) map.get("bill_starttime"));//勤務開始時間
 		plan.setBillStopTime((java.sql.Time) map.get("bill_stoptime"));//勤務終了時間
-		//plan.setRestCheck((boolean) map.get("rest_check"));//休暇申請判定
+		plan.setRestCheck((int) map.get("rest_check"));//休暇申請判定
+
+
 
 		return plan;
 	}
 
 //rest_checkの値をfalseに変換
-//public int updateOne(Plan plan) throws DataAccessException {
-//
-//	int rowNumber = jdbcTemplate.update(
-//				"UPDATE plan"
-//						+ " SET"
-//						+ " rest_check = false"
-//						+ " WHERE plan_id = ?",
-//				plan.getRestCheck()
-//
-//		);
-//
-//		return rowNumber;
-//	}
+	public int updateFalse(int planId) throws DataAccessException {
+
+	int rowNumber = jdbcTemplate.update(
+				"UPDATE plan"
+						+ " SET"
+						+ " rest_check = 1"
+						+ " WHERE plan_id = ?",
+				//plan.isRestCheck(),
+				planId
+		);
+
+
+		return rowNumber;
+	}
 
 
 
@@ -109,7 +112,7 @@ public class PlanRepository {
 				+" FROM PLAN p "
 				+"INNER JOIN STAFF s on p.STAFF_ID = s.STAFF_ID "
 				+"INNER JOIN BILL b on b.BILL_ID = p.BILL_ID"
-				+ " WHERE REST_CHECK = FALSE");
+				+ " WHERE REST_CHECK = 1");
 
 		// 検索結果返却用の変数
 		List<Plan> planList = new ArrayList<>();
@@ -125,7 +128,7 @@ public class PlanRepository {
 			plan.setPlanDate((Date)map.get("plan_date")); //スケジュール日付
 			plan.setBillId((Integer) map.get("bill_id")); //ビルID
 			plan.setStaffId((Integer)map.get("staff_id"));//スタッフID
-			plan.setRestCheck((Boolean)map.get("rest_check"));//休み希望(falseに書き換わったものが休み希望)
+			plan.setRestCheck((Integer)map.get("rest_check"));//休み希望(falseに書き換わったものが休み希望)
 			plan.setBillName((String)map.get("bill_name"));//ビル名
 			plan.setStaffName((String)map.get("staff_name"));//スタッフ名
 
@@ -143,8 +146,8 @@ public class PlanRepository {
 		public int deleatePlan(Plan plan)throws DataAccessException {
 	 		//
 	 		int rowNumber = jdbcTemplate.update(
-	 				"UPDATE PLAN SET STAFF_ID=NULL "
-	 				+ "WHERE REST_CHECK=false)",
+	 				"UPDATE PLAN SET REST_CHECK = 2 "
+	 				+ "WHERE REST_CHECK=1)",
 
 	 			plan.getPlanId(),//プランID
 				plan.getPlanDate(), //スケジュール日付
