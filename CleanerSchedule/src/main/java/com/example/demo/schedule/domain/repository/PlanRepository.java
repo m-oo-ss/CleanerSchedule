@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.schedule.domain.model.Plan;
+import com.example.demo.schedule.domain.model.SelectForm;
 
 @Repository
 public class PlanRepository {
@@ -52,18 +53,18 @@ public class PlanRepository {
 
 		return planList;
 
-
 	}
+
 	//idをもとに1件検索
 	public Plan findOne(int planId) {
 
 		// Staffテーブルのデータを全件取得
 		Map<String, Object> map = jdbcTemplate.queryForMap("select "
-                + "p.PLAN_ID ,p.PLAN_DATE , b.BILL_NAME , s.STAFF_NAME , p.staff_id, p.bill_id , b.bill_starttime , b.bill_stoptime "
-                + "from plan p "
-                + "inner join staff s on p.staff_id = s. staff_id "
-                + "inner join bill b on b.bill_id = p.bill_id"
-                + " WHERE plan_id = ?", planId);
+				+ "p.PLAN_ID ,p.PLAN_DATE , b.BILL_NAME , s.STAFF_NAME , p.staff_id, p.bill_id , b.bill_starttime , b.bill_stoptime "
+				+ "from plan p "
+				+ "inner join staff s on p.staff_id = s. staff_id "
+				+ "inner join bill b on b.bill_id = p.bill_id"
+				+ " WHERE plan_id = ?", planId);
 		//Staffインスタンスの生成
 		Plan plan = new Plan();
 
@@ -81,35 +82,32 @@ public class PlanRepository {
 		return plan;
 	}
 
-//rest_checkの値をfalseに変換
-//public int updateOne(Plan plan) throws DataAccessException {
-//
-//	int rowNumber = jdbcTemplate.update(
-//				"UPDATE plan"
-//						+ " SET"
-//						+ " rest_check = false"
-//						+ " WHERE plan_id = ?",
-//				plan.getRestCheck()
-//
-//		);
-//
-//		return rowNumber;
-//	}
-
-
+	//rest_checkの値をfalseに変換
+	//public int updateOne(Plan plan) throws DataAccessException {
+	//
+	//	int rowNumber = jdbcTemplate.update(
+	//				"UPDATE plan"
+	//						+ " SET"
+	//						+ " rest_check = false"
+	//						+ " WHERE plan_id = ?",
+	//				plan.getRestCheck()
+	//
+	//		);
+	//
+	//		return rowNumber;
+	//	}
 
 	//休み希望のひとを検索
-    public List<Plan> getRestList() {
+	public List<Plan> getRestList() {
 		//
-		List<Map<String, Object>> getList =
-				jdbcTemplate.queryForList(
+		List<Map<String, Object>> getList = jdbcTemplate.queryForList(
 				"SELECT p.PLAN_ID, p.PLAN_DATE, p.STAFF_ID,p.BILL_ID,p.REST_CHECK,"
-				+ " b.BILL_NAME,"
-				+ " s.STAFF_NAME"
-				+" FROM PLAN p "
-				+"INNER JOIN STAFF s on p.STAFF_ID = s.STAFF_ID "
-				+"INNER JOIN BILL b on b.BILL_ID = p.BILL_ID"
-				+ " WHERE REST_CHECK = FALSE");
+						+ " b.BILL_NAME,"
+						+ " s.STAFF_NAME"
+						+ " FROM PLAN p "
+						+ "INNER JOIN STAFF s on p.STAFF_ID = s.STAFF_ID "
+						+ "INNER JOIN BILL b on b.BILL_ID = p.BILL_ID"
+						+ " WHERE REST_CHECK = FALSE");
 
 		// 検索結果返却用の変数
 		List<Plan> planList = new ArrayList<>();
@@ -122,12 +120,12 @@ public class PlanRepository {
 
 			// Planインスタンスに取得したデータをセットする
 			plan.setPlanId((Integer) map.get("plan_id"));//プランID
-			plan.setPlanDate((Date)map.get("plan_date")); //スケジュール日付
+			plan.setPlanDate((Date) map.get("plan_date")); //スケジュール日付
 			plan.setBillId((Integer) map.get("bill_id")); //ビルID
-			plan.setStaffId((Integer)map.get("staff_id"));//スタッフID
-			plan.setRestCheck((Boolean)map.get("rest_check"));//休み希望(falseに書き換わったものが休み希望)
-			plan.setBillName((String)map.get("bill_name"));//ビル名
-			plan.setStaffName((String)map.get("staff_name"));//スタッフ名
+			plan.setStaffId((Integer) map.get("staff_id"));//スタッフID
+			plan.setRestCheck((Boolean) map.get("rest_check"));//休み希望(falseに書き換わったものが休み希望)
+			plan.setBillName((String) map.get("bill_name"));//ビル名
+			plan.setStaffName((String) map.get("staff_name"));//スタッフ名
 
 			//結果返却用のListに追加
 			planList.add(plan);
@@ -135,43 +133,43 @@ public class PlanRepository {
 		}
 
 		return planList;
-    }
+	}
+
+	//休み希望のスタッフIDをnullに書き換える
+
+	public int deleatePlan() throws DataAccessException {
+		//
+		int rowNumber = jdbcTemplate.update(
+				"UPDATE PLAN SET STAFF_ID=1"
+						+ " WHERE REST_CHECK=false");
+
+		return rowNumber; //check_restのfalseのひとを書き換えて書き換えたという結果を次の画面に渡すための判定を返す
+	}
 
 
- //休み希望のスタッフIDをnullに書き換える
+	//planテーブルの書き換え
+	public int updateOne(SelectForm selectform) throws DataAccessException {
+		//１件更新
+		int rowNumber = 0;
+		//selectformに入っている要素を取り出して変数selectに格納：なくなるまで繰り返し
+		for (String select : selectform.getSelectForm()) {
+			//String型配列contentsに"1,2020-01-01,2,3"をカンマ区切りで格納
+			String[] contents = select.split(",", 0);
 
-		public int deleatePlan()throws DataAccessException {
-	 		//
-	 		int rowNumber = jdbcTemplate.update(
-	 				"UPDATE PLAN SET STAFF_ID=null"
-	 				+ " WHERE REST_CHECK=false");
-
-	 		return rowNumber; //check_restのfalseのひとを書き換えて書き換えたという結果を次の画面に渡すための判定を返す
-
-}
-
-
-	//
-
-			public int updateOne(Plan plan) throws DataAccessException {
-				//１件更新
-				int rowNumber = jdbcTemplate.update(
-						"UPDATE plan"
-								+ " SET"
-								+ " staff_id = ?"
-								+ " WHERE bill_id = ?"
-								+ " and plan_date = ?"
-								+ " and staff_number = ?",
-						plan.getStaffId(),
-						plan.getBillId(),
-						plan.getPlanDate(),
-						plan.getStaffNumber()
-
-				);
-				if(rowNumber==0) {
-System.out.println("何も入っていない");
-				}
-				return rowNumber;
-			}
+			rowNumber = jdbcTemplate.update(
+					"UPDATE plan"
+							+ " SET"
+							+ " staff_id = ?,"
+							+ " rest_check = 3"
+							+ " WHERE bill_id = ?"
+							+ " and plan_date = ?"
+							+ " and staff_number = ?",
+					contents[3],//セレクトボックスで選んだ人
+					contents[0],//ビルid
+					contents[1],//日付
+					contents[2]);//何人目のスタッフか:j
+		}
+			return rowNumber;
+		}
 
 }

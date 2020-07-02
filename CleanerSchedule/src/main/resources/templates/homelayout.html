@@ -22,7 +22,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">JMCビルメンテナンス</a>
+                <a class="navbar-brand" th:href="@{'/plan/mtop'}">JMCビルメンテナンス</a>
             </div>
             <form method="post" th:action="@{/sample}">
                 <button class="btn btn-link pull-right navbar-brand" type="submit">
@@ -37,6 +37,8 @@
             <div class="col-sm-2 sidebar">
                 <ul class="nav nav-pills nav-stacked">
                     <li role="presentation"><a th:href="@{'/plan/mtop'}">スケジュール一覧</a>
+                    </li>
+                    <li role="presentation"><a th:href="@{'/plan/edit'}">スケジュール編集</a>
                     </li>
                     <li role="presentation"><a th:href="@{'/staff/ssearch'}">従業員一覧</a>
                     </li>

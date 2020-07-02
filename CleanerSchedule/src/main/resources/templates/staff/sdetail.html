@@ -123,8 +123,11 @@
 					        		count++
 				            	if(selectDateStr == plan.planDate && staffId == plan.staffId){
 				            		 //予定がある場合背景色変更
-				                     html += '"<td style ="background-color:red;">'
-				                     + '<a href="/user/udetail/'
+				                     if(plan.rest_check = 0){html += '"<td style ="background-color:red;">'
+				                     }else if (plan.rest_check = 3){html += '"<td style ="background-color:yellow;">'
+				                     }
+
+				                     html+= '<a href="/user/udetail/'
 				                     + plan.planId + '">'
 				                     + dayCount + '<br>'
 				                     +plan.billName+'</a></td>'
