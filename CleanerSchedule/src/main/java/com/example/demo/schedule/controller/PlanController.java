@@ -28,28 +28,11 @@ public class PlanController {
 	//	@Autowired
 	//	private OwnerService ownerService;
 
-	//schedule,bill.staffのリストを取得
-	@GetMapping("/plan/mtop_sub")
-	public String getList(Model model) {
 
-		// コンテンツ部分にユーザー詳細を表示するための文字列を登録
-		//	model.addAttribute("contents", "plan/mtop :: mtop_contents");
-		// ビル一覧の生成
-		List<Bill> billList = billService.findAll();
-		List<Staff> staffList = staffService.findAll();
-		List<Plan> planList = planService.findAll();
-		model.addAttribute("billList", billList);
-		model.addAttribute("staffList", staffList);
-		model.addAttribute("planList", planList);
-
-		// helloResponseDB.htmlに画面遷移
-		//return "homelayout";
-		return "plan/mtop_sub";
-	}
 
 	//html+で書いたmtop2に飛ぶ
 	@GetMapping("/plan/mtop")
-	public String getList2(Model model) {
+	public String getList(Model model) {
 
 		// コンテンツ部分にユーザー詳細を表示するための文字列を登録
 			model.addAttribute("contents", "plan/mtop :: mtop_contents");
