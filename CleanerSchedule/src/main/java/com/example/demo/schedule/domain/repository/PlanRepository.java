@@ -159,7 +159,8 @@ public class PlanRepository {
 			rowNumber = jdbcTemplate.update(
 					"UPDATE plan"
 							+ " SET"
-							+ " staff_id = ?"
+							+ " staff_id = ?,"
+							+ " rest_check = 3"
 							+ " WHERE bill_id = ?"
 							+ " and plan_date = ?"
 							+ " and staff_number = ?",

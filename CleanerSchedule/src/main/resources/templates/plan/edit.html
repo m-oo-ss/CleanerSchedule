@@ -152,9 +152,9 @@ function createCalendar(year, month) {
 
          //後ろに移動       	Html += '<select id = "staffSelect">'
 
-					//カウント関数生成
+					//データなしの場合に分岐するためのカウント
 					var count = 0
-					//セレクトのデフォルト値を設定するかを判定するフラグ
+					//ループ制御のためのフラグ
 					var flag = 0;
 						//従業員数の分だけ繰り返す
                 		for (var staff of staffList) {
@@ -177,7 +177,7 @@ function createCalendar(year, month) {
                 					if(selectDateStr == plan.planDate
         								&& j == plan.staffNumber
         								&& bill.billId == plan.billId){
-                						if(plan.staffId == 1){
+                						if(plan.rest_check == 2){
 
                 		                	//-----表記の時だけnameに配列beanクラスのフィールド名を指定----
                 							Html += '<select name ="selectForm">'
