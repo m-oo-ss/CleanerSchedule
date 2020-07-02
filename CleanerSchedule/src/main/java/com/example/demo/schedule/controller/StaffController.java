@@ -310,7 +310,7 @@ public class StaffController {
 
     public String postUpdateFalse(Model model,Plan plan,@PathVariable("sid") int staffId,@PathVariable("pid")int planId) {
 
-    	System.out.println(planId);
+//    	System.out.println(planId);
 
     	//変換の実行・変換結果の判定
 		boolean result = planService.updateFalse(planId);
