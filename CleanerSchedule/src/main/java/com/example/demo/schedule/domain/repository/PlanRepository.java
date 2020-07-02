@@ -84,20 +84,20 @@ public class PlanRepository {
 		return plan;
 	}
 
-//rest_checkの値をfalseに変換
-//public int updateOne(Plan plan) throws DataAccessException {
-//
-//	int rowNumber = jdbcTemplate.update(
-//				"UPDATE plan"
-//						+ " SET"
-//						+ " rest_check = false"
-//						+ " WHERE plan_id = ?",
-//				plan.getRestCheck()
-//
-//		);
-//
-//		return rowNumber;
-//	}
+	public int updateFalse(int planId) throws DataAccessException {
+
+	int rowNumber = jdbcTemplate.update(
+				"UPDATE plan"
+						+ " SET"
+						+ " rest_check = 1"
+						+ " WHERE plan_id = ?",
+				//plan.isRestCheck(),
+				planId
+		);
+
+
+		return rowNumber;
+	}
 
 
 
@@ -111,7 +111,7 @@ public class PlanRepository {
 				+" FROM PLAN p "
 				+"INNER JOIN STAFF s on p.STAFF_ID = s.STAFF_ID "
 				+"INNER JOIN BILL b on b.BILL_ID = p.BILL_ID"
-				+ " WHERE REST_CHECK = FALSE");
+				+ " WHERE REST_CHECK = 1");
 
 		// 検索結果返却用の変数
 		List<Plan> planList = new ArrayList<>();
@@ -127,7 +127,7 @@ public class PlanRepository {
 			plan.setPlanDate((Date) map.get("plan_date")); //スケジュール日付
 			plan.setBillId((Integer) map.get("bill_id")); //ビルID
 			plan.setStaffId((Integer)map.get("staff_id"));//スタッフID
-			plan.setRestCheck((Boolean)map.get("rest_check"));//休み希望(falseに書き換わったものが休み希望)
+			plan.setRestCheck((Integer)map.get("rest_check"));//休み希望(falseに書き換わったものが休み希望)
 			plan.setBillName((String)map.get("bill_name"));//ビル名
 			plan.setStaffName((String)map.get("staff_name"));//スタッフ名
 
@@ -144,14 +144,10 @@ public class PlanRepository {
 	public int deleatePlan() throws DataAccessException {
 		//
 		int rowNumber = jdbcTemplate.update(
-				"UPDATE PLAN SET STAFF_ID=1"
-						+ " WHERE REST_CHECK=false");
-
-		public int deleatePlan(Plan plan)throws DataAccessException {
-	 		//
-	 		int rowNumber = jdbcTemplate.update(
-	 				"UPDATE PLAN SET STAFF_ID=NULL "
-	 				+ "WHERE REST_CHECK=false)",
+				"UPDATE PLAN REST_CHECK = 2"
+						+ "WHERE REST_CHECK=1");
+		return rowNumber;
+	}
 
 
 	//planテーブルの書き換え
