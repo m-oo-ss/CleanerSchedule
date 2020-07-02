@@ -22,7 +22,7 @@ public class PlanRepository {
 
 		// planテーブルのデータを全件取得
 		List<Map<String, Object>> getList = jdbcTemplate.queryForList("select "
-				+ "p.PLAN_ID ,p.PLAN_DATE , p.DATE_ID  ,b.BILL_NAME , s.STAFF_NAME , p.staff_id, p.bill_id, p.staff_number "
+				+ "p.PLAN_ID ,p.PLAN_DATE , p.DATE_ID  ,b.BILL_NAME , s.STAFF_NAME , p.staff_id, p.bill_id, p.staff_number, p.rest_check "
 				+ "from plan p "
 				+ "inner join staff s on p.staff_id = s. staff_id "
 				+ "inner join bill b on b.bill_id = p.bill_id");
@@ -46,6 +46,7 @@ public class PlanRepository {
 			plan.setBillId((Integer) map.get("bill_id")); //ビル名
 
 			plan.setStaffNumber((Integer) map.get("staff_number")); //ビル名
+			plan.setRestCheck((Integer) map.get("rest_check")); //ビル名
 
 			//結果返却用のListに追加
 			planList.add(plan);
@@ -144,8 +145,8 @@ public class PlanRepository {
 	public int deleatePlan() throws DataAccessException {
 		//
 		int rowNumber = jdbcTemplate.update(
-				"UPDATE PLAN REST_CHECK = 2"
-						+ "WHERE REST_CHECK=1");
+				"UPDATE PLAN set REST_CHECK = 2"
+						+ " WHERE REST_CHECK=1");
 		return rowNumber;
 	}
 
@@ -162,8 +163,8 @@ public class PlanRepository {
 			rowNumber = jdbcTemplate.update(
 					"UPDATE plan"
 							+ " SET"
-							+ " staff_id = ?,"
-							+ " rest_check = 3"
+							+ " rest_check = 3,"
+							+ " staff_id = ?"
 							+ " WHERE bill_id = ?"
 							+ " and plan_date = ?"
 							+ " and staff_number = ?",

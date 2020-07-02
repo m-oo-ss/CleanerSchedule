@@ -124,9 +124,11 @@
 					        		count++
 				            	if(selectDateStr == plan.planDate && staffId == plan.staffId){
 				            		 //予定がある場合背景色変更
-				                     if(plan.rest_check = 0){html += '"<td style ="background-color:red;">'
-				                     }else if (plan.rest_check = 3){html += '"<td style ="background-color:yellow;">'
-				                     }
+				                   //  if(plan.restCheck == 0){
+				                    	 html += '"<td style ="background-color:red;">'
+				                //     }
+				                  //   else if (plan.restCheck == 3){html += '"<td style ="background-color:yellow;">'
+				                    // }
 
 				                     html+= '<a href="/user/udetail/'
 				                     + plan.planId + '">'
