@@ -34,7 +34,7 @@ public class BillRepository {
 			// Billインスタンスに取得したデータをセットする
 			bill.setBillId((Integer) map.get("bill_id")); //ビルID
 			bill.setBillName((String) map.get("bill_name")); //ビル名
-			bill.setBillPeople((Integer) map.get("bill_people")); //ビルID
+			bill.setBillPeople((Integer) map.get("bill_people")); //派遣人数
 			bill.setBillStartTime((java.sql.Time) map.get("bill_starttime")); //ビルID
 			bill.setBillSun((Integer) map.get("bill_sunday")); //ビルID
 			bill.setBillMon((Integer) map.get("bill_monday")); //ビルID

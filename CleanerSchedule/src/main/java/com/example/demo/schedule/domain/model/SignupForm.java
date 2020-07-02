@@ -1,5 +1,7 @@
 package com.example.demo.schedule.domain.model;
 
+import java.sql.Time;
+
 import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
@@ -28,5 +30,17 @@ public class SignupForm {
 	//必須入力
 	@NotBlank
 	private String ownerTel; // オーナー電話
+
+	private int billPeople; //ビルID
+	private Time billStartTime; //ビルID
+	private Time billStopTime; //ビルID
+	private int billSun; //ビルID
+	private int billMon; //ビルID
+	private int billTue; //ビルID
+	private int billWed; //ビルID
+	private int billThu; //ビルID
+	private int billFri; //ビルID
+	private int billSat; //ビルID
+
 
 }
