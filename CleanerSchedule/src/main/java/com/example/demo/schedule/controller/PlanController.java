@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.schedule.domain.model.Bill;
 import com.example.demo.schedule.domain.model.Plan;
@@ -146,18 +147,32 @@ public class PlanController {
 	//変更を実行
 	@PostMapping(value = "/plan/mtop", params = "update")
 
-	public String postPlanChangeUpdate(@ModelAttribute Plan form, Model model) {
+	public String postPlanChangeUpdate(
+			@RequestParam("ID1")String name1,
+			@RequestParam("ID2")String name2,
+			@RequestParam("ID3")String name3,
+			@RequestParam("ID4")String name4,
+			@ModelAttribute Plan form, Model model) {
+
+
+		System.out.println(name1);
+		System.out.println(name2);
+		System.out.println(name3);
+		System.out.println(name4);
 
 		// コンテンツ部分にユーザー詳細を表示するための文字列を登録
 		model.addAttribute("contents", "plan/mtop :: mtop_contents");
 
 		Plan plan = new Plan();
 		Bill bill = new Bill();
+		Staff staff = new Staff();
 
 		// 変更した値をplanクラスにセット
-		plan.setBillId(bill.getBillId());//	ビルIdをプランクラスにセット
-//		plan.setPlanDate//日付をプランクラスにセット
-		plan.setStaffNumber(bill.getBillPeople());//ビル清掃人数をプランクラスにセット
+		plan.setBillId(bill.getBillId());//Billクラスに入れたビルIdをPlanクラスにセット
+//		plan.setPlanDate//日付をPlanクラスにセット
+		plan.setStaffNumber(bill.getBillPeople());//Billクラスに入れたビル清掃人数をPlanクラスにセット
+		plan.setStaffId(staff.getStaffId());//Staffクラスに入れたStaffIdをPlanクラスにセット
+
 
 //		plan.setPlanId(form.getPlanId()); //プランID
 //		plan.setPlanDate(form.getPlanDate());

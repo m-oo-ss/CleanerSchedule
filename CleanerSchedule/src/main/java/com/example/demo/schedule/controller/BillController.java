@@ -210,7 +210,7 @@ public class BillController {
 		form.setOwnerName(owner.getOwnerName()); //オーナー名
 		form.setOwnerTel(owner.getOwnerTel()); //オーナー電話番号
 
-	model.addAttribute("signupForm", form);
+		model.addAttribute("signupForm", form);
 
 		// homelayout.htmlに画面遷移
 		return "homelayout";
