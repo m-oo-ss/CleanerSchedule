@@ -164,7 +164,7 @@ date_id int,
 staff_number int,
 /*op varchar(50),*/
 
-rest_check boolean DEFAULT true ,
+rest_check int DEFAULT 0 ,
 
 PRIMARY KEY (plan_id),
 

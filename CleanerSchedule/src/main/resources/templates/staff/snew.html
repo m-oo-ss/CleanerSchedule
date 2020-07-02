@@ -17,18 +17,20 @@
 		<!-- 追加ビルID(12以降)： <input type="text" th:field="*{staffId}">  -->
 		<tr>
 	        <th class="active col-sm-2">​ ​従業員名​</th>
-	        <td> <input type="text" th:field="*{staffName}">​ </td> ​</tr>
+	        <td> <input type="text" th:field="*{staffName}" required>​ </td> ​</tr>
          <tr>
 	       <th class="active col-sm-2">​ ​住所​</th>
-	       <td><input type="text" th:field="*{staffAddress}">​</td>​</tr>
+	       <td><input type="text" th:field="*{staffAddress}" required>​</td>​</tr>
          <tr>
 		   <th class="active col-sm-2">​ ​メールアドレス</th>
-		   <td><input type="text" th:field="*{staffMail}">​</td>​</tr>
+		   <td><input type="email" th:field="*{staffMail}">​</td>​</tr>
         <tr>
 		  <th class="active col-sm-2">​ ​電話番号</th>
-		  <td><input type="text" th:field="*{staffTel}"></td>​​</tr>
+		  <td><input type="text" th:field="*{staffTel}" minlength="9" maxlength="11"></td>​​</tr>
         <tr>
 		 <th class="active col-sm-2">​ ​勤務開始日</th>
+		 <td><input type="text" th:field="*{staffStart}" pattern="^\d{4}-\d\d-\d\d$" title="○○〇〇-○○-○○の形式で入力してください。">​ </td>​</tr>
+
 <!--デートピッカー -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
