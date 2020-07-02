@@ -60,11 +60,11 @@ public class PlanRepository {
 
 		// Staffテーブルのデータを全件取得
 		Map<String, Object> map = jdbcTemplate.queryForMap("select "
-				+ "p.PLAN_ID ,p.PLAN_DATE , b.BILL_NAME , s.STAFF_NAME , p.staff_id, p.bill_id , b.bill_starttime , b.bill_stoptime "
-				+ "from plan p "
-				+ "inner join staff s on p.staff_id = s. staff_id "
-				+ "inner join bill b on b.bill_id = p.bill_id"
-				+ " WHERE plan_id = ?", planId);
+                + "p.PLAN_ID , p.PLAN_DATE , b.BILL_NAME , s.STAFF_NAME , p.staff_id , p.bill_id , b.bill_starttime , b.bill_stoptime , p.rest_check "
+                + "from plan p "
+                + "inner join staff s on p.staff_id = s. staff_id "
+                + "inner join bill b on b.bill_id = p.bill_id"
+                + " WHERE plan_id = ?", planId);
 		//Staffインスタンスの生成
 		Plan plan = new Plan();
 
@@ -77,37 +77,41 @@ public class PlanRepository {
 		plan.setBillName((String) map.get("bill_name"));//ビル名
 		plan.setBillStartTime((java.sql.Time) map.get("bill_starttime"));//勤務開始時間
 		plan.setBillStopTime((java.sql.Time) map.get("bill_stoptime"));//勤務終了時間
-		//plan.setRestCheck((boolean) map.get("rest_check"));//休暇申請判定
+		plan.setRestCheck((int) map.get("rest_check"));//休暇申請判定
+
+
 
 		return plan;
 	}
 
-	//rest_checkの値をfalseに変換
-	//public int updateOne(Plan plan) throws DataAccessException {
-	//
-	//	int rowNumber = jdbcTemplate.update(
-	//				"UPDATE plan"
-	//						+ " SET"
-	//						+ " rest_check = false"
-	//						+ " WHERE plan_id = ?",
-	//				plan.getRestCheck()
-	//
-	//		);
-	//
-	//		return rowNumber;
-	//	}
+//rest_checkの値をfalseに変換
+//public int updateOne(Plan plan) throws DataAccessException {
+//
+//	int rowNumber = jdbcTemplate.update(
+//				"UPDATE plan"
+//						+ " SET"
+//						+ " rest_check = false"
+//						+ " WHERE plan_id = ?",
+//				plan.getRestCheck()
+//
+//		);
+//
+//		return rowNumber;
+//	}
+
+
 
 	//休み希望のひとを検索
 	public List<Plan> getRestList() {
 		//
 		List<Map<String, Object>> getList = jdbcTemplate.queryForList(
 				"SELECT p.PLAN_ID, p.PLAN_DATE, p.STAFF_ID,p.BILL_ID,p.REST_CHECK,"
-						+ " b.BILL_NAME,"
-						+ " s.STAFF_NAME"
-						+ " FROM PLAN p "
-						+ "INNER JOIN STAFF s on p.STAFF_ID = s.STAFF_ID "
-						+ "INNER JOIN BILL b on b.BILL_ID = p.BILL_ID"
-						+ " WHERE REST_CHECK = FALSE");
+				+ " b.BILL_NAME,"
+				+ " s.STAFF_NAME"
+				+" FROM PLAN p "
+				+"INNER JOIN STAFF s on p.STAFF_ID = s.STAFF_ID "
+				+"INNER JOIN BILL b on b.BILL_ID = p.BILL_ID"
+				+ " WHERE REST_CHECK = FALSE");
 
 		// 検索結果返却用の変数
 		List<Plan> planList = new ArrayList<>();
@@ -122,10 +126,10 @@ public class PlanRepository {
 			plan.setPlanId((Integer) map.get("plan_id"));//プランID
 			plan.setPlanDate((Date) map.get("plan_date")); //スケジュール日付
 			plan.setBillId((Integer) map.get("bill_id")); //ビルID
-			plan.setStaffId((Integer) map.get("staff_id"));//スタッフID
-			plan.setRestCheck((Boolean) map.get("rest_check"));//休み希望(falseに書き換わったものが休み希望)
-			plan.setBillName((String) map.get("bill_name"));//ビル名
-			plan.setStaffName((String) map.get("staff_name"));//スタッフ名
+			plan.setStaffId((Integer)map.get("staff_id"));//スタッフID
+			plan.setRestCheck((Boolean)map.get("rest_check"));//休み希望(falseに書き換わったものが休み希望)
+			plan.setBillName((String)map.get("bill_name"));//ビル名
+			plan.setStaffName((String)map.get("staff_name"));//スタッフ名
 
 			//結果返却用のListに追加
 			planList.add(plan);
@@ -143,8 +147,11 @@ public class PlanRepository {
 				"UPDATE PLAN SET STAFF_ID=1"
 						+ " WHERE REST_CHECK=false");
 
-		return rowNumber; //check_restのfalseのひとを書き換えて書き換えたという結果を次の画面に渡すための判定を返す
-	}
+		public int deleatePlan(Plan plan)throws DataAccessException {
+	 		//
+	 		int rowNumber = jdbcTemplate.update(
+	 				"UPDATE PLAN SET STAFF_ID=NULL "
+	 				+ "WHERE REST_CHECK=false)",
 
 
 	//planテーブルの書き換え

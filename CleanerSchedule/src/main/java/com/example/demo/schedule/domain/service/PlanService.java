@@ -27,20 +27,20 @@ public class PlanService {
 		return planRepository.findOne(planId);
 	}
 
-	//1件更新
-	//	public boolean updateFalse(Plan plan) {
-	//
-	//		// 判定用変数
-	//		boolean result = false;
-	//
-	//		// １件更新
-	//		int rowNumber = planRepository.updateOne(plan);
-	//		if (rowNumber > 0) {
-	//			// update成功
-	//			result = true;
-	//		}
-	//		return result;
-	//	}
+	//rest_checkの値をfalseに変換
+		public boolean updateFalse(int planId) {
+
+			// 判定用変数
+			boolean result = false;
+
+			// １件更新
+			int rowNumber = planRepository.updateFalse(planId);
+			if (rowNumber > 0) {
+				// update成功
+				result = true;
+			}
+			return result;
+		}
 
 	//休み申請者取得
 
