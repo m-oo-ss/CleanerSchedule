@@ -66,13 +66,13 @@ public class PlanService {
 		return result;
 	}
 
-	//nullのひとを書き換えている。
+	//スタッフIDをnullに書き換えている。
 
-	public boolean deleatePlan(Plan plan) {
+	public boolean deleatePlan() {
 		// 判定用変数
 		boolean result = false;
 		// １件更新
-		int rowNumber = planRepository.deleatePlan(plan);
+		int rowNumber = planRepository.deleatePlan();
 		if (rowNumber > 0) {
 			// update成功
 			result = true;
