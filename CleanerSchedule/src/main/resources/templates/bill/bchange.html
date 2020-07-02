@@ -1,4 +1,4 @@
-x<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
@@ -24,12 +24,12 @@ x<!DOCTYPE html>
 					<tr>
 					<th>ビル名</th>
 						<td th:text="${name}"></td>
-						<td><input type="text" th:field="*{billName}"></td>
+						<td><input type="text" th:field="*{billName}" required></td>
 					</tr>
 					<tr>
                     <th>ビル住所</th>
 						<td th:text="${address}"></td>
-						<td><input type="text" th:field="*{billAddress}"></td>
+						<td><input type="text" th:field="*{billAddress}" required></td>
 					</tr>
 				</table>
 				<button type="submit" name="update">変更</button>
@@ -39,5 +39,4 @@ x<!DOCTYPE html>
 </body>
 
 </html>
-
 

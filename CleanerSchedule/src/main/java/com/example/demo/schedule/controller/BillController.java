@@ -31,14 +31,14 @@ public class BillController {
 	private PlanService planService;
 
 
-	//サンプルページの表示
-	@GetMapping("/sample")
-	public String getSample(Model model) {
-		model.addAttribute("contents", "sample :: sample_contents");
-
-		// sample.htmlに画面遷移
-		return "homelayout";
-	}
+//	//サンプルページの表示
+//	@GetMapping("/sample")
+//	public String getSample(Model model) {
+//		model.addAttribute("contents", "sample :: sample_contents");
+//
+//		// sample.htmlに画面遷移
+//		return "homelayout";
+//	}
 
 	//ビル一覧の表示
 	@GetMapping("/bill/blist")

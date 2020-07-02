@@ -285,24 +285,46 @@ public class StaffController {
   //      PlanService planService = new PlanService();
         Plan plan = planService.findOne(planId);
 
+
         // 検索結果をModelに登録
         model.addAttribute("pid", plan.getPlanId());
-        model.addAttribute("date", plan.getPlanDate());
-        model.addAttribute("bid", plan.getBillId());
+//        model.addAttribute("date", plan.getPlanDate());
+//        model.addAttribute("bid", plan.getBillId());
         model.addAttribute("sid", plan.getStaffId());
         model.addAttribute("sname", plan.getStaffName());
         model.addAttribute("bname", plan.getBillName());
         model.addAttribute("starttime", plan.getBillStartTime());
         model.addAttribute("stoptime", plan.getBillStopTime());
-        //model.addAttribute("bid", plan.getRestCheck());
+  //      model.addAttribute("check", plan.isRestCheck());
+
 
 
 
         // sdetail.htmlに画面遷移
         return "homelayout";
+
     }
 
+    //Planテーブルのrest_checkをfalseに変換する
+    @PostMapping(value = "/staff/sdetail/{sid}/{pid}")
 
+    public String postUpdateFalse(Model model,Plan plan,@PathVariable("sid") int staffId,@PathVariable("pid")int planId) {
+
+    	System.out.println(planId);
+
+    	//変換の実行・変換結果の判定
+		boolean result = planService.updateFalse(planId);
+
+		if (result == true) {
+			model.addAttribute("result", "登録成功");
+		} else {
+			model.addAttribute("result", "登録失敗");
+
+		}
+			//従業員トップに移動
+			return getDetail(model,staffId);
+
+    }
 
 }
 

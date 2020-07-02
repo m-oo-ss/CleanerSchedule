@@ -10,6 +10,7 @@
 
 
   <div id="calendar" class="table-responsive"></div>
+   <td><a th:href="@{'/staff/schange/'+ ${id}}">情報変更する </a></td>
 		<button id="prev" type="button">前の月</button>
 		<button id="next" type="button">次の月</button>
 
@@ -125,7 +126,14 @@
 					        		count++
 				            	if(selectDateStr == plan.planDate && staffId == plan.staffId){
 				            		 //予定がある場合背景色変更
-				                     html += '<td style ="background-color:red;">' + dayCount + '<br>'+plan.billName+'</td>'
+				                     if(plan.rest_check = 0){html += '"<td style ="background-color:red;">'
+				                     }else if (plan.rest_check = 3){html += '"<td style ="background-color:yellow;">'
+				                     }
+
+				                     html+= '<a href="/user/udetail/'
+				                     + plan.planId + '">'
+				                     + dayCount + '<br>'
+				                     +plan.billName+'</a></td>'
 					               //日付カウント
 					                dayCount++
 					                //ループカウンタを初期化

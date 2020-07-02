@@ -25,22 +25,22 @@
         <tr>
         <th>名前</th>
         <td th:text="${name}"></td> ​
-        <td><input type="text" th:field="*{staffName}" ></td>
+        <td><input type="text" th:field="*{staffName}" required></td>
         </tr>
 		<tr>
 		<th>住所</th>
         <td th:text="${address}"></td> ​
-        <td><input type="text" th:field="*{staffAddress}" ></td>
+        <td><input type="text" th:field="*{staffAddress}" required></td>
         </tr>
         <tr>
         <th>メールアドレス</th>
         <td th:text="${mail}"></td> ​
-        <td><input type="text" th:field="*{staffMail}" ></td>
+        <td><input type="email" th:field="*{staffMail}"></td>
         </tr>
         <tr>
         ​<th>電話番号</th>
         <td th:text="${tel}"></td> <br>​
-        <td><input type="text" th:field="*{staffTel}" ></td>
+        <td><input type="text" th:field="*{staffTel} " minlength="9" maxlength="11"></td>
         </tr>
 
         <!--  現出勤日数：<td th:text="${days}"></td> <br>​
