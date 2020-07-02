@@ -140,25 +140,18 @@ public class PlanRepository {
 
  //休み希望のスタッフIDをnullに書き換える
 
-		public int deleatePlan(Plan plan)throws DataAccessException {
+		public int deleatePlan()throws DataAccessException {
 	 		//
 	 		int rowNumber = jdbcTemplate.update(
-	 				"UPDATE PLAN SET STAFF_ID=NULL "
-	 				+ "WHERE REST_CHECK=false)",
+	 				"UPDATE PLAN SET STAFF_ID=null"
+	 				+ " WHERE REST_CHECK=false");
 
-	 			plan.getPlanId(),//プランID
-				plan.getPlanDate(), //スケジュール日付
-				plan.getBillId(), //ビルID
-				plan.getStaffId(),//スタッフID
-//				plan.getRestCheck(),//休み希望(falseに書き換わったものが休み希望)
-				plan.getBillName(),
-				plan.getStaffName()
-        );
 	 		return rowNumber; //check_restのfalseのひとを書き換えて書き換えたという結果を次の画面に渡すための判定を返す
 
 }
 
-	//ビル情報更新を行う（bchange.html）
+
+	//
 
 			public int updateOne(Plan plan) throws DataAccessException {
 				//１件更新
@@ -175,7 +168,9 @@ public class PlanRepository {
 						plan.getStaffNumber()
 
 				);
-
+				if(rowNumber==0) {
+System.out.println("何も入っていない");
+				}
 				return rowNumber;
 			}
 

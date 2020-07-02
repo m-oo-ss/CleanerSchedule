@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -5,10 +8,14 @@
 
  <div th:fragment="restlist_contents">
  <table class="table table-bordered table-hover table-striped">
+
+
 <th>名前</th>
 <th>休み申請をしたい日</th>
 <th>ビルの名前</th>
-    <tr th:each="plan : ${planList}">
+
+
+     <tr th:each="plan : ${planList}">
 
             <td th:text="${plan.staffName}">
                 </td>
@@ -19,9 +26,8 @@
             </tr>
         </table>
 
-<p th:unless="${planList} != null">新着申請はありません</p>
-<form method="post" th:action="@{/plan/restlist}">
- <button type="submit" > スケジュール編集</button>
+ <form method="post" th:action="@{/plan/edit}">
+ <button type="submit"  name="restcheck" > スケジュール編集</button>
 </form>
 
 	​​ <a th:href="@{'/plan/mtop'}">戻る</a>
