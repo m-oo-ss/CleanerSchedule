@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.schedule.domain.model.Plan;
+import com.example.demo.schedule.domain.model.SelectForm;
 
 @Repository
 public class PlanRepository {
@@ -52,14 +53,14 @@ public class PlanRepository {
 
 		return planList;
 
-
 	}
+
 	//idをもとに1件検索
 	public Plan findOne(int planId) {
 
 		// Staffテーブルのデータを全件取得
 		Map<String, Object> map = jdbcTemplate.queryForMap("select "
-                + "p.PLAN_ID ,p.PLAN_DATE , b.BILL_NAME , s.STAFF_NAME , p.staff_id, p.bill_id , b.bill_starttime , b.bill_stoptime "
+                + "p.PLAN_ID , p.PLAN_DATE , b.BILL_NAME , s.STAFF_NAME , p.staff_id , p.bill_id , b.bill_starttime , b.bill_stoptime , p.rest_check "
                 + "from plan p "
                 + "inner join staff s on p.staff_id = s. staff_id "
                 + "inner join bill b on b.bill_id = p.bill_id"
@@ -76,7 +77,9 @@ public class PlanRepository {
 		plan.setBillName((String) map.get("bill_name"));//ビル名
 		plan.setBillStartTime((java.sql.Time) map.get("bill_starttime"));//勤務開始時間
 		plan.setBillStopTime((java.sql.Time) map.get("bill_stoptime"));//勤務終了時間
-		//plan.setRestCheck((boolean) map.get("rest_check"));//休暇申請判定
+		plan.setRestCheck((int) map.get("rest_check"));//休暇申請判定
+
+
 
 		return plan;
 	}
@@ -99,10 +102,9 @@ public class PlanRepository {
 
 
 	//休み希望のひとを検索
-    public List<Plan> getRestList() {
+	public List<Plan> getRestList() {
 		//
-		List<Map<String, Object>> getList =
-				jdbcTemplate.queryForList(
+		List<Map<String, Object>> getList = jdbcTemplate.queryForList(
 				"SELECT p.PLAN_ID, p.PLAN_DATE, p.STAFF_ID,p.BILL_ID,p.REST_CHECK,"
 				+ " b.BILL_NAME,"
 				+ " s.STAFF_NAME"
@@ -122,7 +124,7 @@ public class PlanRepository {
 
 			// Planインスタンスに取得したデータをセットする
 			plan.setPlanId((Integer) map.get("plan_id"));//プランID
-			plan.setPlanDate((Date)map.get("plan_date")); //スケジュール日付
+			plan.setPlanDate((Date) map.get("plan_date")); //スケジュール日付
 			plan.setBillId((Integer) map.get("bill_id")); //ビルID
 			plan.setStaffId((Integer)map.get("staff_id"));//スタッフID
 			plan.setRestCheck((Boolean)map.get("rest_check"));//休み希望(falseに書き換わったものが休み希望)
@@ -135,43 +137,46 @@ public class PlanRepository {
 		}
 
 		return planList;
-    }
+	}
 
+	//休み希望のスタッフIDをnullに書き換える
 
- //休み希望のスタッフIDをnullに書き換える
+	public int deleatePlan() throws DataAccessException {
+		//
+		int rowNumber = jdbcTemplate.update(
+				"UPDATE PLAN SET STAFF_ID=1"
+						+ " WHERE REST_CHECK=false");
 
-		public int deleatePlan()throws DataAccessException {
+		public int deleatePlan(Plan plan)throws DataAccessException {
 	 		//
 	 		int rowNumber = jdbcTemplate.update(
-	 				"UPDATE PLAN SET STAFF_ID=null"
-	 				+ " WHERE REST_CHECK=false");
-
-	 		return rowNumber; //check_restのfalseのひとを書き換えて書き換えたという結果を次の画面に渡すための判定を返す
-
-}
+	 				"UPDATE PLAN SET STAFF_ID=NULL "
+	 				+ "WHERE REST_CHECK=false)",
 
 
-	//
+	//planテーブルの書き換え
+	public int updateOne(SelectForm selectform) throws DataAccessException {
+		//１件更新
+		int rowNumber = 0;
+		//selectformに入っている要素を取り出して変数selectに格納：なくなるまで繰り返し
+		for (String select : selectform.getSelectForm()) {
+			//String型配列contentsに"1,2020-01-01,2,3"をカンマ区切りで格納
+			String[] contents = select.split(",", 0);
 
-			public int updateOne(Plan plan) throws DataAccessException {
-				//１件更新
-				int rowNumber = jdbcTemplate.update(
-						"UPDATE plan"
-								+ " SET"
-								+ " staff_id = ?"
-								+ " WHERE bill_id = ?"
-								+ " and plan_date = ?"
-								+ " and staff_number = ?",
-						plan.getStaffId(),
-						plan.getBillId(),
-						plan.getPlanDate(),
-						plan.getStaffNumber()
-
-				);
-				if(rowNumber==0) {
-System.out.println("何も入っていない");
-				}
-				return rowNumber;
-			}
+			rowNumber = jdbcTemplate.update(
+					"UPDATE plan"
+							+ " SET"
+							+ " staff_id = ?,"
+							+ " rest_check = 3"
+							+ " WHERE bill_id = ?"
+							+ " and plan_date = ?"
+							+ " and staff_number = ?",
+					contents[3],//セレクトボックスで選んだ人
+					contents[0],//ビルid
+					contents[1],//日付
+					contents[2]);//何人目のスタッフか:j
+		}
+			return rowNumber;
+		}
 
 }

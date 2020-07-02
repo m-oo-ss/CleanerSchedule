@@ -18,26 +18,26 @@
 				<!-- 追加ビルID(6以降)： <input type="text" th:field="*{billId}">  -->
 				<tr>
 					<th class="active col-sm-2">追加ビル名</th>
-					<td><input type="text" th:field="*{billName}"></td>
+					<td><input type="text" th:field="*{billName}" required></td>
 
 				</tr>
 				<tr>
 					<th class="active col-sm-2">住所</th>
-					<td><input type="text" th:field="*{billAddress}"></td>
+					<td><input type="text" th:field="*{billAddress}" required></td>
 				</tr>
 				<tr>
 
 					<th class="active col-sm-2">電話番号</th>
-					<td><input type="text" th:field="*{billTel}"></td>
+					<td><input type="text" th:field="*{billTel}" minlength="9" maxlength="11"></td>
 				</tr>
 				<tr>
 
 					<th class="active col-sm-2">オーナー氏名</th>
-					<td><input type="text" th:field="*{ownerName}"></td>
+					<td><input type="text" th:field="*{ownerName}" required></td>
 				</tr>
 				<tr>
 					<th class="active col-sm-2">オーナー電話番号</th>
-					<td><input type="text" th:field="*{ownerTel}"></td>
+					<td><input type="text" th:field="*{ownerTel}" minlength="9" maxlength="11"></td>
 				</tr>
 				<tr>
 				<th class="active co-sm-2">派遣人数</th>
