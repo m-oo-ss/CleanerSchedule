@@ -31,11 +31,16 @@ public class BillRepository {
 			//Billインスタンスの生成
 			Bill bill = new Bill();
 
+//			Time startTime = bill.getBillStartTime();
+
 			// Billインスタンスに取得したデータをセットする
 			bill.setBillId((Integer) map.get("bill_id")); //ビルID
 			bill.setBillName((String) map.get("bill_name")); //ビル名
 			bill.setBillPeople((Integer) map.get("bill_people")); //ビルID
-			bill.setBillStartTime((java.sql.Time) map.get("bill_starttime")); //ビルID
+//			SimpleDateFormat sdf1 = new SimpleDateFormat("h'時'mm'分'");
+//			String time = sdf1.format(startTime);
+			bill.setBillStartTime((java.sql.Time) map.get("bill_starttime"));//ビルID
+			bill.setBillStopTime((java.sql.Time) map.get("bill_stoptime"));
 			bill.setBillSun((Integer) map.get("bill_sunday")); //ビルID
 			bill.setBillMon((Integer) map.get("bill_monday")); //ビルID
 			bill.setBillTue((Integer) map.get("bill_tuesday")); //ビルID
@@ -43,6 +48,7 @@ public class BillRepository {
 			bill.setBillThu((Integer) map.get("bill_thursday")); //ビルID
 			bill.setBillFri((Integer) map.get("bill_friday")); //ビルID
 			bill.setBillSat((Integer) map.get("bill_saturday")); //ビルID
+
 
 			//結果返却用のListに追加
 			billList.add(bill);
@@ -72,6 +78,7 @@ public class BillRepository {
 		bill.setBillAddress((String) map.get("bill_address")); //住所
 		bill.setBillPeople((Integer) map.get("bill_people")); //ビルID
 		bill.setBillStartTime((java.sql.Time) map.get("bill_starttime")); //ビルID
+		bill.setBillStopTime((java.sql.Time) map.get("bill_stoptime"));
 		bill.setBillSun((Integer) map.get("bill_sunday")); //ビルID
 		bill.setBillMon((Integer) map.get("bill_monday")); //ビルID
 		bill.setBillTue((Integer) map.get("bill_tuesday")); //ビルID
