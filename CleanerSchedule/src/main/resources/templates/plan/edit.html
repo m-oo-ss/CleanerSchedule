@@ -11,7 +11,7 @@
 
 <button id="prev" type="button">前の月</button>
 <button id="next" type="button">次の月</button>
-<form method="post" th:action="@{/plan/mtop}" th:object="${selectForm}" name ="plan">
+<form method="post" th:action="@{/plan/mtop}" th:object="${selectForm}" >
 <div id="calendar"></div>
 
 
@@ -219,6 +219,7 @@ function createCalendar(year, month) {
                 				+ ','
                 				+ staff.staffId
                 				+ '>'
+
                      			+  staff.staffName
                     			+ '</option>'
                 		}//スタッフ全員選択肢に格納終わり
