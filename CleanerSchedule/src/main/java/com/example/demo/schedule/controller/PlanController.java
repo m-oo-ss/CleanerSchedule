@@ -121,9 +121,6 @@ public class PlanController {
 		model.addAttribute("staffList", staffList);
 		model.addAttribute("planList", planList);
 
-
-
-
 		// helloResponseDB.htmlに画面遷移
 		return "homelayout";
 	}

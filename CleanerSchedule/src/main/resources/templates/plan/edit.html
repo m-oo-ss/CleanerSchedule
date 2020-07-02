@@ -180,17 +180,29 @@ function createCalendar(year, month) {
                 					if(selectDateStr == plan.planDate
         								&& j == plan.staffNumber
         								&& bill.billId == plan.billId){
+                						if(plan.staffId == 1){
+                         					console.log("nullです");
+                        	 				Html += '<option selected >----'
+                             					+ '</option>'
+                             					count++
 
 
-                	 				Html += '<option selected >〇'
-                 					+  plan.staffName
-                 					+ '</option>'
-                 					count++
+                						}else{
+                							Html += '<option selected >〇'
+                             					+  plan.staffName
+                             					+ '</option>'
+                             					count++
+
+
+                						}
+
+
 
 
                  				//	var plan2 = plan.planId
 
                 					}//if文
+
 
                 				}//プランリスト
 							}

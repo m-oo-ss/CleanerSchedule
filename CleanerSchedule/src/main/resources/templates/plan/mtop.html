@@ -113,9 +113,18 @@
 					if(selectDateStr == plan.planDate
 							&& j == plan.staffNumber
 							&& bill.billId == plan.billId){
+						if(plan.staffId == 1){
+         					console.log("nullです");
+        	 				html +=  '<td style="background-color:red;">勤務者が居ません</td>'
+
+						}else{
+
 					html += '<td ><a href="/staff/sdetail/'+ plan.staffId + ' ">'
 							+ plan.staffName +'</a></td>'
-					}
+						}
+
+
+					}//日付、人数、ビルIDのif文終わり
 				}
 			}	html += '</tr><tr>'
 		}
