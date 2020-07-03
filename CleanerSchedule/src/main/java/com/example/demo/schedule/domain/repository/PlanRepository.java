@@ -145,7 +145,7 @@ public class PlanRepository {
 		//
 		int rowNumber = jdbcTemplate.update(
 				"UPDATE PLAN REST_CHECK = 2"
-						+ "WHERE REST_CHECK=1");
+						+ " WHERE REST_CHECK=1");
 		return rowNumber;
 	}
 

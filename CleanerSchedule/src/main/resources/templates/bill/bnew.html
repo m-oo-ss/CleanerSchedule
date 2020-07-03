@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 
-
 <title>ビル新規登録</title>
 </head>
 <body>
@@ -41,12 +40,51 @@
 				</tr>
 				<tr>
 				<th class="active co-sm-2">派遣人数</th>
-				<td><input type="text"th:field="*{billPeople}"></td>
+				<td><input type="number" th:field="*{billPeople}"  min="1" max="3" value="1"></td>
+				</tr>
+				<tr>
+				<th class="active co-sm-2">掃除日</th>
+			   <td>
+          <input type="checkbox" id="sample2" class="my_check_box" />
+<label for="sample2">日</label>
+<input type="checkbox" id="sample2" class="my_check_box"  />
+<label for="sample2">月</label>
+<input type="checkbox" id="sample2" class="my_check_box" />
+<label for="sample2">火</label>
+<input type="checkbox" id="sample2" class="my_check_box" />
+<label for="sample2">水</label>
+<input type="checkbox" id="sample2" class="my_check_box"  />
+<label for="sample2">木</label>
+<input type="checkbox" id="sample2" class="my_check_box" />
+<label for="sample2">金</label>
+<input type="checkbox" id="sample2" class="my_check_box" />
+<label for="sample2">土</label>
 
 
+		       </tr>
+              	<tr>
+		       <th class="active co-sm-2">掃除時間始まり</th>
+         <td><input type="text"th:field="*{billStartTime}"></td>
+
+               </tr>
+               <tr>
+               <th class="active co-sm-2">掃除時間終わり</th>
+           <td><input type="text"th:field="*{billStopTime}"></td>
+
+               </tr>
 			</table>
 			<button type="submit" name="new">登録する</button>
 
+<script>
+$(function(){
+    $("#sample2").on("click", function (evt) {
+        //クリックされたチェックボックスのステータスを取得
+        //3 項演算子で true なら 1 に、false なら 0 に変換
+        chk_status = $(this).prop('checked') ? 1 : 0;
+
+    });
+});
+</script>
 
 		</form>
 

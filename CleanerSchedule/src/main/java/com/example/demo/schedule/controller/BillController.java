@@ -185,6 +185,16 @@ public class BillController {
 		form.setOwnerName(owner.getOwnerName()); //オーナー名
 		form.setOwnerTel(owner.getOwnerTel()); //オーナー電話番号
 		form.setBillPeople(bill.getBillPeople());//派遣人数
+		form.setBillSun(bill.getBillSun());//日
+		form.setBillMon(bill.getBillMon());//月
+		form.setBillTue(bill.getBillTue());//火
+		form.setBillWed(bill.getBillWed());//水
+		form.setBillWed(bill.getBillWed());//水
+		form.setBillThu(bill.getBillThu());//
+		form.setBillFri(bill.getBillFri());//
+		form.setBillSat(bill.getBillSat());//
+		form.setBillStartTime(bill.getBillStartTime());
+		form.setBillStopTime(bill.getBillStopTime());
 
 	model.addAttribute("signupForm", form);
 
@@ -220,6 +230,18 @@ public class BillController {
 		owner.setOwnerName(form.getOwnerName()); //オーナー名
 		owner.setOwnerTel(form.getOwnerTel()); //オーナー電話番号
 		bill.setBillPeople(form.getBillPeople());//派遣人数
+		bill.setBillPeople(bill.getBillPeople());//派遣人数
+		bill.setBillSun(form.getBillSun());//日
+		bill.setBillMon(form.getBillMon());//月
+		bill.setBillTue(form.getBillTue());//火
+		bill.setBillWed(form.getBillWed());//水
+		bill.setBillWed(form.getBillWed());//水
+		bill.setBillThu(form.getBillThu());//
+		bill.setBillFri(form.getBillFri());//
+		bill.setBillSat(form.getBillSat());//
+		bill.setBillStartTime(form.getBillStartTime());
+		bill.setBillStopTime(form.getBillStopTime());
+
 
 		//登録実行
 		boolean result = billService.insert(bill);
