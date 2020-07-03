@@ -128,14 +128,24 @@ function createCalendar(year, month) {
 
 		console.log(billweek);
 
-//		SimpleDateFormat sdf = new SimpleDateFormat("h時mm分")
+
+	//	var start = bill.billStartTime;
+
+	//	var h = start.getHours();
+	//	var m = start.getMinutes();
+
+	//	var select = h + "時" + m + "分;
+
+	//  console.log(select);
+
 
     	Html += '<tr>'
 
 
+
     	Html += '<th rowspan ='+ bill.billPeople +'>'+ bill.billName +'</th>'
 		Html += '<th rowspan ='+ bill.billPeople +'>'+ bill.billPeople +'</th>'
-		Html += '<th rowspan ='+ bill.billPeople +'>' + bill.billStartTime + '～' + bill.billStopTime + '</th>'
+		Html += '<th rowspan ='+ bill.billPeople +'>' + bill.billStartTime.slice(0,5) + '～' + bill.billStopTime.slice(0,5) + '</th>'
 
 
 			for(var j = 1; j <= bill.billPeople; j++){
@@ -186,8 +196,17 @@ function createCalendar(year, month) {
                              					count = 0;
                              					flag = 1;
                 						}else{
-                		                	Html += '<select >'
-                							Html += '<option selected >〇'
+                		                	Html += '<select name ="selectForm">'
+                							Html += '<option selected'
+                								+ ' value= '
+                                				+ bill.billId//
+                                				+ ','
+                                				+ selectDateStr
+                                				+ ','
+                                				+ j
+                                				+ ','
+                                				+ plan.staffId
+                                				+ '>〇'
                              					+  plan.staffName
                              					+ '</option>'
                              					count = 0;

@@ -15,16 +15,15 @@
 		<a class="btn btn-primary" th:href="@{'/bill/bnew'}">新規ビル登録</a>
 
 		<table class="table table-bordered table-hover table-striped">
-			<!--  each：繰り返し-->
+		<tr><th>ビル名</th><th>派遣人数</th><th>所在地</th></tr>
 			<tr th:each="bill : ${billList}">
-			<!-- <td th:text="${bill.billId}"></td>-->
-				<td><a th:href="@{'/bill/bdetail/'+${bill.billId}}">
-				<p	th:text="${bill.billName}"></p></a></td>
+			<td><a th:href="@{'/bill/bdetail/'+${bill.billId}}">
+			<p	th:text="${bill.billName}"></p></a></td>
+			<td th:text="${bill.billPeople}"></td>
+			<td th:text="${bill.billAddress}"></td>
 
-<td th:text=${result}></td>
 			</tr>
 		</table>
 	</div>
 </body>
 </html>
-

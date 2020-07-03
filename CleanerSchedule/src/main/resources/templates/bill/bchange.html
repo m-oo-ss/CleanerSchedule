@@ -9,7 +9,7 @@
 
 <body>
 	<div th:fragment="bchange_contents">
-		<form method="post" th:action="@{/bill/bcomp}" th:object="${bill}">
+		<form method="post" th:action="@{/bill/bcomp}" th:object="${signupForm}">
 			<table>
 				<table class="table table-bordered table-hover table-striped">
 
@@ -24,14 +24,15 @@
 					<tr>
 					<th>ビル名</th>
 						<td th:text="${name}"></td>
-						<td><input type="text" th:field="*{billName}" required></td>
+						<td><input type="text" th:field="*{billName}"></td>
 					</tr>
 					<tr>
                     <th>ビル住所</th>
 						<td th:text="${address}"></td>
-						<td><input type="text" th:field="*{billAddress}" required></td>
+						<td><input type="text" th:field="*{billAddress}"></td>
 					</tr>
 				</table>
+
 				<button type="submit" name="update">変更</button>
 				</form>
 
@@ -39,4 +40,3 @@
 </body>
 
 </html>
-

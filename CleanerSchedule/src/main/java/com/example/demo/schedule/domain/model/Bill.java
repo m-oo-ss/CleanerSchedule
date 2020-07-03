@@ -11,7 +11,7 @@ public class Bill {
 	private String billName; //ビル名
 	private String billAddress; //住所
 	private String billTel; //住所
-	private int billPeople; //ビルID
+	private int billPeople; //派遣人数
 	private Time billStartTime; //ビルID
 	private Time billStopTime; //ビルID
 	private int billSun; //ビルID
