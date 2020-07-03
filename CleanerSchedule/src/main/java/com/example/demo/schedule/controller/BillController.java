@@ -109,20 +109,20 @@ public class BillController {
 		model.addAttribute("address", bill.getBillAddress());//ビル住所
 //		model.addAttribute("owner_name", owner.getOwnerName());//オーナー名
 //		model.addAttribute("owner_tel", owner.getOwnerTel());//オーナー電話番号
-		model.addAttribute("people", bill.getBillPeople());//ビルへの派遣人数
-		model.addAttribute("sun", bill.getBillSun());//
-		model.addAttribute("mon", bill.getBillMon());
-		model.addAttribute("tue", bill.getBillTue());
-		model.addAttribute("wed", bill.getBillWed());
-		model.addAttribute("thu", bill.getBillThu());
-		model.addAttribute("fri", bill.getBillFri());
-		model.addAttribute("sat", bill.getBillSat());
+//		model.addAttribute("people", bill.getBillPeople());//ビルへの派遣人数
+//		model.addAttribute("sun", bill.getBillSun());//
+//		model.addAttribute("mon", bill.getBillMon());
+//		model.addAttribute("tue", bill.getBillTue());
+//		model.addAttribute("wed", bill.getBillWed());
+//		model.addAttribute("thu", bill.getBillThu());
+//		model.addAttribute("fri", bill.getBillFri());
+//		model.addAttribute("sat", bill.getBillSat());
 
 		// Billクラスをフォームクラスに変換
 		form.setBillId(bill.getBillId()); //ユーザーID
 		form.setBillName(bill.getBillName()); //ビル名前
 		form.setBillAddress(bill.getBillAddress()); //ビル住所
-		form.setBillTel(bill.getBillTel()); //電話番号
+//		form.setBillTel(bill.getBillTel()); //電話番号
 //		form.setOwnerName(owner.getOwnerName()); //オーナー名
 //		form.setOwnerTel(owner.getOwnerTel()); //オーナー電話番号
 //		form.setBillPeople(bill.getBillPeople());//派遣人数
@@ -149,15 +149,15 @@ public class BillController {
 	@PostMapping(value = "/bill/bcomp", params = "update")
 
 	public String postBillChangeUpdate(@ModelAttribute Bill form, Model model) {
-
 		// コンテンツ部分にユーザー詳細を表示するための文字列を登録
 		model.addAttribute("contents", "bill/bcomp :: bcomp_contents");
 
 		Bill bill = new Bill();
 		// フォームクラスをbillクラスに変換 ↑の逆
+		bill.setBillId(form.getBillId());
 		bill.setBillName(form.getBillName()); //ビル名
 		bill.setBillAddress(form.getBillAddress()); //住所
-		bill.setBillTel(form.getBillTel()); //電話番号
+//		bill.setBillTel(form.getBillTel()); //電話番号
 //		owner.setOwnerName(form.getOwnerName()); //オーナー名
 //		owner.setOwnerTel(form.getOwnerTel()); //オーナー電話番号
 //		bill.setBillPeople(form.getBillPeople());//派遣人数
@@ -173,8 +173,7 @@ public class BillController {
 //		bill.setBillStartTime(form.getBillStartTime());
 //		bill.setBillStopTime(form.getBillStopTime());
 
-
-		try {
+	try {
 			//更新実行
 			boolean result = billService.updateOne(bill);
 			if (result == true) {
@@ -188,7 +187,7 @@ public class BillController {
 		}
 
 		//ビル一一覧画面を表示
-		//
+
 		return getBillList(model);
 	}
 

@@ -102,33 +102,36 @@ public class BillRepository {
 				"UPDATE bill"
 						+ " SET"
 						+ " bill_name = ?,"
-						+ " bill_address = ?,"
-						+" bill_tel=?,"
-						+" bill_starttime=?,"
-						+" bill_stoptime=?,"
-						+" bill_people=?,"
-						+" bill_sunday=?,"
-						+" bill_monday=?,"
-						+" bill_tuesday=?,"
-						+" bill_wednesday=?,"
-						+" bill_thursday=?,"
-						+" bill_friday=,?"
-						+" bill_saturday=?"
+						+ " bill_address = ?"
+//						+" bill_tel=?,"
+//						+" bill_starttime=?,"
+//						+" bill_stoptime=?,"
+//						+" bill_people=?,"
+//						+" bill_sunday=?,"
+//						+" bill_monday=?,"
+//						+" bill_tuesday=?,"
+//						+" bill_wednesday=?,"
+//						+" bill_thursday=?,"
+//						+" bill_friday=,?"
+//						+" bill_saturday=?"
 						+ " WHERE bill_id = ?",
 
 						bill.getBillName(),
 						bill.getBillAddress(),
-						bill.getBillTel(),
-						bill.getBillStartTime(),
-						bill.getBillStopTime(),
-				        bill.getBillPeople(),
-				        bill.getBillSun(),
-				        bill.getBillMon(),
-				        bill.getBillTue(),
-				        bill.getBillWed(),
-				        bill.getBillThu(),
-				        bill.getBillFri(),
-				        bill.getBillSat());
+						bill.getBillId()
+						);
+
+//						bill.getBillTel(),
+//						bill.getBillStartTime(),
+//						bill.getBillStopTime(),
+//				        bill.getBillPeople(),
+//				        bill.getBillSun(),
+//				        bill.getBillMon(),
+//				        bill.getBillTue(),
+//				        bill.getBillWed(),
+//				        bill.getBillThu(),
+//				        bill.getBillFri(),
+//				        bill.getBillSat());
 
 
 
