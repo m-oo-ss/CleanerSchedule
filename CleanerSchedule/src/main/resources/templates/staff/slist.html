@@ -15,12 +15,12 @@
         <h1>検索結果</h1>
 
         <table class="table table-bordered table-hover table-striped">
-            <!--  each：繰り返し-->
-            <tr th:each="staff : ${staffList}">
+			 <tr><th>従業員名</th><th>住所</th><th>電話番号</th></tr>
+            	<tr th:each="staff : ${staffList}">
                 <td><a th:href="@{'/staff/sdetail/'+${staff.staffId}}">
-                  <p th:text="${staff.staffName}"></p></a>
-                  <td><p th:text="${staff.staffAddress}"></p></td>
-                  <td><p th:text="${staff.staffTel}"></p></td>
+                  <p th:text="${staff.staffName}"></p></a></td>
+                  <td th:text="${staff.staffAddress}"></td>
+                  <td th:text="${staff.staffTel}"></td>
 
 
             </tr>
