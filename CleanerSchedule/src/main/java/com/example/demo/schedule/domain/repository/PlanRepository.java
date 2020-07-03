@@ -44,7 +44,6 @@ public class PlanRepository {
 			plan.setDateId((Integer) map.get("date_id")); //ビル名
 			plan.setStaffId((Integer) map.get("staff_id")); //ビル名
 			plan.setBillId((Integer) map.get("bill_id")); //ビル名
-
 			plan.setStaffNumber((Integer) map.get("staff_number")); //ビル名
 			plan.setRestCheck((Integer) map.get("rest_check")); //ビル名
 
@@ -153,7 +152,7 @@ public class PlanRepository {
 			System.out.println(selected);
 			//String型配列contentsに"1,2020-01-01,2,3"をカンマ区切りで格納
 			String[] contents = selected.split(",", 0);
-
+			System.out.println(contents);
 
 
 			rowNumber = jdbcTemplate.update(
