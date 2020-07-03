@@ -31,18 +31,23 @@ public class BillRepository {
 			//Billインスタンスの生成
 			Bill bill = new Bill();
 
+//			Time startTime = bill.getBillStartTime();
+
 			// Billインスタンスに取得したデータをセットする
 			bill.setBillId((Integer) map.get("bill_id")); //ビルID
 			bill.setBillName((String) map.get("bill_name")); //ビル名
-			bill.setBillPeople((Integer) map.get("bill_people")); //ビルID
+			bill.setBillPeople((Integer) map.get("bill_people")); //派遣人数
 			bill.setBillStartTime((java.sql.Time) map.get("bill_starttime")); //ビルID
-			bill.setBillSun((Integer) map.get("bill_sunday")); //ビルID
-			bill.setBillMon((Integer) map.get("bill_monday")); //ビルID
-			bill.setBillTue((Integer) map.get("bill_tuesday")); //ビルID
-			bill.setBillWed((Integer) map.get("bill_wednesday")); //ビルID
-			bill.setBillThu((Integer) map.get("bill_thursday")); //ビルID
-			bill.setBillFri((Integer) map.get("bill_friday")); //ビルID
-			bill.setBillSat((Integer) map.get("bill_saturday")); //ビルID
+			bill.setBillSun((Integer) map.get("bill_sunday")); //日曜仕事
+			bill.setBillMon((Integer) map.get("bill_monday")); //月曜仕事
+			bill.setBillTue((Integer) map.get("bill_tuesday")); //火曜仕事
+			bill.setBillWed((Integer) map.get("bill_wednesday")); //水曜仕事
+			bill.setBillThu((Integer) map.get("bill_thursday")); //木曜仕事
+			bill.setBillFri((Integer) map.get("bill_friday")); //金曜仕事
+			bill.setBillSat((Integer) map.get("bill_saturday")); //土曜仕事
+//			SimpleDateFormat sdf1 = new SimpleDateFormat("h'時'mm'分'");
+//			String time = sdf1.format(startTime);
+
 
 			//結果返却用のListに追加
 			billList.add(bill);
@@ -72,6 +77,7 @@ public class BillRepository {
 		bill.setBillAddress((String) map.get("bill_address")); //住所
 		bill.setBillPeople((Integer) map.get("bill_people")); //ビルID
 		bill.setBillStartTime((java.sql.Time) map.get("bill_starttime")); //ビルID
+		bill.setBillStopTime((java.sql.Time) map.get("bill_stoptime"));
 		bill.setBillSun((Integer) map.get("bill_sunday")); //ビルID
 		bill.setBillMon((Integer) map.get("bill_monday")); //ビルID
 		bill.setBillTue((Integer) map.get("bill_tuesday")); //ビルID
@@ -114,18 +120,40 @@ public class BillRepository {
 		return rowNumber;
 	}
 
+
 	//ビル新規登録
 	public int insertOne(Bill bill) {
 
 		//１件登録
-		int rowNumber = jdbcTemplate.update("INSERT INTO bill("
-				+ " bill_name,"
-				+ " bill_address,"
-				+ " bill_tel)"
-				+ " VALUES(?, ?, ?)",
+		int rowNumber = jdbcTemplate.update(
+				"INSERT INTO bill("
+				+" bill_name,"
+				+" bill_address,"
+				+" bill_tel,"
+				+" bill_starttime,"
+				+" bill_stoptime,"
+				+" bill_people,"
+				+" bill_sunday,"
+				+" bill_monday,"
+				+" bill_tuesday,"
+				+" bill_wednesday,"
+				+" bill_thursday,"
+				+" bill_friday,"
+				+" bill_saturday)"
+				+ " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)",
 				bill.getBillName(),
 				bill.getBillAddress(),
-				bill.getBillTel());
+				bill.getBillTel(),
+				bill.getBillStartTime(),
+				bill.getBillStopTime(),
+		        bill.getBillPeople(),
+		        bill.getBillSun(),
+		        bill.getBillMon(),
+		        bill.getBillTue(),
+		        bill.getBillWed(),
+		        bill.getBillThu(),
+		        bill.getBillFri(),
+		        bill.getBillSat());
 
 		return rowNumber;
 	}

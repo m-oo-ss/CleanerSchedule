@@ -131,8 +131,8 @@ public class BillController {
 		Bill bill = new Bill();
 		// フォームクラスをbillクラスに変換 ↑の逆
 		bill.setBillId(form.getBillId()); //ユーザーID
-		bill.setBillName(form.getBillName()); //ユーザー名
-		bill.setBillAddress(form.getBillAddress()); //年齢
+		bill.setBillName(form.getBillName()); //ビル名前
+		bill.setBillAddress(form.getBillAddress()); //ビル住所
 
 		try {
 			//更新実行
@@ -169,31 +169,6 @@ public class BillController {
 		return "bdelete";
 	}
 
-	//確認画面に移動
-	//    @GetMapping("/bcomp")
-	//    public String getComplete(Model model) {
-	//
-	//        return "bcomp";
-	//    }
-
-////最後の確認画面に移動
-//	@PostMapping("/bill/bcomp")
-//	public String postDelete(
-//			Model model, @RequestParam("id") int billId) {
-//
-//		//削除実行
-//		boolean result = billService.deleteOne(billId);
-//		if (result == true) {
-//			model.addAttribute("result", "削除成功");
-//		} else {
-//			model.addAttribute("result", "削除失敗");
-//		}
-//
-//		//画面遷移
-//		return "bcomp";
-//
-//	}
-
 	//新規登録画面に移動
 	@GetMapping("/bill/bnew")
 	public String getNew(@ModelAttribute SignupForm form, Model model) {
@@ -203,14 +178,25 @@ public class BillController {
 
 		Bill bill = new Bill();
 		Owner owner = new Owner();
-		// Userクラスをフォームクラスに変換
+		// Billクラスをフォームクラスに変換
 		form.setBillName(bill.getBillName()); //ビル名
 		form.setBillAddress(bill.getBillAddress()); //ビル住所
 		form.setBillTel(bill.getBillTel()); //電話番号
 		form.setOwnerName(owner.getOwnerName()); //オーナー名
 		form.setOwnerTel(owner.getOwnerTel()); //オーナー電話番号
+		form.setBillPeople(bill.getBillPeople());//派遣人数
+		form.setBillSun(bill.getBillSun());//日
+		form.setBillMon(bill.getBillMon());//月
+		form.setBillTue(bill.getBillTue());//火
+		form.setBillWed(bill.getBillWed());//水
+		form.setBillWed(bill.getBillWed());//水
+		form.setBillThu(bill.getBillThu());//
+		form.setBillFri(bill.getBillFri());//
+		form.setBillSat(bill.getBillSat());//
+		form.setBillStartTime(bill.getBillStartTime());
+		form.setBillStopTime(bill.getBillStopTime());
 
-	model.addAttribute("signupForm", form);
+		model.addAttribute("signupForm", form);
 
 		// homelayout.htmlに画面遷移
 		return "homelayout";
@@ -243,6 +229,19 @@ public class BillController {
 		bill.setBillTel(form.getBillTel()); //電話番号
 		owner.setOwnerName(form.getOwnerName()); //オーナー名
 		owner.setOwnerTel(form.getOwnerTel()); //オーナー電話番号
+		bill.setBillPeople(form.getBillPeople());//派遣人数
+		bill.setBillPeople(bill.getBillPeople());//派遣人数
+		bill.setBillSun(form.getBillSun());//日
+		bill.setBillMon(form.getBillMon());//月
+		bill.setBillTue(form.getBillTue());//火
+		bill.setBillWed(form.getBillWed());//水
+		bill.setBillWed(form.getBillWed());//水
+		bill.setBillThu(form.getBillThu());//
+		bill.setBillFri(form.getBillFri());//
+		bill.setBillSat(form.getBillSat());//
+		bill.setBillStartTime(form.getBillStartTime());
+		bill.setBillStopTime(form.getBillStopTime());
+
 
 		//登録実行
 		boolean result = billService.insert(bill);
