@@ -113,14 +113,15 @@
 					if(selectDateStr == plan.planDate
 							&& j == plan.staffNumber
 							&& bill.billId == plan.billId){
-						if(plan.rest_check = 2){
-
-        	 				html +=  '<td style="background-color:red;">勤務者が居ません</td>'
-
+					if(plan.restCheck == 2){
+        	 			html +=  '<td style="background-color:red;">勤務者が居ません</td>'
+						}else if(plan.restCheck == 3){
+					html += '<td style="background-color:yellow;"><a href="/staff/sdetail/'+ plan.staffId + ' ">'
+							+ plan.staffName +'</a></td>'
 						}else{
-
 					html += '<td ><a href="/staff/sdetail/'+ plan.staffId + ' ">'
 							+ plan.staffName +'</a></td>'
+
 						}
 
 

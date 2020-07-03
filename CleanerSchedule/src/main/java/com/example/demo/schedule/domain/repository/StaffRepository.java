@@ -146,7 +146,7 @@ public class StaffRepository {
 			staff.setStaffId((Integer) map.get("staff_id")); //ID
 			staff.setStaffName((String) map.get("staff_name")); //ビル名
 			staff.setStaffAddress((String) map.get("staff_address")); //住所
-			   staff.setStaffMail((String) map.get("staff_mail"));
+			staff.setStaffMail((String) map.get("staff_mail"));
 			staff.setStaffTel((String) map.get("staff_tel"));
 			//    staff.setStaffStart((Date) map.get("staff_start"));
 			//    staff.setStaffStop((Date) map.get("staff_stop"));

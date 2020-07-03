@@ -11,7 +11,7 @@
 
 <button id="prev" type="button">前の月</button>
 <button id="next" type="button">次の月</button>
-<form method="post" th:action="@{/plan/mtop}" th:object="${selectForm}" name ="plan">
+<form method="post" th:action="@{/plan/mtop}" th:object="${selectForm}" >
 <div id="calendar"></div>
 
 
@@ -177,7 +177,7 @@ function createCalendar(year, month) {
                 					if(selectDateStr == plan.planDate
         								&& j == plan.staffNumber
         								&& bill.billId == plan.billId){
-                						if(plan.rest_check == 2){
+                						if(plan.restCheck == 2){
 
                 		                	//-----表記の時だけnameに配列beanクラスのフィールド名を指定----
                 							Html += '<select name ="selectForm">'
@@ -209,9 +209,9 @@ function createCalendar(year, month) {
 
 							//登録しているスタッフの名前をすべて表示
 
-                			Html += '<option'
+	               			Html += '<option'
                 				+ ' value= '
-                				+ bill.billId
+                				+ bill.billId//
                 				+ ','
                 				+ selectDateStr
                 				+ ','

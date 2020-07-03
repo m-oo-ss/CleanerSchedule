@@ -148,7 +148,8 @@ FOREIGN KEY(workshift_id)REFERENCES workshift(workshift_id)
 
 
 
-/*スケジュールテーブル作成*/
+/*スケジュールテーブル作成
+ * rest_checkは0:デフォルト 1:休暇申請中 2:休みに変更 3:変更済*/
 
 CREATE TABLE IF NOT EXISTS plan(
 

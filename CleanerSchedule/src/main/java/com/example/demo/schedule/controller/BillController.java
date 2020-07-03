@@ -196,7 +196,7 @@ public class BillController {
 		form.setBillStartTime(bill.getBillStartTime());
 		form.setBillStopTime(bill.getBillStopTime());
 
-	model.addAttribute("signupForm", form);
+		model.addAttribute("signupForm", form);
 
 		// homelayout.htmlに画面遷移
 		return "homelayout";
