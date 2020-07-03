@@ -51,7 +51,19 @@
       <tr>
 ​      <th> 勤務終了日</th>
       <td th:text="${stop}"></td>
-      <td><input type="text" th:field="*{staffStop}" ></td>
+      <!--デートピッカー -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	 <script src="https://rawgit.com/jquery/jquery-ui/master/ui/i18n/datepicker-ja.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <td><input type="text" id="datepicker"  placeholder="日付を選択してください" th:field="*{staffStart}" pattern="^\d{4}-\d\d-\d\d$" title="○○〇〇-○○-○○の形式で入力してください。">​ </td>​
+     <script>
+        $("#datepicker").datepicker({
+
+            dateFormat: 'yy-mm-dd',
+        });
+    </script>
+     <!--   <td><input type="text" th:field="*{staffStop}" ></td> -->
       </tr>
 <!--          現シフトパターン：<td th:text="${shift}"></td> <br>​
 

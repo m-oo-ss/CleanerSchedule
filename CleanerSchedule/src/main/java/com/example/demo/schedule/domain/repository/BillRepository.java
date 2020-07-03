@@ -36,6 +36,7 @@ public class BillRepository {
 			// Billインスタンスに取得したデータをセットする
 			bill.setBillId((Integer) map.get("bill_id")); //ビルID
 			bill.setBillName((String) map.get("bill_name")); //ビル名
+			bill.setBillAddress((String) map.get("bill_address")); //ビルID
 			bill.setBillPeople((Integer) map.get("bill_people")); //派遣人数
 			bill.setBillStartTime((java.sql.Time) map.get("bill_starttime")); //ビルID
 			bill.setBillSun((Integer) map.get("bill_sunday")); //日曜仕事
@@ -101,16 +102,41 @@ public class BillRepository {
 				"UPDATE bill"
 						+ " SET"
 						+ " bill_name = ?,"
-						+ " bill_address = ?"
+						+ " bill_address = ?,"
+						+" bill_tel=?,"
+						+" bill_starttime=?,"
+						+" bill_stoptime=?,"
+						+" bill_people=?,"
+						+" bill_sunday=?,"
+						+" bill_monday=?,"
+						+" bill_tuesday=?,"
+						+" bill_wednesday=?,"
+						+" bill_thursday=?,"
+						+" bill_friday=,?"
+						+" bill_saturday=?"
 						+ " WHERE bill_id = ?",
-				bill.getBillName(),
-				bill.getBillAddress(),
-				bill.getBillId()
 
-		);
+						bill.getBillName(),
+						bill.getBillAddress(),
+						bill.getBillTel(),
+						bill.getBillStartTime(),
+						bill.getBillStopTime(),
+				        bill.getBillPeople(),
+				        bill.getBillSun(),
+				        bill.getBillMon(),
+				        bill.getBillTue(),
+				        bill.getBillWed(),
+				        bill.getBillThu(),
+				        bill.getBillFri(),
+				        bill.getBillSat());
+
+
 
 		return rowNumber;
 	}
+
+
+
 
 	//ビル削除
 	public int deleteOne(int billId) throws DataAccessException {
