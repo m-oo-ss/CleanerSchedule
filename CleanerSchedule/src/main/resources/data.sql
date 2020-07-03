@@ -317,4 +317,8 @@ VALUES('2020-06-07', 4 ,2,7,1);
 
 INSERT INTO plan (plan_date,bill_id ,staff_id , date_id, staff_number)
 VALUES('2020-06-07', 5 ,3,7,1);
-
+/*試し
+INSERT INTO plan (plan_date,bill_id ,staff_id , date_id, staff_number)
+VALUES('2020-07-01', 1 ,1,1,1);
+INSERT INTO plan (plan_date,bill_id ,staff_id , date_id, staff_number)
+VALUES('2020-07-01', 1 ,2,1,2);*/
