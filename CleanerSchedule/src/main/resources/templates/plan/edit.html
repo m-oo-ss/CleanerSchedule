@@ -14,10 +14,7 @@
 <form method="post" th:action="@{/plan/mtop}" th:object="${selectForm}" >
 <div id="calendar"></div>
 
-<input type hidden value="" name = "ID1"></input>
-<input type hidden value="" name = "ID2"></input>
-<input type hidden value="" name = "ID3"></input>
-<input type hidden value="" name = "ID4"></input>
+
 <button type="submit" name="update">編集確定</button>
 
 
@@ -58,7 +55,10 @@ function showCalendar(year, month) {
 function createCalendar(year, month) {
 
 	const date = new Date();//現在
-
+//	 var selectDate = new Date(Date.getHours(),Date.getMinutes());
+	var hh = date.getHours();
+	var mm = date.getMinutes();
+	var selectDateStr = hh+"時"+ mm +"分";
 
 
     const startDate = new Date(year, month - 1, 1) // 月の最初の日を取得
@@ -128,38 +128,19 @@ function createCalendar(year, month) {
 
 		console.log(billweek);
 
+//		SimpleDateFormat sdf = new SimpleDateFormat("h時mm分")
 
     	Html += '<tr>'
 
 
-
-
-//			var selectDate = new Date(start.getHours(),start.getMinutes());
-//			var h = selectDate.getHours();
-//			var m = selectDate.getMinutes();
-
-    		var start = bill.billStartTime;
-
-    		console.log(start)
-
-    		//「時」を取得する
-    		var h = start.getHours();
-    		//「分」を取得する
-    		var m = start.getMinutes();
-
-    		var dateStr = h+"時"+ m +"分";
-
-
     	Html += '<th rowspan ='+ bill.billPeople +'>'+ bill.billName +'</th>'
 		Html += '<th rowspan ='+ bill.billPeople +'>'+ bill.billPeople +'</th>'
-		Html += '<th rowspan ='+ bill.billPeople +'>' + dateStr + '～' + bill.billStopTime + '</th>'
+		Html += '<th rowspan ='+ bill.billPeople +'>' + bill.billStartTime + '～' + bill.billStopTime + '</th>'
 
 
 			for(var j = 1; j <= bill.billPeople; j++){
 
         		for (var d = 1; d <= DAY_OF_MONTH; d++) {
-
-
 
      			if(billweek[(d+DAY_OF_THE_WEEK-1)%7] ==0){
 						Html += '<td style="background-color:#7d7d7d;"></td>'
@@ -183,6 +164,14 @@ function createCalendar(year, month) {
 								//プランリストのデータ数の分だけ繰り返す
                 				for(var plan of planList) {
                 					count++
+
+                					//日付をString型にする
+                					var selectDate = new Date(startDate.getFullYear(),startDate.getMonth(),d);
+                                    var yy =selectDate.getFullYear();
+                                    var mm =("0"+(selectDate.getMonth()+1)).slice(-2);
+                                    var dd =("0"+selectDate.getDate()).slice(-2);
+
+                                    var selectDateStr = yy+"-"+ mm +"-"+ dd;
 
                 					//プランリストの中から（日付＝プランの日付Idかつビルの清掃人数＝プランの清掃人数かつビルのビルId＝プランのビルIdが一致するものを表示
                 					if(selectDateStr == plan.planDate
@@ -210,42 +199,29 @@ function createCalendar(year, month) {
     				            //リストを回し終わった(その日に合うプランがなかった)場合
     				            if (count >= planList.length){
 
-                 				//	var plan2 = plan.planId
+    				            	Html += '<select>'
+                    	 				Html += '<option selected >'
+                         					+ '</option>'
+                         					count = 0;
+                         					flag = 1;
+    			            	}
+							}//プランリスト内に条件に合ったものがあればcount=1になるのでプランリスト中断
 
 							//登録しているスタッフの名前をすべて表示
 
-					var selectDate = new Date(startDate.getFullYear(),startDate.getMonth(),d);
-                    var yy =selectDate.getFullYear();
-                    var mm =("0"+(selectDate.getMonth()+1)).slice(-2);
-                    var dd =("0"+selectDate.getDate()).slice(-2);
-
-                    var selectDateStr = yy+"-"+ mm +"-"+ dd;
-
-                			Html += '<option'
-                			//	+ 'id= a, b, c'
-                			//	+ 'value='
-                			//	+ '"'
-                			//	+ bill.billId
-                			//	+ '"'
-                			//	+ ','
-                			//	+ '"'
-                			//	+ selectDateStr
-                			//	+ '"'
-                			//	+ ','
-                			//	+ '"'
-                			//	+ bill.billPeople
-                			//	+ '"'
+	               			Html += '<option'
+                				+ ' value= '
+                				+ bill.billId//
+                				+ ','
+                				+ selectDateStr
+                				+ ','
+                				+ j
+                				+ ','
+                				+ staff.staffId
                 				+ '>'
                      			+  staff.staffName
-
                     			+ '</option>'
                 		}//スタッフ全員選択肢に格納終わり
-
-                    			console.log(bill.billPeople)
-
-                		}
-
-
 
                 	Html += '</select>'
                 	Html += '</td>'
