@@ -17,6 +17,7 @@ import com.example.demo.schedule.domain.model.Bill;
 import com.example.demo.schedule.domain.model.Owner;
 import com.example.demo.schedule.domain.model.Plan;
 import com.example.demo.schedule.domain.model.SignupForm;
+import com.example.demo.schedule.domain.service.AlertService;
 import com.example.demo.schedule.domain.service.BillService;
 import com.example.demo.schedule.domain.service.OwnerService;
 import com.example.demo.schedule.domain.service.PlanService;
@@ -29,7 +30,8 @@ public class BillController {
 	private OwnerService ownerService;
 	@Autowired
 	private PlanService planService;
-
+	@Autowired
+	private AlertService alertService;
 
 //	//サンプルページの表示
 //	@GetMapping("/sample")
@@ -51,6 +53,12 @@ public class BillController {
 		List<Bill> billList = billService.findAll();
 		//Modelにユーザーリストを登録
 		model.addAttribute("billList", billList);
+
+
+        //新着件数表示をしたいのですが。保留。
+		List<Plan> pList = alertService.getAlertList();
+        model.addAttribute("pList",pList.size());
+//        System.out.println(pList.size());
 
 		// homelayout.htmlに画面遷移
 		return "homelayout";

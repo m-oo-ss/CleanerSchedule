@@ -10,12 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.schedule.domain.model.Bill;
 import com.example.demo.schedule.domain.model.Plan;
 import com.example.demo.schedule.domain.model.SelectForm;
 import com.example.demo.schedule.domain.model.Staff;
+import com.example.demo.schedule.domain.service.AlertService;
 import com.example.demo.schedule.domain.service.BillService;
 import com.example.demo.schedule.domain.service.PlanService;
 import com.example.demo.schedule.domain.service.StaffService;
@@ -28,6 +28,8 @@ public class PlanController {
 	private StaffService staffService;
 	@Autowired
 	private PlanService planService;
+	@Autowired
+	private AlertService alertService;
 	//	@Autowired
 	//	private OwnerService ownerService;
 
@@ -46,6 +48,12 @@ public class PlanController {
 		model.addAttribute("billList", billList);
 		model.addAttribute("staffList", staffList);
 		model.addAttribute("planList", planList);
+
+        //新着件数表示をしたいのですが。保留。
+		List<Plan> pList = alertService.getAlertList();
+        model.addAttribute("pList",pList.size());
+//        System.out.println(pList.size());
+
 
 		// スケジュール一覧に画面遷移
 		return "homelayout";
@@ -69,6 +77,12 @@ public class PlanController {
 	 		System.out.println("入っていない");
 
 			}
+
+	        //新着件数表示をしたいのですが。保留。
+			List<Plan> pList = alertService.getAlertList();
+	        model.addAttribute("pList",pList.size());
+//	        System.out.println(pList.size());
+
 
 			// homelayout.htmlに画面遷移
 			return "homelayout";

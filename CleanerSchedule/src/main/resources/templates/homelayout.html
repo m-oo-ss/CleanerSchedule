@@ -15,9 +15,11 @@
 <!-- CSSの読込 -->
 <link href="/home.css" rel="stylesheet"></link>
 
-<title>Home</title>
+<title>JMCビルメンテナンス（株）</title>
 </head>
 <body>
+	<div th:fragment="homelayout_contents">
+
     <!-- ===== ヘッダー（ナビゲーションバー） =====-->
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
@@ -45,6 +47,11 @@
                     <li role="presentation"><a th:href="@{'/bill/blist'}">ビル一覧</a>
                     </li>
                     <li role="presentation"><a th:href="@{'/plan/restlist'}">休み申請</a>
+                     </li>
+                     <li>
+                  <!--  <form method="post" th:action="@{'/homelayout'}"></p>-->
+                      新着申請数<p th:text=${pList}></p>
+
                     </li>
                     <!--  <li role="presentation" sec:authorize="hasRole('ADMIN')">
                         <a th:href="@{'/sample'}">アドミン用画面</a>
