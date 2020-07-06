@@ -32,34 +32,22 @@ const weeks = ['日', '月', '火', '水', '木', '金', '土']
 const date = new Date()
 let year = date.getFullYear()
 let month = date.getMonth() + 1
-const config = {
-    show: 1,
-}
+
+
 
 function showCalendar(year, month) {
-    for ( i = 0; i < config.show; i++) {
-        const calendarHtml = createCalendar(year, month)
+
+	const calendarHtml = createCalendar(year, month)
         const sec = document.createElement('section')
         sec.innerHTML = calendarHtml
         document.querySelector('#calendar').appendChild(sec)
 
-        month++
-        if (month > 12) {
-            year++
-            month = 1
-        }
-    }
 
 }
 
 function createCalendar(year, month) {
 
 	const date = new Date();//現在
-//	 var selectDate = new Date(Date.getHours(),Date.getMinutes());
-	var hh = date.getHours();
-	var mm = date.getMinutes();
-	var selectDateStr = hh+"時"+ mm +"分";
-
 
     const startDate = new Date(year, month - 1, 1) // 月の最初の日を取得
     const endDate = new Date(year, month,  0) // 月の最後の日を取得
@@ -75,6 +63,9 @@ function createCalendar(year, month) {
 
 //    var msd = Format(bill.billStartTime, "Short Time")
 //    dateToFormatTime(bill.billStartTime(), '%HH%時%mm%分%');
+    	//日付をString型にする
+
+
 
 
     Html += '<h1>' + year  + '/' + month + '</h1>'
@@ -82,13 +73,21 @@ function createCalendar(year, month) {
     + '<div style="height:500px; width:1000px; overflow-y:scroll;">'
     + '<table  border="1" style="border-collapse: collapse">'
 
+    var mm =("0"+ (month) ).slice(-2);
+    var dateStr = year +"-"+ mm +"-01";
+    index = planList.findIndex(x => x.planDate==dateStr);
+    console.log(index)
+    //表示した月の初日がプランリストになければbutton表示
+    if(index == -1){
+  //  	 Html += '<button type="button">先月のスケジュールを参照</button>'
+    }
 
-    + '<tr>'
 
+    Html += '<tr>'
+	Html += '<th rowspan=2>ビル名</th>'
+    Html += '<th rowspan=2>人数</th>'
+   	Html += '<th rowspan=2>時間</th>'
 
-	Html += '<th>' + '出勤表' + '</th>'
-	Html += '<th>' + '' + '</th>'
-	Html += '<th>' + '' + '</th>'
 
 
     // 日付の行を作成
@@ -97,13 +96,7 @@ function createCalendar(year, month) {
     }
 
 	Html +='</tr>'
-
     Html += '<tr>'
-
-
-    	Html += '<th>' + '' + '</th>'
-    	Html += '<th>' + '' + '</th>'
-    	Html += '<th>' + '' + '</th>'
 
 	//曜日
 	for(var i = DAY_OF_THE_WEEK; i < (endDayCount+DAY_OF_THE_WEEK); i++){
@@ -128,14 +121,24 @@ function createCalendar(year, month) {
 
 		console.log(billweek);
 
-//		SimpleDateFormat sdf = new SimpleDateFormat("h時mm分")
+
+	//	var start = bill.billStartTime;
+
+	//	var h = start.getHours();
+	//	var m = start.getMinutes();
+
+	//	var select = h + "時" + m + "分;
+
+	//  console.log(select);
+
 
     	Html += '<tr>'
 
 
+
     	Html += '<th rowspan ='+ bill.billPeople +'>'+ bill.billName +'</th>'
 		Html += '<th rowspan ='+ bill.billPeople +'>'+ bill.billPeople +'</th>'
-		Html += '<th rowspan ='+ bill.billPeople +'>' + bill.billStartTime + '～' + bill.billStopTime + '</th>'
+		Html += '<th rowspan ='+ bill.billPeople +'>' + (bill.billStartTime).slice(0,5) + '～' + (bill.billStopTime).slice(0,5) + '</th>'
 
 
 			for(var j = 1; j <= bill.billPeople; j++){
@@ -144,13 +147,10 @@ function createCalendar(year, month) {
 
      			if(billweek[(d+DAY_OF_THE_WEEK-1)%7] ==0){
 						Html += '<td style="background-color:#7d7d7d;"></td>'
-
 					continue;
-					}
+					}//曜日によって格納できるか判定
 
-					Html += '<td>'
-
-         //後ろに移動       	Html += '<select id = "staffSelect">'
+//後ろに移動					Html += '<td>'
 
 					//データなしの場合に分岐するためのカウント
 					var count = 0
@@ -159,7 +159,9 @@ function createCalendar(year, month) {
 						//従業員数の分だけ繰り返す
                 		for (var staff of staffList) {
 
-							//カウントが0の時のみ実行
+
+
+							//フラグが0の時のみ実行
 							if(flag == 0){
 								//プランリストのデータ数の分だけ繰り返す
                 				for(var plan of planList) {
@@ -170,35 +172,73 @@ function createCalendar(year, month) {
                                     var yy =selectDate.getFullYear();
                                     var mm =("0"+(selectDate.getMonth()+1)).slice(-2);
                                     var dd =("0"+selectDate.getDate()).slice(-2);
-
                                     var selectDateStr = yy+"-"+ mm +"-"+ dd;
+
+                                    if(index == -1){
+                                        var mm =("0"+(month-1)).slice(-2);
+                                        var dd =("0"+d).slice(-2);
+                                        var selectDateStr =  year +"-"+ mm +"-" + dd;
+
+                                      //プランリストの中から（日付＝プランの日付Idかつビルの清掃人数＝プランの清掃人数かつビルのビルId＝プランのビルIdが一致するものを表示
+                    					if(selectDateStr == plan.planDate
+            								&& j == plan.staffNumber
+            								&& bill.billId == plan.billId){
+                    						if(plan.restCheck == 2){
+                    							Html += '<td style="background-color:pink;">'
+                    							Html += '<select name ="selectForm">'
+                            	 				Html += '<option selected >----'
+                                 					+ '</option>'
+                                 					count = 0;
+                                 					flag = 1;
+                    						}else{
+                    							var newDateStr = selectDateStr.replace(mm, ("0"+ (month) ).slice(-2));
+                    							console.log(newDateStr)
+                    							Html += '<td>'
+                    		                	Html += '<select name ="selectForm">'
+                    							Html += '<option selected value='
+        	           								+ bill.billId + ',' + newDateStr + ',' + j +',' + plan.staffId
+         	          								+ ',insert >（未定）'
+                                 					+  plan.staffName
+                                 					+ '</option>'
+                                 					count = 0;
+                                 					flag = 1;
+                    						}
+
+                    					}//照らし合わせif文終わり
+
+                                   }else{
 
                 					//プランリストの中から（日付＝プランの日付Idかつビルの清掃人数＝プランの清掃人数かつビルのビルId＝プランのビルIdが一致するものを表示
                 					if(selectDateStr == plan.planDate
         								&& j == plan.staffNumber
         								&& bill.billId == plan.billId){
                 						if(plan.restCheck == 2){
-
-                		                	//-----表記の時だけnameに配列beanクラスのフィールド名を指定----
+                							Html += '<td style="background-color:pink;">'
+                							//-----表記の時だけnameに配列beanクラスのフィールド名を指定----
                 							Html += '<select name ="selectForm">'
                         	 				Html += '<option selected >----'
                              					+ '</option>'
                              					count = 0;
                              					flag = 1;
                 						}else{
-                		                	Html += '<select >'
-                							Html += '<option selected >〇'
+
+                							Html += '<td>'
+                		                	Html += '<select name ="selectForm">'
+                							Html += '<option selected value="none,none,none,none,none">〇'
                              					+  plan.staffName
                              					+ '</option>'
                              					count = 0;
                              					flag = 1;
                 						}
+                					}//照らし合わせif文終わり
+                                   }
 
-                					}//if文
                 				}//プランリスト
-    				            //リストを回し終わった(その日に合うプランがなかった)場合
+
+                				//リストを回し終わった(その日に合うプランがなかった)場合
     				            if (count >= planList.length){
 
+        							Html += '<td>'
     				            	Html += '<select>'
                     	 				Html += '<option selected >'
                          					+ '</option>'
@@ -207,20 +247,44 @@ function createCalendar(year, month) {
     			            	}
 							}//プランリスト内に条件に合ったものがあればcount=1になるのでプランリスト中断
 
+
+
+
+
 							//登録しているスタッフの名前をすべて表示
 
-	               			Html += '<option'
+	               			if(index == -1){
+	               				Html += '<option'
                 				+ ' value= '
-                				+ bill.billId//
+                				+ bill.billId
+                				+ ','
+                				+ newDateStr
+                				+ ','
+                				+ j
+                				+ ','
+                				+ staff.staffId
+                				+ ',insert>'
+                     			+  staff.staffName
+                    			+ '</option>'
+	               			}else{
+							Html += '<option'
+                				+ ' value= '
+                				+ bill.billId
                 				+ ','
                 				+ selectDateStr
                 				+ ','
                 				+ j
                 				+ ','
-                				+ staff.staffId
-                				+ '>'
+                				+ staff.staffId + ','
+                				+ ',update>'
                      			+  staff.staffName
                     			+ '</option>'
+	               			}
+
+
+
+
+
                 		}//スタッフ全員選択肢に格納終わり
 
                 	Html += '</select>'
@@ -257,18 +321,12 @@ function moveCalendar(e) {
             month = 1
         }
     }
-
     showCalendar(year, month)
 }
 
 document.querySelector('#prev').addEventListener('click', moveCalendar)
 document.querySelector('#next').addEventListener('click', moveCalendar)
 
-//document.addEventListener("click", function(e) {
-//    if(e.target.classList.contains("calendar_td")) {
-//        alert('クリックした人は' + 'Aさん' + 'です')
-//    }
-//})
 
 showCalendar(year, month)
 

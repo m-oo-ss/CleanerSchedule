@@ -4,13 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.schedule.domain.model.Bill;
 import com.example.demo.schedule.domain.model.Plan;
@@ -131,7 +129,7 @@ public class PlanController {
 		System.out.println(Arrays.toString(select));
 		System.out.println(select[1]);
 
-		try {
+//		try {
 			//更新実行
 			boolean result = planService.updateOne(selectform);
 			if (result == true) {
@@ -139,10 +137,10 @@ public class PlanController {
 			} else {
 				model.addAttribute("result", "更新失敗");
 			}
-		} catch (DataAccessException e) {
-
-			model.addAttribute("result", "更新失敗(トランザクションテスト)");
-		}
+//		} catch (DataAccessException e) {
+//
+//			model.addAttribute("result", "更新失敗(トランザクションテスト)");
+//		}
 
 		//mtopに戻る
 		return getList(model);

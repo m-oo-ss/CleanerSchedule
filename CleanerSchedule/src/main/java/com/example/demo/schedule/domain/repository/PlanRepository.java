@@ -22,7 +22,7 @@ public class PlanRepository {
 
 		// planテーブルのデータを全件取得
 		List<Map<String, Object>> getList = jdbcTemplate.queryForList("select "
-				+ "p.PLAN_ID ,p.PLAN_DATE , p.DATE_ID  ,b.BILL_NAME , s.STAFF_NAME , p.staff_id, p.bill_id, p.staff_number, p.rest_check "
+				+ "p.PLAN_ID ,p.PLAN_DATE  ,b.BILL_NAME , s.STAFF_NAME , p.staff_id, p.bill_id, p.staff_number, p.rest_check "
 				+ "from plan p "
 				+ "inner join staff s on p.staff_id = s. staff_id "
 				+ "inner join bill b on b.bill_id = p.bill_id");
@@ -41,10 +41,8 @@ public class PlanRepository {
 			plan.setPlanDate((Date) map.get("plan_date")); //ビルID
 			plan.setBillName((String) map.get("bill_name")); //ビルID
 			plan.setStaffName((String) map.get("staff_name")); //ビル名
-			plan.setDateId((Integer) map.get("date_id")); //ビル名
 			plan.setStaffId((Integer) map.get("staff_id")); //ビル名
 			plan.setBillId((Integer) map.get("bill_id")); //ビル名
-
 			plan.setStaffNumber((Integer) map.get("staff_number")); //ビル名
 			plan.setRestCheck((Integer) map.get("rest_check")); //ビル名
 
@@ -151,11 +149,27 @@ public class PlanRepository {
 		//selectformに入っている要素を取り出して変数selectに格納：なくなるまで繰り返し
 		for (String selected : selectform.getSelectForm()) {
 			System.out.println(selected);
+
 			//String型配列contentsに"1,2020-01-01,2,3"をカンマ区切りで格納
 			String[] contents = selected.split(",", 0);
+			if(contents[0].equals("none")) {
+				continue;
+			}
+			if(contents[4].equals("insert")) {
+				rowNumber = jdbcTemplate.update(
+						"INSERT INTO plan("
+								+ " bill_id,"
+								+ " plan_date,"
+								+ " staff_number,"
+								+ " staff_id)"
+								+ " VALUES(?,?,?,?)",
+						contents[0],
+						contents[1],
+						contents[2],
+						contents[3]
+						);
 
-
-
+			}else {
 			rowNumber = jdbcTemplate.update(
 					"UPDATE plan"
 							+ " SET"
@@ -168,6 +182,8 @@ public class PlanRepository {
 					contents[0],
 					contents[1],
 					contents[2]);
+			}
+
 		}
 		return rowNumber;
 	}
