@@ -134,11 +134,10 @@ public class PlanRepository {
 	}
 
 	//休み希望のスタッフIDをnullに書き換える
-	///////////テスト staff_idも書き換えたい
 	public int deleatePlan() throws DataAccessException {
 		//
 		int rowNumber = jdbcTemplate.update(
-				"UPDATE PLAN set REST_CHECK = 2 , staff_id = 1"
+				"UPDATE PLAN set REST_CHECK = 2 "
 						+ " WHERE REST_CHECK=1");
 		return rowNumber;
 	}
@@ -183,6 +182,7 @@ public class PlanRepository {
 					contents[0],
 					contents[1],
 					contents[2]);
+			System.out.println(contents[3]);
 			}
 
 		}

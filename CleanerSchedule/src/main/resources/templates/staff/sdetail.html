@@ -125,19 +125,25 @@
 					        for(var plan of planList){
 					        		count++
 				            	if(selectDateStr == plan.planDate && staffId == plan.staffId){
-				            		 //予定がある場合背景色変更
+
+				                       if (plan.restCheck == 2){html += '"<td style ="background-color:lightgreen;">休みになりました'
+					                     }else{
 				                     if(plan.restCheck == 0){
-				                    	 html += '"<td style ="background-color:red;">'
-				                    }
+				                    	 html += '<td style ="background-color:pink;">'}//出勤
 				                      else if (plan.restCheck == 1){html += '"<td style ="background-color:lightblue;">'
-				                     }
+				                     }//申請中
 				                     else if (plan.restCheck == 3){html += '"<td style ="background-color:yellow;">'
-				                     }
+				                     }//変更有
 
 				                     html+= '<a href="/user/udetail/'
 				                     + plan.planId + '">'
 				                     + dayCount + '<br>'
-				                     +plan.billName+'</a></td>'
+				                     +plan.billName+'</a>'
+					                     }
+
+
+
+				            		 html += '</td>'
 					               //日付カウント
 					                dayCount++
 					                //ループカウンタを初期化

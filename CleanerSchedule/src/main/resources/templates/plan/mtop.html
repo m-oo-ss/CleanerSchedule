@@ -30,7 +30,7 @@
 
 	var week = ['日', '月', '火', '水', '木', '金', '土']
 	var items = ["ビル名","人数"]
-
+	console.log(Object.keys(planList).length)
 
 	function showCalendar(year, month) {
 
@@ -109,24 +109,31 @@
 
 					var selectDateStr = yy+"-"+ mm +"-"+ dd;
 
+					var count = 0
 					for(var plan of planList){
+						count++
 					if(selectDateStr == plan.planDate
 							&& j == plan.staffNumber
 							&& bill.billId == plan.billId){
 					if(plan.restCheck == 2){
         	 			html +=  '<td style="background-color:red;">勤務者が居ません</td>'
+        	 				var count = 0
 						}else if(plan.restCheck == 3){
 					html += '<td style="background-color:yellow;"><a href="/staff/sdetail/'+ plan.staffId + ' ">'
 							+ plan.staffName +'</a></td>'
+							var count = 0
 						}else{
 					html += '<td ><a href="/staff/sdetail/'+ plan.staffId + ' ">'
-							+ plan.staffName +'</a></td>'
-
+							+ plan.planId+plan.staffName +'</a></td>'
+							var count = 0
 						}
-
-
 					}//日付、人数、ビルIDのif文終わり
-				}
+						if(count >= planList.length){
+							html += '<td style="background-color:pink;">no data</td>'
+								var count = 0
+						}
+				}//プランリスト終わり
+
 			}	html += '</tr><tr>'
 		}
 	}

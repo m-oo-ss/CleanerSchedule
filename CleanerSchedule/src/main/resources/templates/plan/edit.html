@@ -52,7 +52,7 @@ function createCalendar(year, month) {
     const startDate = new Date(year, month - 1, 1) // 月の最初の日を取得
     const endDate = new Date(year, month,  0) // 月の最後の日を取得
     const endDayCount = endDate.getDate() // 月の末日
-    const lastMonthEndDate = new Date(year, month - 2, 0) // 前月の最後の日の情報
+    const lastMonthEndDate = new Date(year, month-1, 0) // 前月の最後の日の情報
     const lastMonthendDayCount = lastMonthEndDate.getDate() // 前月の末日
     const startDay = startDate.getDay() // 月の最初の日の曜日を取得
 
@@ -61,9 +61,6 @@ function createCalendar(year, month) {
     let dayCount = 1 // 日にちのカウント
     let Html = '' // HTMLを組み立てる変数
 
-//    var msd = Format(bill.billStartTime, "Short Time")
-//    dateToFormatTime(bill.billStartTime(), '%HH%時%mm%分%');
-    	//日付をString型にする
 
 
 
@@ -76,7 +73,7 @@ function createCalendar(year, month) {
     var mm =("0"+ (month) ).slice(-2);
     var dateStr = year +"-"+ mm +"-01";
     index = planList.findIndex(x => x.planDate==dateStr);
-    console.log(index)
+    console.log(dateStr,index)
     //表示した月の初日がプランリストになければbutton表示
     if(index == -1){
   //  	 Html += '<button type="button">先月のスケジュールを参照</button>'
@@ -119,11 +116,21 @@ function createCalendar(year, month) {
 			bill.billSat,
 		]
 
-		console.log(billweek);
 
-//		SimpleDateFormat sdf = new SimpleDateFormat("h時mm分")
+
+
+	//	var start = bill.billStartTime;
+
+	//	var h = start.getHours();
+	//	var m = start.getMinutes();
+
+	//	var select = h + "時" + m + "分;
+
+	//  console.log(select);
+
 
     	Html += '<tr>'
+
 
 
     	Html += '<th rowspan ='+ bill.billPeople +'>'+ bill.billName +'</th>'
@@ -164,29 +171,39 @@ function createCalendar(year, month) {
                                     var dd =("0"+selectDate.getDate()).slice(-2);
                                     var selectDateStr = yy+"-"+ mm +"-"+ dd;
 
-                                    if(index == -1){
-                                        var mm =("0"+(month-1)).slice(-2);
-                                        var dd =("0"+d).slice(-2);
-                                        var selectDateStr =  year +"-"+ mm +"-" + dd;
+
+
+                                    if(index == -1){//表示月のプランデータがない場合、先月のプランを参照
+                                        if(lastMonthendDayCount == 30){
+                                            var dd2 =("0"+(d+2)).slice(-2);
+                                        }else if(lastMonthendDayCount == 31){
+                                        	var dd2 =("0"+(d+3)).slice(-2);
+                                        }else if(lastMonthendDayCount == 29){
+                                        	var dd2 =("0"+(d+1)).slice(-2);
+                                        }else if(lastMonthendDayCount == 28){
+                                        	var dd2 =("0"+d).slice(-2);
+                                        }
+
+                                    	var mm2 =("0"+(month-1)).slice(-2);
+                                        var selectDateStr2 =  year +"-"+ mm2 +"-" + dd2;
 
                                       //プランリストの中から（日付＝プランの日付Idかつビルの清掃人数＝プランの清掃人数かつビルのビルId＝プランのビルIdが一致するものを表示
-                    					if(selectDateStr == plan.planDate
+                    					if(selectDateStr2 == plan.planDate
             								&& j == plan.staffNumber
             								&& bill.billId == plan.billId){
                     						if(plan.restCheck == 2){
-                    							Html += '<td style="background-color:pink;">'
+/*                    							Html += '<td style="background-color:pink;">'
                     							Html += '<select name ="selectForm">'
                             	 				Html += '<option selected >----'
                                  					+ '</option>'
                                  					count = 0;
-                                 					flag = 1;
+                                 					flag = 1;*/
+                                 					continue;
                     						}else{
-                    							var newDateStr = selectDateStr.replace(mm, ("0"+ (month) ).slice(-2));
-                    							console.log(newDateStr)
                     							Html += '<td>'
                     		                	Html += '<select name ="selectForm">'
                     							Html += '<option selected value='
-        	           								+ bill.billId + ',' + newDateStr + ',' + j +',' + plan.staffId
+        	           								+ bill.billId + ',' + selectDateStr + ',' + j +',' + plan.staffId
          	          								+ ',insert >（未定）'
                                  					+  plan.staffName
                                  					+ '</option>'
@@ -194,9 +211,12 @@ function createCalendar(year, month) {
                                  					flag = 1;
                     						}
 
+
                     					}//照らし合わせif文終わり
 
                                    }else{
+
+
 
                 					//プランリストの中から（日付＝プランの日付Idかつビルの清掃人数＝プランの清掃人数かつビルのビルId＝プランのビルIdが一致するものを表示
                 					if(selectDateStr == plan.planDate
@@ -220,43 +240,39 @@ function createCalendar(year, month) {
                              					count = 0;
                              					flag = 1;
                 						}
+
+                     					var setFlag = 0//insertかupdateか区別する
                 					}//照らし合わせif文終わり
-                                   }
-
+                                   }//else終わり
                 				}//プランリスト
-
                 				//リストを回し終わった(その日に合うプランがなかった)場合
     				            if (count >= planList.length){
 
         							Html += '<td>'
-    				            	Html += '<select>'
-                    	 				Html += '<option selected >'
+    				            	Html += '<select name ="selectForm">'
+                    	 				Html += '<option selected value="none,none,none,none,none">'
                          					+ '</option>'
                          					count = 0;
                          					flag = 1;
+                         					var setFlag = 1
     			            	}
-							}//プランリスト内に条件に合ったものがあればcount=1になるのでプランリスト中断
+							}//プランリスト内に条件に合ったものがあればflag=1になるのでプランリスト中断
+							var dateStaff = [];
+							for (plan of planList){
 
 
+								 if(plan.planDate == selectDateStr){
+									   dateStaff.push(plan.staffId);
+								 }
 
+							}
 
+							console.log(dateStaff)
 
 							//登録しているスタッフの名前をすべて表示
+						  if(dateStaff.indexOf( staff.staffId ) == -1){
 
-	               			if(index == -1){
-	               				Html += '<option'
-                				+ ' value= '
-                				+ bill.billId
-                				+ ','
-                				+ newDateStr
-                				+ ','
-                				+ j
-                				+ ','
-                				+ staff.staffId
-                				+ ',insert>'
-                     			+  staff.staffName
-                    			+ '</option>'
-	               			}else{
+
 							Html += '<option'
                 				+ ' value= '
                 				+ bill.billId
@@ -265,12 +281,18 @@ function createCalendar(year, month) {
                 				+ ','
                 				+ j
                 				+ ','
-                				+ staff.staffId + ','
-                				+ ',update>'
-                     			+  staff.staffName
-                    			+ '</option>'
-	               			}
 
+                				+ staff.staffId + ','
+
+                				if(setFlag == 1){
+                        			Html += 'insert>'
+                				}else{
+                            		Html += 'update>'
+                				}
+                      	 	 Html +=  staff.staffName
+                 			+ '</option>'
+
+                      	   }
 
 
 

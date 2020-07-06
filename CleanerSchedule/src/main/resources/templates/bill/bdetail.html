@@ -69,11 +69,10 @@
 	function createCalendar(year, month) {
 		var endDate = new Date(year,month,0);	//今月末日 0は前月の末日
 		var startDate = new Date(year,month-1,1);	//今月初日
-		console.log(endDate,startDate);
 		var DAY_OF_MONTH = endDate.getDate();	//今月の日数
 		var startDay = startDate.getDay();	//今月初日の曜日
-		var dayCount = 1 // 日にちのカウント
-		var planDayCount = 1 // 日にちのカウント()
+		var dayCount = 1 // 日にちのカウント（日付用）
+		var planDayCount = 1 // 日にちのカウント(スタッフ用)
 
 
 
@@ -120,24 +119,26 @@
 				        //wが奇数の時シフト
 				        else{
 							for(var j = 1; j <= billPeople; j++){
-
 				        	 for (let d = 0; d < 7; d++) {
 
-									console.log(planDayCount);
 
 			        			  if (w == 1 && d < startDay) {
 						                // 1行目で1日の曜日の前
 						                  html += '<td class="is-disabled"></td>'
 						           continue;
-			        			  }
+			        			  }else if(planDayCount > DAY_OF_MONTH) {
+						                // 末尾の日数を超えた
+						                   html += '<td class="is-disabled"></td>'
+						                planDayCount++
+						                continue;}
+
 									//曜日によってデータを格納できるか変更する
 									if(billweek[d] ==0){
 										html += '<td style="background-color:#EDF7FF;"></td>'
-										if(j == 1){
 											planDayCount++;
-										}
 										continue;
 									}
+
 									//plandaycountの時の日付を取得、yyyy-mm-dd文字型に変換
 									var selectDate = new Date(startDate.getFullYear(),startDate.getMonth(),planDayCount);
 									var yy =selectDate.getFullYear();
@@ -146,27 +147,31 @@
 
 									var selectDateStr = yy+"-"+ mm +"-"+ dd;
 
-
+									var count = 0
 						        	for(var plan of planList){
+						        		count ++
 
 				        			  if(selectDateStr == plan.planDate && plan.billId== billId  && j == plan.staffNumber
 						            ){
 						                html += '<td><a href="/staff/sdetail/'+ plan.staffId + ' ">'
-										+ plan.staffName +'</a>'
+										+ planDayCount +plan.staffName +plan.planId +'</a>'
 						                html += '</td>'
-						                //1人目の時だけ日付をカウント
-						                	if(j == 1){
 						                		planDayCount++;
-											}
-						                	break;
+						                count = 0
 						            }
-					                  else{
-					                  continue;}
-
-
+						        		if(count >= planList.length){
+											html += '<td style="background-color:pink;">no data</td>'
+						                		planDayCount++;
+						        		}
 							        }//planList終わり
 
 						        }//1週刊おわりfor文終わり
+
+						        if(w==1 && j!=billPeople){
+							        planDayCount = 1
+						        }else if(j!=billPeople){
+						        	var planDayCount = planDayCount - 7
+						        }
 						        html += '</tr>'
 							}//jのfor文終わり
 
