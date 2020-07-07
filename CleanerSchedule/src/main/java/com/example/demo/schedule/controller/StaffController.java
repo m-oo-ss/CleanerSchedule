@@ -43,10 +43,10 @@ public class StaffController {
 		model.addAttribute("staffList", staffList);
 
 
-        //新着件数表示をしたいのですが。保留。
+        //新着件数表示をしたい。ただし一括で表示ができないので個別にいれて保留。
 		List<Plan> pList = alertService.getAlertList();
         model.addAttribute("pList",pList.size());
-        System.out.println(pList.size());
+        //System.out.println(pList.size());
 
 
 		// homelayout.htmlに画面遷移
@@ -305,6 +305,7 @@ public class StaffController {
         model.addAttribute("bname", plan.getBillName());
         model.addAttribute("starttime", plan.getBillStartTime());
         model.addAttribute("stoptime", plan.getBillStopTime());
+        model.addAttribute("billmap",plan.getBillMap());
   //      model.addAttribute("check", plan.isRestCheck());
 
 
