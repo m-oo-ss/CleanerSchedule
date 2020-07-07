@@ -32,3 +32,20 @@ table#list{
 table#list tr:nth-child(odd){
   background-color: #eee
 }
+
+th#days{
+	 background-color: #b4bacd
+
+}
+td#close{
+	 background-color: #ebebeb
+}
+td#nodata{
+	 background-color: pink
+}
+td#request{
+	 background-color: lightblue
+}
+td#changed{
+	 background-color: #fafa89
+}

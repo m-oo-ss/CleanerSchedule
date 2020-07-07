@@ -12,7 +12,7 @@
 <button id="prev" type="button">前の月</button>
 <button id="next" type="button">次の月</button>
 <form method="post" th:action="@{/plan/mtop}" th:object="${selectForm}" >
-<div id="calendar"></div>
+<div id="calendar" class="table-responsive"></div>
 
 
 <button type="submit" name="update">編集確定</button>
@@ -67,13 +67,13 @@ function createCalendar(year, month) {
 
     Html += '<h1>' + year  + '/' + month + '</h1>'
 
-    + '<div style="height:500px; width:1000px; overflow-y:scroll;">'
-    + '<table  border="1" style="border-collapse: collapse">'
+//    + '<div style="height:500px; width:1000px; overflow-y:scroll;">'
+    + '<table  class="table table-bordered table-striped text-nowrap">'
 
     var mm =("0"+ (month) ).slice(-2);
     var dateStr = year +"-"+ mm +"-01";
     index = planList.findIndex(x => x.planDate==dateStr);
-    console.log(dateStr,index)
+
     //表示した月の初日がプランリストになければbutton表示
     if(index == -1){
   //  	 Html += '<button type="button">先月のスケジュールを参照</button>'
@@ -148,7 +148,11 @@ function createCalendar(year, month) {
 					}//曜日によって格納できるか判定
 
 //後ろに移動					Html += '<td>'
+        							Html += '<td>'
+    				            	Html += '<select class='+d+' name ="selectForm" >'
 
+    				    	    		var elements = document.getElementById("sample");
+    						    	console.log(elements);
 					//データなしの場合に分岐するためのカウント
 					var count = 0
 					//ループ制御のためのフラグ
@@ -200,8 +204,8 @@ function createCalendar(year, month) {
                                  					flag = 1;*/
                                  					continue;
                     						}else{
-                    							Html += '<td>'
-                    		                	Html += '<select name ="selectForm">'
+//                   							Html += '<td>'
+//                    		                	Html += '<select name ="selectForm">'
                     							Html += '<option selected value='
         	           								+ bill.billId + ',' + selectDateStr + ',' + j +',' + plan.staffId
          	          								+ ',insert >（未定）'
@@ -223,17 +227,22 @@ function createCalendar(year, month) {
         								&& j == plan.staffNumber
         								&& bill.billId == plan.billId){
                 						if(plan.restCheck == 2){
-                							Html += '<td style="background-color:pink;">'
+
+//                							Html += '<td style="background-color:pink;">'
+
+
+
+
                 							//-----表記の時だけnameに配列beanクラスのフィールド名を指定----
-                							Html += '<select name ="selectForm">'
+//                							Html += '<select name ="selectForm">'
                         	 				Html += '<option selected >----'
                              					+ '</option>'
                              					count = 0;
                              					flag = 1;
                 						}else{
 
-                							Html += '<td>'
-                		                	Html += '<select name ="selectForm">'
+//                							Html += '<td>'
+//                		                	Html += '<select name ="selectForm">'
                 							Html += '<option selected value="none,none,none,none,none">〇'
                              					+  plan.staffName
                              					+ '</option>'
@@ -248,8 +257,8 @@ function createCalendar(year, month) {
                 				//リストを回し終わった(その日に合うプランがなかった)場合
     				            if (count >= planList.length){
 
-        							Html += '<td>'
-    				            	Html += '<select name ="selectForm">'
+//        							Html += '<td>'
+//    				            	Html += '<select name ="selectForm">'
                     	 				Html += '<option selected value="none,none,none,none,none">'
                          					+ '</option>'
                          					count = 0;
@@ -267,7 +276,6 @@ function createCalendar(year, month) {
 
 							}
 
-							console.log(dateStaff)
 
 							//登録しているスタッフの名前をすべて表示
 						  if(dateStaff.indexOf( staff.staffId ) == -1){
@@ -295,8 +303,6 @@ function createCalendar(year, month) {
                       	   }
 
 
-
-
                 		}//スタッフ全員選択肢に格納終わり
 
                 	Html += '</select>'
@@ -312,6 +318,17 @@ function createCalendar(year, month) {
     return Html
 
 }//createcalendar終わり
+
+////////////////////////////重複
+const getDuplicateValues = ([...array]) => {
+  return array.filter((value, index, self) => self.indexOf(value) === index && self.lastIndexOf(value) !== index);
+}
+
+function selectCheck(){
+
+
+}
+
 
 function moveCalendar(e) {
     document.querySelector('#calendar').innerHTML = ''

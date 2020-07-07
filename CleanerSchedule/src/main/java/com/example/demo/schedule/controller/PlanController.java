@@ -102,7 +102,7 @@ public class PlanController {
 	public String getList3(Model model) {
 
 		// コンテンツ部分にユーザー詳細を表示するための文字列を登録
-		model.addAttribute("contents", "plan/edit :: edit_contents");
+		model.addAttribute("contents", "plan/edit2 :: edit_contents");
 
 		// ビル一覧の生成
 		List<Bill> billList = billService.findAll();

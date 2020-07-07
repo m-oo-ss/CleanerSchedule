@@ -59,7 +59,7 @@
 	        const html = createCalendar(year, month)
 	        //tableタグの生成
 	        const sec = document.createElement('table')
-	        sec.setAttribute("class","table table-bordered table-striped text-nowrap")
+	        sec.setAttribute("class","table table-bordered text-nowrap")
 	        sec.innerHTML = html
 	        //id=calendarのタグを親としてsec(htmlを入れたtableタグ)を挿入
 	        document.getElementById("calendar").appendChild(sec)
@@ -88,7 +88,7 @@
 
 	//曜日
 	for(var i = 0 ; i < (week.length); i++){
-		html += '<th>'+ week[i]; +'</th>'
+		html += '<th id="days">'+ week[i]; +'</th>'
 	}
 			html += '</tr>'//ここまでヘッダー部分
 
@@ -134,7 +134,7 @@
 
 									//曜日によってデータを格納できるか変更する
 									if(billweek[d] ==0){
-										html += '<td style="background-color:#EDF7FF;"></td>'
+										html += '<td id="close"></td>'
 											planDayCount++;
 										continue;
 									}
@@ -153,14 +153,23 @@
 
 				        			  if(selectDateStr == plan.planDate && plan.billId== billId  && j == plan.staffNumber
 						            ){
-						                html += '<td><a href="/staff/sdetail/'+ plan.staffId + ' ">'
-										+ planDayCount +plan.staffName +plan.planId +'</a>'
+				        				  if(plan.restCheck ==1){
+				        					  html += '<td id ="request">'
+				        				  }else if(plan.restCheck ==2){
+				        					  html += '<td id="nodata">'
+				        				  }else if(plan.restCheck ==3){
+				        					  html += '<td id ="changed">'
+				        				  }
+
+						                html += '<a href="/staff/sdetail/'+ plan.staffId + ' ">'
+										 +plan.staffName+'</a>'
 						                html += '</td>'
 						                		planDayCount++;
 						                count = 0
 						            }
+
 						        		if(count >= planList.length){
-											html += '<td style="background-color:pink;">no data</td>'
+											html += '<td id="nodata">no data</td>'
 						                		planDayCount++;
 						        		}
 							        }//planList終わり

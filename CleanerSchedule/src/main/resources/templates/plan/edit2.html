@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>社員トップ画面</title>​
+</head>
+<body>
+
+<div th:fragment="edit_contents">
+
+<button id="prev" type="button">前の月</button>
+<button id="next" type="button">次の月</button>
+<form method="post" th:action="@{/plan/mtop}" th:object="${selectForm}" >
+<div id="calendar" class="table-responsive"></div>
+
+
+<button type="submit" name="update">編集確定</button>
+
+
+<script th:inline="javascript">
+
+/*<![CDATA[*/
+
+	let planList = /*[[ ${planList} ]]*/
+	let billList = /*[[ ${billList} ]]*/
+	let staffList = /*[[ ${staffList} ]]*/
+
+const weeks = ['日', '月', '火', '水', '木', '金', '土']
+const info =['ビル名','人数','時間']
+const date = new Date()
+let year = date.getFullYear()
+let month = date.getMonth() + 1
+
+var calendar = document.getElementById('calendar');
+
+function createCalendar(year, month) {
+
+	const date = new Date();//現在
+
+    const startDate = new Date(year, month - 1, 1) // 月の最初の日を取得
+    const endDate = new Date(year, month,  0) // 月の最後の日を取得
+    const endDayCount = endDate.getDate() // 月の末日
+    const lastMonthEndDate = new Date(year, month-1, 0) // 前月の最後の日の情報
+    const lastMonthendDayCount = lastMonthEndDate.getDate() // 前月の末日
+    const startDay = startDate.getDay() // 月の最初の日の曜日を取得
+
+    const DAY_OF_MONTH = endDate.getDate();	//今月の日数
+    const DAY_OF_THE_WEEK = startDate.getDay();	//今月初日の曜日
+    let dayCount = 1 // 日にちのカウント
+    let Html = '' // HTMLを組み立てる変数
+
+
+
+    	//h1要素の生成
+    	var h1 = document.createElement('h1');
+    	h1.textContent = year  + '/' + month;
+    	calendar.appendChild(h1);
+
+     	var table = document.createElement('table');
+ 		table.setAttribute("class","table table-bordered table-striped text-nowrap");
+     	var tbody = document.createElement('tbody');
+
+    var mm =("0"+ (month) ).slice(-2);
+    var dateStr = year +"-"+ mm +"-01";
+    index = planList.findIndex(x => x.planDate==dateStr);
+
+    //表示した月の初日がプランリストになければbutton表示
+    if(index == -1){
+  //  	 Html += '<button type="button">先月のスケジュールを参照</button>'
+    }
+
+
+ 	var tr = document.createElement('tr');
+ 	for(var i=0 ; i< info.length ; i++){
+ 	 	var th = document.createElement('th');
+ 	 	th.textContent = info[i];
+ 	 	th.setAttribute("rowspan",2);
+    	tr.appendChild(th);
+ 	}
+
+    // 日付の行を作成
+    for (let i = 1; i <= DAY_OF_MONTH; i++) {
+ 	 	var th = document.createElement('th');
+	 	th.textContent = i;
+  	tr.appendChild(th);
+    }
+    tbody.appendChild(tr);
+
+ 	var tr = document.createElement('tr');
+	//曜日
+	for(var i = DAY_OF_THE_WEEK; i < (endDayCount+DAY_OF_THE_WEEK); i++){
+ 	 	var th = document.createElement('th');
+	 	th.textContent = weeks[i%7];
+  	tr.appendChild(th);
+	}
+    tbody.appendChild(tr);
+
+////////////////////////////////////スケジュール部分
+
+    for (let bill of billList) {
+
+		var billweek= [
+			bill.billSun,
+			bill.billMon,
+			bill.billTue,
+			bill.billWed,
+			bill.billThu,
+			bill.billFri,
+			bill.billSat,
+		]
+
+		//tr生成
+	 	var tr = document.createElement('tr');
+
+ 	 	var th = document.createElement('th');
+ 	 	th.textContent = bill.billName;
+ 	 	th.setAttribute("rowspan",bill.billPeople);
+    	tr.appendChild(th);
+
+    	var th = document.createElement('th');
+ 	 	th.textContent = bill.billPeople;
+ 	 	th.setAttribute("rowspan",bill.billPeople);
+    	tr.appendChild(th);
+
+    	var th = document.createElement('th');
+ 	 	th.textContent = (bill.billStartTime).slice(0,5) + '～' + (bill.billStopTime).slice(0,5);
+ 	 	th.setAttribute("rowspan",bill.billPeople);
+    	tr.appendChild(th);
+
+
+
+
+
+			for(var j = 1; j <= bill.billPeople; j++){
+
+        		for (var d = 1; d <= DAY_OF_MONTH; d++) {
+
+     			if(billweek[(d+DAY_OF_THE_WEEK-1)%7] ==0){
+     		    	var td = document.createElement('td');
+					td.setAttribute("id","close")
+					tr.appendChild(td);
+					continue;
+					}//曜日によって格納できるか判定
+
+     		    	var td = document.createElement('td');
+
+     		    	var sel = document.createElement('select');
+     		    	sel.setAttribute("name","selectForm")
+					sel.setAttribute("onChange","selectCheck(this)");
+     		    	sel.setAttribute("class",d)
+     		    	sel.setAttribute("id","sample")
+
+     		    	//データなしの場合に分岐するためのカウント
+					var count = 0
+					//ループ制御のためのフラグ
+					var flag = 0;
+					var option = document.createElement('option');
+							//フラグが0の時のみ実行
+							if(flag == 0){
+								//プランリストのデータ数の分だけ繰り返す
+                				for(var plan of planList) {
+
+                					count++
+                					//日付をString型にする
+                					var selectDate = new Date(startDate.getFullYear(),startDate.getMonth(),d);
+                                    var yy =selectDate.getFullYear();
+                                    var mm =("0"+(selectDate.getMonth()+1)).slice(-2);
+                                    var dd =("0"+selectDate.getDate()).slice(-2);
+                                    var selectDateStr = yy+"-"+ mm +"-"+ dd;
+
+
+                                    if(index == -1){//表示月のプランデータがない場合、先月のプランを参照
+                                        if(lastMonthendDayCount == 30){
+                                            var dd2 =("0"+(d+2)).slice(-2);
+                                        }else if(lastMonthendDayCount == 31){
+                                        	var dd2 =("0"+(d+3)).slice(-2);
+                                        }else if(lastMonthendDayCount == 29){
+                                        	var dd2 =("0"+(d+1)).slice(-2);
+                                        }else if(lastMonthendDayCount == 28){
+                                        	var dd2 =("0"+d).slice(-2);
+                                        }
+
+                                    	var mm2 =("0"+(month-1)).slice(-2);
+                                        var selectDateStr2 =  year +"-"+ mm2 +"-" + dd2;
+
+                                      //プランリストの中から（日付＝プランの日付Idかつビルの清掃人数＝プランの清掃人数かつビルのビルId＝プランのビルIdが一致するものを表示
+                    					if(selectDateStr2 == plan.planDate
+            								&& j == plan.staffNumber
+            								&& bill.billId == plan.billId){
+                    						if(plan.restCheck == 2){
+                                 					continue;
+                    						}else{
+     		    								option.setAttribute("selected","");
+     		    								option.setAttribute("value", bill.billId + ','
+     		    										+ selectDateStr + ','
+     		    										+ j +','
+     		    										+ plan.staffId
+             	          								+ ',insert');
+     		    								option.textContent ="（未定）"+plan.staffName
+
+                                 					count = 0;
+                                 					flag = 1;
+                    						}
+
+                    					    sel.appendChild(option);
+                    					}//照らし合わせif文終わり
+
+                                   }else{
+
+                					//プランリストの中から（日付＝プランの日付Idかつビルの清掃人数＝プランの清掃人数かつビルのビルId＝プランのビルIdが一致するものを表示
+                					if(selectDateStr == plan.planDate
+        								&& j == plan.staffNumber
+        								&& bill.billId == plan.billId){
+                						if(plan.restCheck == 2){
+     		    								option.setAttribute("selected","");
+     		    								td.setAttribute("id","nodata")
+     		    								option.textContent ="--選択してください--"
+                             					count = 0;
+                             					flag = 1;
+
+
+                						}else {
+
+ 		    								option.setAttribute("selected","");
+ 		    								option.setAttribute("value", "none" + ','
+ 		    										+ "none" + ','
+ 		    										+ "none" +','
+ 		    										+ plan.staffId
+         	          								+ ',none');
+ 		    								option.textContent ="〇"+plan.staffName
+                             					count = 0;
+                             					flag = 1;
+                             					if(plan.restCheck == 1){
+         		    								td.setAttribute("id","request")
+                        						}
+                						}
+
+                     					var restStaff = plan.staffId; //選択肢に含めないためにidをセット
+                     					var setFlag = 0//insertかupdateか区別する
+                					    sel.appendChild(option);
+
+                					}//照らし合わせif文終わり
+                                   }//index!=-1のelse終わり
+                				}//プランリスト
+
+                				//リストを回し終わった(その日に合うプランがなかった)場合
+    				            if (count >= planList.length){
+ 		    								option.setAttribute("selected","");
+ 		    								option.setAttribute("value", "none" + ','
+ 		    										+ "none" + ','
+ 		    										+ "none" +','
+ 		    										+ "none"
+         	          								+ ',none');
+
+                         					count = 0;
+                         					flag = 1;
+                         					var setFlag = 1
+                    					    sel.appendChild(option);
+    			            	}
+
+							}//プランリスト内に条件に合ったものがあればflag=1になるのでプランリスト中断
+							var dateStaff = [];
+							for (plan of planList){
+								 if(plan.planDate == selectDateStr){
+									   dateStaff.push(plan.staffId);
+								 }
+							}
+					///////////////////////////////////////////従業員の選択肢
+							//従業員数の分だけ繰り返す
+	                		for (var staff of staffList) {
+	             		    	var option = document.createElement('option');
+
+							//休みスタッフの表示
+						 	 if(dateStaff.indexOf( staff.staffId ) == -1){
+              				if(setFlag == 1){
+ 								option.setAttribute("value", bill.billId + ','
+ 										+ selectDateStr + ','
+ 										+ j +','
+ 										+ staff.staffId
+	          							+ ',insert');
+ 								option.textContent =staff.staffName
+              				}else{
+ 								option.setAttribute("value", bill.billId + ','
+ 										+ selectDateStr + ','
+ 										+ j +','
+ 										+ staff.staffId
+	          							+ ',update');
+ 								option.textContent =staff.staffName
+              				}
+						    sel.appendChild(option);
+
+                      	   }//if(dateStaffにいない人)終わり
+                		}//for文休みスタッフ選択肢に格納終わり
+
+                		if(index != -1){var option = document.createElement('option');
+							option.textContent ="--以下出勤予定者--"
+							    sel.appendChild(option);
+                		}
+
+						//従業員数の分だけ繰り返す
+                		for (var staff of staffList) {
+             		    	var option = document.createElement('option');
+						//出勤予定スタッフの表示
+					  	if(dateStaff.indexOf( staff.staffId ) != -1 && staff.staffId != restStaff){ //出勤予定者リストにいる&&
+          				if(setFlag == 1){
+								option.setAttribute("value", bill.billId + ','
+										+ selectDateStr + ','
+										+ j +','
+										+ staff.staffId
+          							+ ',insert');
+								option.textContent =staff.staffName
+          				}else{
+								option.setAttribute("value", bill.billId + ','
+										+ selectDateStr + ','
+										+ j +','
+										+ staff.staffId
+          							+ ',update');
+								option.textContent =staff.staffName
+          				}
+					    sel.appendChild(option);
+
+                  	   }//if(dateStaffにいる人)終わり
+
+            		}//for文スタッフ全員選択肢に格納終わり
+
+						    td.appendChild(sel);
+						    tr.appendChild(td);
+
+        		}//月末まで終わり
+
+				    tbody.appendChild(tr);
+					//tr生成
+				 	var tr = document.createElement('tr');
+
+			}//〇人目終わり
+    }//ビル繰り返し終わり
+
+
+    table.appendChild(tbody);
+	    calendar.appendChild(table);
+
+
+
+
+
+
+}//createcalendar終わり
+
+////////////////////////////重複
+
+
+
+const getDuplicateValues = ([...array]) => {
+  return array.filter((value, index, self) => self.indexOf(value) === index && self.lastIndexOf(value) !== index);
+}
+
+function selectCheck(select){
+    const endDate = new Date(year, month,  0) // 月の最後の日を取得
+
+    const DAY_OF_MONTH = endDate.getDate();	//今月の日数
+
+
+   	//クラス名をもとに要素を取得する
+	for(var p = 0; p < DAY_OF_MONTH; p++){
+
+    var elements = document.getElementsByClassName((p+1));//日ごとに要素をまとめて取り出す
+	var elementValues = [];//staffIdだけを格納
+	var indexArray = [];
+	var duplicateArray = [];
+	var indexRed = [];
+  		//elementsから値だけを抽出してelementValueに格納
+    	for(var i = 0; i < elements.length; i++){ //同一日の清掃員人数分繰り返し
+    		var staffIds = elements[i].value.split(`,`);//[ビル,日付,何人目,スタッフid]カンマ区切りでstaffIdsに格納
+	    	elementValues.push(staffIds[3]);//3番目の要素をelementValuesに格納
+    	}
+		//さらにgetDuplicateValuesで重複している値のみを抽出
+	duplicateArray = getDuplicateValues(elementValues);//[1,1,2,3.3,4]であれば[1,3]を抽出し格納
+
+		//重複している要素の添え字をindexRedに格納
+	for(var i = 0; i < duplicateArray.length; i++){ //[1.3]を回す
+		for(var j = 0; j < elements.length; j++){ ////同一日の清掃員人数分繰り返し
+			if(elementValues[j] == "none"){
+			}else if(elementValues[j] == null){
+			}else if(elementValues[j] == duplicateArray[i]){
+				indexRed.push(j); //[1,2,4,5]が格納
+			}
+		}
+	}
+
+
+
+	//一度全ての要素をデフォルトの色に設定
+	for(var i = 0; i < elements.length; i ++){
+		var parent = $(elements[i]).parent();
+		if(parent[0].style.backgroundColor=="pink"){
+			console.log("白色")
+    		parent[0].style.backgroundColor="";
+		}
+	}
+	//重複している要素の色を格納
+	for(var i = 0; i < indexRed.length; i++){
+		var parent = $(elements[indexRed[i]]).parent(); //indexRed番目のelements(selectタグ)の親を指定
+		parent[0].style.backgroundColor="pink";
+	}
+
+
+	}
+}
+
+
+function moveCalendar(e) {
+    document.querySelector('#calendar').innerHTML = ''
+
+    if (e.target.id === 'prev') {
+        month--
+
+        if (month < 1) {
+            year--
+            month = 12
+        }
+    }
+
+    if (e.target.id === 'next') {
+        month++
+
+        if (month > 12) {
+            year++
+            month = 1
+        }
+    }
+    createCalendar(year, month)
+}
+
+document.querySelector('#prev').addEventListener('click', moveCalendar)
+document.querySelector('#next').addEventListener('click', moveCalendar)
+
+
+
+
+createCalendar(year, month)
+
+
+/*]]>*/
+</script>
+
+
+
+</form>
+
+</div>
+
+</body>
+</html>

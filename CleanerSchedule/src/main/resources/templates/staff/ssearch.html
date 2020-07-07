@@ -20,22 +20,10 @@
 					</form>
 			<br> <a class="btn btn-primary" th:href="@{'/staff/snew'}">新規社員登録</a>​
 
+<div id = "list" class="table-responsive">
 
-			<table  class="table table-bordered table-hover table-striped" id ="list">
-				<!--  each：繰り返し
-				class="table table-bordered table-hover table-striped"
-				<tr th:each="staff : ${staffList}">
-					<td><a th:href="@{'/staff/sdetail/'+${staff.staffId}}">
-							<p th:text="${staff.staffName}"></p>
-					</a></td>
-					<td><p th:text="${staff.staffAddress}"></p></td>
-					<td><p th:text="${staff.staffTel}"></p></td>
-					<td><p id ="mail"></p></td>
 
-				</tr>
-				-->
-			</table>
-
+</div>
 
 
 
@@ -45,6 +33,8 @@
     let staffList= /*[[ ${staffList} ]]*/
 		//id=listがついているタグをlistTableという名前で指定
     	var listTable = document.getElementById("list");
+    	var table = document.createElement('table')
+    	table.setAttribute("class","table table-bordered table-hover " )
     	//スタッフリストをまわす
         for(var staff of staffList){
 
@@ -78,8 +68,10 @@
 			td.appendChild(a);
 			tr.appendChild(td);
 
-
-			listTable.appendChild(tr);
+			var tbody = document.createElement('tbody')
+			tbody.appendChild(tr);
+			table.appendChild(tbody);
+			listTable.appendChild(table);
 
         }
 /*]]>*/

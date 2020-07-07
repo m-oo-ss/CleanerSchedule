@@ -61,7 +61,7 @@
 	        const html = createCalendar(year, month)
 	        //tableタグの生成
 	        const sec = document.createElement('table')
-	        sec.setAttribute("class","table table-bordered table-striped text-nowrap")
+	        sec.setAttribute("class","table table-bordered text-nowrap")
 	        sec.innerHTML = html
 	        //id=calendarのタグを親としてsec(htmlを入れたtableタグ)を挿入
 	        document.getElementById("calendar").appendChild(sec)
@@ -90,7 +90,7 @@
 
 	//曜日
 	for(var i = 0 ; i < (week.length); i++){
-		html += '<th>'+ week[i]; +'</th>'
+		html += '<th id="days">'+ week[i]; +'</th>'
 	}
 			html += '</tr>'//ここまでヘッダー部分
 
@@ -126,13 +126,13 @@
 					        		count++
 				            	if(selectDateStr == plan.planDate && staffId == plan.staffId){
 
-				                       if (plan.restCheck == 2){html += '"<td style ="background-color:lightgreen;">休みになりました'
+				                       if (plan.restCheck == 2){html += '<td style ="background-color:lightgreen;">休みになりました'
 					                     }else{
 				                     if(plan.restCheck == 0){
 				                    	 html += '<td style ="background-color:pink;">'}//出勤
-				                      else if (plan.restCheck == 1){html += '"<td style ="background-color:lightblue;">'
+				                      else if (plan.restCheck == 1){html += '<td  id="request">'
 				                     }//申請中
-				                     else if (plan.restCheck == 3){html += '"<td style ="background-color:yellow;">'
+				                     else if (plan.restCheck == 3){html += '<td id ="changed">'
 				                     }//変更有
 
 				                     html+= '<a href="/user/udetail/'
