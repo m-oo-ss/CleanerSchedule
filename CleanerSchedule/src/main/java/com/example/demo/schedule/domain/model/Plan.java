@@ -19,4 +19,5 @@ public class Plan {
 	private int restCheck;//休暇申請判定用
 	private int staffNumber;
 	private int dateId;
+	private String billMap;
 }

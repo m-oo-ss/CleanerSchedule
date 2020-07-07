@@ -17,8 +17,7 @@ public class AlertController {
 	private AlertService alertService;
 
 	@GetMapping("/homelayout")
-	public String postRestList(Model model) {
-	model.addAttribute("contents", "homelayout :: homelayout_contents");
+	public String getAlertList(Model model) {
 
 	List<Plan> pList = alertService.getAlertList();
     model.addAttribute("pList",pList.size());

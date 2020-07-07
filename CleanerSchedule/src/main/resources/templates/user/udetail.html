@@ -15,25 +15,46 @@
 
 
 
-       <h4 th:text="${sname}"></h4><br>
-       <h4 th:text="${bname}"></h4><br>
+       <h4 th:text="${sname}"></h4>
+       <h5>仕事場所</h5>
+       <h4 th:text="${bname}"></h4>
+      <h5>掃除開始時刻</h5>
        <h4 th:text="${starttime}"></h4>
+      <h5>掃除終了時刻</h5>
        <h4 th:text="${stoptime}"></h4>
+       <h5>地図</h5>
+       <div id=map></div>
 
+	  <p> <input type="button" onclick="history.back()" value="スケジュール一覧に戻る"></p>
 
-    <tr>
-	   <td><INPUT type="button" onclick="history.back()" value="スケジュール一覧に戻る"></td>
-	</tr>
 
 	<form method="post" th:action="@{'/staff/sdetail/'+${sid}+'/'+${pid}}" onsubmit="return check()">
 	<button type="submit">休暇申請</button></form>
 
 
-	</table>
 
 
 
-<script>
+
+<script th:inline="javascript" charset="utf-8">
+
+
+/*<![CDATA[*/
+let billmap= /*[[ ${billmap} ]]*/
+	var map =document.getElementById("map");
+	var i =document.createElement('iframe');
+	i.setAttribute("src","https://www.google.com/maps/embed?"+billmap);
+	i.setAttribute("width","400");
+	i.setAttribute('height',"300");
+	i.setAttribute('frameborder',"0");
+	i.setAttribute('style',"border:0;");
+	i.setAttribute('allowfullscreen',"");
+	map.appendChild(i);
+
+
+/*]]>*/
+
+
 //休暇申請ボタンがクリックされた時、確認のポップアップを表示する
 function check() {
 
