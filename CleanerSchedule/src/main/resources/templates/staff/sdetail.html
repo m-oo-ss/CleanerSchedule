@@ -7,13 +7,13 @@
 <body>
 	<div th:fragment="sdetail_contents">
 	  <h1 th:text="${name}"></h1>
-
-
   <div id="calendar" ></div>
-
+		<form method="post" th:action="@{'/staff/sdetail/'+${id} }"  id="confirm">
 		<button id="prev" type="button">前の月</button>
 		<button id="next" type="button">次の月</button>
 
+
+				</form>
 
 			<!-- 情報を書くテーブル -->
 		<table class="table table-bordered text-nowrap">
@@ -59,6 +59,19 @@
 				fri,
 				sat,
 			]
+
+
+	////////////restcheck=3があった場合のみボタンを表示////////////////////////////////
+    index = planList.findIndex(x => x.staffId==staffId && x.restCheck == 3);
+    if(index != -1){
+    	var button =document.createElement('button')
+    	button.setAttribute("type","submit")
+       	button.setAttribute("name","update")
+       	button.setAttribute("class","btn btn-danger")
+       	button.textContent="変更を確認しました"
+	        document.getElementById("confirm").appendChild(button)
+
+    }
 
 
 	/////////////////////////////////////////////
