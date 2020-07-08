@@ -85,7 +85,7 @@ public class PlanController {
         List<Mail> rmailList = planService.findRmail();
 		//forループを使ってメールアドレスをすべて出力
 		String sendrmail1 = "";
-		for (int i=1; i<rmailList.size(); ++i) {
+		for (int i=0; i<rmailList.size(); ++i) {
 
 			String srmail1 = (rmailList.get(i).getStaffMail()+",");
 
@@ -105,7 +105,7 @@ public class PlanController {
         sendrmail += "mailto:"+mrmail+"?bcc="+sendrmail1+"&subject=勤務変更&body=勤務変更があります。ご確認ください。";
 
 		//html文をmodelに格納
-        model.addAttribute("sendmail", sendrmail);
+        model.addAttribute("sendrmail", sendrmail);
 
 
         System.out.println(sendrmail);
