@@ -10,6 +10,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.schedule.domain.model.Mail;
 import com.example.demo.schedule.domain.model.Plan;
 import com.example.demo.schedule.domain.model.SelectForm;
 
@@ -186,6 +187,33 @@ public class PlanRepository {
 
 		}
 		return rowNumber;
+	}
+
+	//メールアドレスの全件取得
+	public List<Mail> findMail() {
+
+		//Staffテーブルからメールアドレスを取得
+		List<Map<String, Object>> getList = jdbcTemplate.queryForList("SELECT staff_mail FROM staff; ");
+		//メールアドレスを格納するmailList
+		List<Mail> mailList = new ArrayList<>();
+		//forループを使ってメールアドレスをすべて格納
+		for (Map<String, Object> map : getList) {
+			//planインスタンスの生成
+			Mail mail = new Mail();
+			//データベースから取得したメールアドレスをplanインスタンスに格納
+			mail.setStaffMail((String) map.get("staff_mail"));
+			//mailインスタンスに格納したメールアドレスをmailListに格納
+			mailList.add(mail);
+
+
+
+		}
+
+//		System.out.println(mailList);
+
+
+		return mailList;
+
 	}
 
 }
