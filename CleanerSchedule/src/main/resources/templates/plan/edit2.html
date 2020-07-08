@@ -7,10 +7,13 @@
 </head>
 <body>
 <div th:fragment="edit_contents">
-<form method="post" th:action="@{/plan/mtop}" th:object="${selectForm}" >
-<div id="calendar" >
+
 <button id="prev" class="btn btn-primary">前の月</button>
-<button id="next" class="btn btn-primary">次の月</button></div>
+<button id="next" class="btn btn-primary">次の月</button>
+<form method="post" th:action="@{/plan/mtop}" th:object="${selectForm}" >
+<div id="calendar">
+
+</div>
 
 
 <button class="btn btn-outline-dark" type="submit" name="update">編集確定</button>
