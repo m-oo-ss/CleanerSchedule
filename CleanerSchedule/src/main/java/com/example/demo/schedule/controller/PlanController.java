@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.schedule.domain.model.Bill;
@@ -15,6 +16,7 @@ import com.example.demo.schedule.domain.model.Mail;
 import com.example.demo.schedule.domain.model.Plan;
 import com.example.demo.schedule.domain.model.SelectForm;
 import com.example.demo.schedule.domain.model.Staff;
+import com.example.demo.schedule.domain.service.AlertService;
 import com.example.demo.schedule.domain.service.BillService;
 import com.example.demo.schedule.domain.service.PlanService;
 import com.example.demo.schedule.domain.service.StaffService;
@@ -27,8 +29,8 @@ public class PlanController {
 	private StaffService staffService;
 	@Autowired
 	private PlanService planService;
-//	@Autowired
-//	private MailService mailService;
+	@Autowired
+	private AlertService alertService;
 	//	@Autowired
 	//	private OwnerService ownerService;
 
@@ -131,34 +133,6 @@ public class PlanController {
 
 			}
 
-			List<Plan> planList = planService.getRestList();
-			String sendmail1 = "";
-			for (int i=0; i<planList.size(); ++i) {
-
-				String smail1 = (planList.get(i).getStaffMail()+",");
-
-
-				sendmail1 += smail1;
-
-
-			}
-
-			System.out.println(sendmail1);
-
-
-			List<Mail> mailList = planService.findMail();
-			String mmail = (mailList.get(0).getStaffMail());
-
-
-			String sendmail ="";
-	        //mailtoを使ってメーラーを起動するhtml文
-	        sendmail += "mailto:"+mmail+"?bcc="+sendmail1+"&subject=休暇申請受付&body=お疲れ様です。休暇申請を受け付けました。ご確認ください。";
-
-	        model.addAttribute("sendmail", sendmail);
-
-
-	        System.out.println(sendmail);
-
 			// homelayout.htmlに画面遷移
 			return "homelayout";
 
@@ -193,7 +167,7 @@ public class PlanController {
 	public String getList3(Model model) {
 
 		// コンテンツ部分にユーザー詳細を表示するための文字列を登録
-		model.addAttribute("contents", "plan/edit :: edit_contents");
+		model.addAttribute("contents", "plan/edit2 :: edit_contents");
 
 		// ビル一覧の生成
 		List<Bill> billList = billService.findAll();
@@ -237,5 +211,43 @@ public class PlanController {
 		return getList(model);
 	}
 
+
+
+	   //個人詳細画面に移動(変更の確認をする)
+    @PostMapping(value="/staff/sdetail/{id}" , params = "update")
+    public String postComfirm(Model model,
+            //PathVariableをつけると渡されてきたパス(URL)の値を引数の変数に入れられる
+            @PathVariable("id") int staffId) {
+        // コンテンツ部分にユーザー詳細を表示するための文字列を登録
+        model.addAttribute("contents", "staff/sdetail :: sdetail_contents");
+
+        //1件検索
+
+        Staff staff = staffService.findOne(staffId);
+        Boolean result = planService.restCheckConfirm(staffId);
+
+		List<Plan> planList = planService.findAll();
+
+        // 検索結果をModelに登録
+        model.addAttribute("id", staff.getStaffId());
+        model.addAttribute("name", staff.getStaffName());
+        model.addAttribute("address", staff.getStaffAddress());
+        model.addAttribute("mail", staff.getStaffMail());
+        model.addAttribute("tel", staff.getStaffTel());
+        model.addAttribute("start", staff.getStaffStart());
+
+        String strDate = staff.getStaffStop().toString();
+        if(strDate.equals("2200-12-31")) {
+            model.addAttribute("stop", "未定");
+        }else {
+            model.addAttribute("stop", staff.getStaffStop());
+        }
+
+		model.addAttribute("planList", planList);
+
+
+        // sdetail.htmlに画面遷移
+        return "homelayout";
+    }
 
 }

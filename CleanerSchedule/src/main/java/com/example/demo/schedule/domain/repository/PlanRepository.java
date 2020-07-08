@@ -60,7 +60,7 @@ public class PlanRepository {
 
 		// Staffテーブルのデータを全件取得
 		Map<String, Object> map = jdbcTemplate.queryForMap("select "
-				+ "p.PLAN_ID , p.PLAN_DATE , b.BILL_NAME , s.STAFF_NAME , p.staff_id , p.bill_id , b.bill_starttime , b.bill_stoptime , p.rest_check "
+				+ "p.PLAN_ID , p.PLAN_DATE , b.BILL_NAME , s.STAFF_NAME , p.staff_id , p.bill_id ,b.bill_map, b.bill_starttime , b.bill_stoptime , p.rest_check "
 				+ "from plan p "
 				+ "inner join staff s on p.staff_id = s. staff_id "
 				+ "inner join bill b on b.bill_id = p.bill_id"
@@ -78,6 +78,7 @@ public class PlanRepository {
 		plan.setBillStartTime((java.sql.Time) map.get("bill_starttime"));//勤務開始時間
 		plan.setBillStopTime((java.sql.Time) map.get("bill_stoptime"));//勤務終了時間
 		plan.setRestCheck((int) map.get("rest_check"));//休暇申請判定
+		plan.setBillMap((String)map.get("bill_map"));//ビルの地図
 
 		return plan;
 	}
@@ -136,11 +137,10 @@ public class PlanRepository {
 	}
 
 	//休み希望のスタッフIDをnullに書き換える
-	///////////テスト staff_idも書き換えたい
 	public int deleatePlan() throws DataAccessException {
 		//
 		int rowNumber = jdbcTemplate.update(
-				"UPDATE PLAN set REST_CHECK = 2 , staff_id = 1"
+				"UPDATE PLAN set REST_CHECK = 2 "
 						+ " WHERE REST_CHECK=1");
 		return rowNumber;
 	}
@@ -185,9 +185,24 @@ public class PlanRepository {
 					contents[0],
 					contents[1],
 					contents[2]);
+			System.out.println(contents[3]);
 			}
 
 		}
+		return rowNumber;
+	}
+
+
+
+	//変更確認restCheckを0に変更
+	public int restCheckConfirm(int staffId) throws DataAccessException {
+		//
+		int rowNumber = jdbcTemplate.update(
+				"UPDATE PLAN set REST_CHECK = 0 "
+						+ " WHERE REST_CHECK=3"
+						+ " and STAFF_ID=?",
+						staffId
+						);
 		return rowNumber;
 	}
 

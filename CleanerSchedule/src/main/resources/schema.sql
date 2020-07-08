@@ -138,6 +138,8 @@ owner_id  INT,
 
 workshift_id INT,
 
+bill_map VARCHAR(5000),
+
 PRIMARY KEY (bill_id)  ,
 
 FOREIGN KEY(owner_id) REFERENCES  owner(owner_id) ,

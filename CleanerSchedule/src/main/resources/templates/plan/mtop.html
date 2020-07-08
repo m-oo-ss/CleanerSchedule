@@ -10,9 +10,9 @@
 	<div th:fragment="mtop_contents">
 
 <p th:text=${result}></p>
-		<button id="prev" type="button">前の月</button>
-		<button id="next" type="button">次の月</button>
-		<div id="calendar" class="table-responsive"></div>
+		<button id="prev" class="btn btn-primary">前の月</button>
+		<button id="next" class="btn btn-primary">次の月</button>
+		<div id="calendar"></div>
 
   <a th:href="${sendmail}">一斉メール送信</a>
     <a th:href="${sendrmail}">変更者メール送信</a>
@@ -35,7 +35,6 @@
 	var week = ['日', '月', '火', '水', '木', '金', '土']
 	var items = ["ビル名","人数"]
 
-
 	function showCalendar(year, month) {
 
 	        const html = createCalendar(year, month)
@@ -43,39 +42,45 @@
 	        const sec = document.createElement('table')
 	        sec.setAttribute("class","table table-bordered table-striped text-nowrap")
 	        sec.innerHTML = html
+
+	        var h1 = document.createElement('h1')
+	        h1.textContent =year +"年"+month+"月"
+	        document.getElementById("calendar").appendChild(h1)
+
 	        //id=calendarのタグを親としてsec(htmlを入れたtableタグ)を挿入
 	        document.getElementById("calendar").appendChild(sec)
+
 	}
 
 
 	function createCalendar(year, month) {
 		var endDate = new Date(year,month,0);	//今月末日 0は前月の末日
 		var startDate = new Date(year,month-1,1);	//今月初日
-		console.log(endDate,startDate);
+
 		var DAY_OF_MONTH = endDate.getDate();	//今月の日数
 		var startDay = startDate.getDay();	//今月初日の曜日
 
 
 		var html = '';
-		html += '<h1>' + year  + '年' + month + '月</h1>'
+
 		html += '<tr>'
 	//固定要素
 	for(var i = 0; i < 2; i++){
 		html += '<th rowspan =2 >' + items[i]; '</th>'
 	}
+		//日付
+		for(var i = 1; i <= (DAY_OF_MONTH); i++){
+			html += '<th class="topfixed">'+ i +'</th>'
 
-	//曜日
-	for(var i = startDay; i < (DAY_OF_MONTH+startDay); i++){
-		html += '<th>'+ week[i%7]; +'</th>'
-	}
+		}
+
 	html += '</tr>'
 
 	html += '<tr>'
-	//日付
-	for(var i = 1; i <= (DAY_OF_MONTH); i++){
-		html += '<th>'+ i +'</th>'
-
-	}
+		//曜日
+		for(var i = startDay; i < (DAY_OF_MONTH+startDay); i++){
+			html += '<th>'+ week[i%7]; +'</th>'
+		}
 			html += '</tr>'//ここまでヘッダー部分
 
 
@@ -92,8 +97,8 @@
 		]
 
 		//ビルの情報の列
-		html += '<td rowspan ='+ bill.billPeople +'>'+ bill.billName +'</td>'
-		html += '<td rowspan ='+ bill.billPeople +'>'+ bill.billPeople +'</td>'
+		html += '<th class="sidefixed" rowspan ='+ bill.billPeople +'>'+ bill.billName +'</th>'
+		html += '<th rowspan ='+ bill.billPeople +'>'+ bill.billPeople +'</th>'
 
 			//ビルの人数分繰り返す
 			for(var j = 1; j <= bill.billPeople; j++){
@@ -101,7 +106,7 @@
 				for(var k = 1; k <= DAY_OF_MONTH; k++){
 					//曜日によってデータを格納できるか変更する
 					if(billweek[(k+startDay-1)%7] ==0){
-						html += '<td style="background-color:#EDF7FF;"></td>'
+						html += '<td id="close"></td>'
 						continue;
 					}
 
@@ -113,27 +118,31 @@
 
 					var selectDateStr = yy+"-"+ mm +"-"+ dd;
 
+					var count = 0
 					for(var plan of planList){
+						count++
 					if(selectDateStr == plan.planDate
 							&& j == plan.staffNumber
 							&& bill.billId == plan.billId){
 					if(plan.restCheck == 2){
-        	 			html +=  '<td style="background-color:red;">勤務者が居ません</td>'
-						}else if(plan.restCheck == 3){
-					html += '<td style="background-color:yellow;"><a href="/staff/sdetail/'+ plan.staffId + ' ">'
-							+ plan.staffName +'</a></td>'
+        	 			html +=  '<td id="nodata">勤務者が居ません</td>'
 						}else{
-					html += '<td ><a href="/staff/sdetail/'+ plan.staffId + ' ">'
-							+ plan.staffName +'</a></td>'
-
+							if(plan.restCheck == 3){html += '<td id="changed">'}
+							else{html += '<td>'}
+							html+= '<a href="/staff/sdetail/'+ plan.staffId + ' ">'
+								+plan.staffName +'</a></td>'
 						}
-
-
+					var count = 0
 					}//日付、人数、ビルIDのif文終わり
-				}
-			}	html += '</tr><tr>'
-		}
-	}
+						if(count >= planList.length){
+							html += '<td id="nodata">no data</td>'
+								var count = 0
+						}
+				}//プランリスト終わり
+
+			}	html += '</tr><tr>' //k
+		}//j
+	}//bill
 				return html
 
 	}//function createCalendar終了

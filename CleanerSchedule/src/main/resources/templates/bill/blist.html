@@ -13,7 +13,7 @@
 
 		<h1>ビル一覧</h1>
 		<a class="btn btn-primary" th:href="@{'/bill/bnew'}">新規ビル登録</a>
-
+<div  class="table-responsive" >
 		<table class="table table-bordered table-hover table-striped">
 		<tr><th>ビル名</th><th>派遣人数</th><th>所在地</th></tr>
 			<tr th:each="bill : ${billList}">
