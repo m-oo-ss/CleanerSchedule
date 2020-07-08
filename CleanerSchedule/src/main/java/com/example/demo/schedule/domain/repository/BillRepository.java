@@ -37,6 +37,7 @@ public class BillRepository {
 			bill.setBillAddress((String) map.get("bill_address")); //ビルID
 			bill.setBillPeople((Integer) map.get("bill_people")); //派遣人数
 			bill.setBillStartTime((java.sql.Time) map.get("bill_starttime")); //ビルID
+			bill.setBillStopTime((java.sql.Time) map.get("bill_stoptime")); //ビルID
 			bill.setBillSun((Integer) map.get("bill_sunday")); //日曜仕事
 			bill.setBillMon((Integer) map.get("bill_monday")); //月曜仕事
 			bill.setBillTue((Integer) map.get("bill_tuesday")); //火曜仕事
