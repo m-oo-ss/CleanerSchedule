@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.schedule.domain.model.Bill;
+import com.example.demo.schedule.domain.model.Mail;
 import com.example.demo.schedule.domain.model.Plan;
 import com.example.demo.schedule.domain.model.SelectForm;
 import com.example.demo.schedule.domain.model.Staff;
@@ -44,15 +45,38 @@ public class PlanController {
 		List<Bill> billList = billService.findAll();
 		List<Staff> staffList = staffService.findAll();
 		List<Plan> planList = planService.findAll();
+
+		//メールアドレスのリストを取得
+		List<Mail> mailList = planService.findMail();
+		//forループを使ってメールアドレスをすべて出力
+		String sendmail1 = "";
+		for (int i=1; i<mailList.size(); ++i) {
+
+			String smail1 = (mailList.get(i).getStaffMail()+",");
+
+
+			sendmail1 += smail1;
+
+
+		}
+
+		System.out.println(sendmail1);
+
+		String mmail = (mailList.get(0).getStaffMail());
+
+
+		String sendmail ="";
+        //mailtoを使ってメーラーを起動するhtml文
+        sendmail += "mailto:"+mmail+"?bcc="+sendmail1+"&subject=今月のシフトです。&body=お疲れ様です。ご確認お願い致します。";
+
+
+
+
 		model.addAttribute("billList", billList);
 		model.addAttribute("staffList", staffList);
 		model.addAttribute("planList", planList);
-
-        //新着件数表示をしたいのですが。保留。
-		List<Plan> pList = alertService.getAlertList();
-        model.addAttribute("pList",pList.size());
-//        System.out.println(pList.size());
-
+		//html文をmodelに格納
+        model.addAttribute("sendmail", sendmail);
 
 		// スケジュール一覧に画面遷移
 		return "homelayout";
@@ -76,12 +100,6 @@ public class PlanController {
 	 		System.out.println("入っていない");
 
 			}
-
-	        //新着件数表示をしたいのですが。保留。
-			List<Plan> pList = alertService.getAlertList();
-	        model.addAttribute("pList",pList.size());
-//	        System.out.println(pList.size());
-
 
 			// homelayout.htmlに画面遷移
 			return "homelayout";
@@ -160,5 +178,6 @@ public class PlanController {
 		//mtopに戻る
 		return getList(model);
 	}
+
 
 }

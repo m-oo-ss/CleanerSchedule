@@ -62,7 +62,7 @@ VALUES(6,1,0,1,1,1,1,1);
 
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start, shift_id)
 
-VALUES ('管理太郎','福岡市中央区','aaa@aaa.co.jp','09090909090','pass1','2020-06-15',1);
+VALUES ('管理太郎','福岡市中央区','aaaa@ggg.kkk','09090909090','pass1','2020-06-15',1);
 
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start, shift_id)
 
