@@ -9,17 +9,33 @@
 	  <h1 th:text="${name}"></h1>
 
 
-  <div id="calendar" class="table-responsive"></div>
-   <td><a th:href="@{'/staff/schange/'+ ${id}}">情報変更する </a></td>
+  <div id="calendar" ></div>
+
 		<button id="prev" type="button">前の月</button>
 		<button id="next" type="button">次の月</button>
 
 
 			<!-- 情報を書くテーブル -->
-		<table>
+		<table class="table table-bordered text-nowrap">
+		<tr><th>従業員名</th>
+		<th>住所</th>
+		<th>メールアドレス</th>
+		<th>電話番号</th>
+		<th>勤務開始日</th>
+		<th>辞職予定日</th>
+		</tr>
+
+		<tr><td th:text="${name}"></td>
+		<td th:text="${address}"></td>
+		<td th:text="${mail}"></td>
+		<td th:text="${tel}"></td>
+		<td th:text="${start}"></td>
+		<td th:text="${stop}"></td>
+		</tr>
+
 
 		</table>
-
+ <td><a th:href="@{'/staff/schange/'+ ${id}}">情報変更する </a></td>
 	<!-- 以下Script -->
 		<script th:inline="javascript" charset="utf-8">
 /*<![CDATA[*/
@@ -61,7 +77,7 @@
 	        const html = createCalendar(year, month)
 	        //tableタグの生成
 	        const sec = document.createElement('table')
-	        sec.setAttribute("class","table table-bordered table-striped text-nowrap")
+	        sec.setAttribute("class","table table-bordered text-nowrap")
 	        sec.innerHTML = html
 	        //id=calendarのタグを親としてsec(htmlを入れたtableタグ)を挿入
 	        document.getElementById("calendar").appendChild(sec)
@@ -86,11 +102,9 @@
 
 		html += '<tr>'
 	//固定要素
-
-
 	//曜日
 	for(var i = 0 ; i < (week.length); i++){
-		html += '<th>'+ week[i]; +'</th>'
+		html += '<th id="days">'+ week[i]; +'</th>'
 	}
 			html += '</tr>'//ここまでヘッダー部分
 
@@ -125,19 +139,25 @@
 					        for(var plan of planList){
 					        		count++
 				            	if(selectDateStr == plan.planDate && staffId == plan.staffId){
-				            		 //予定がある場合背景色変更
+
+				                       if (plan.restCheck == 2){html += '<td style ="background-color:lightgreen;">休みになりました'
+					                     }else{
 				                     if(plan.restCheck == 0){
-				                    	 html += '"<td style ="background-color:red;">'
-				                    }
-				                      else if (plan.restCheck == 1){html += '"<td style ="background-color:lightblue;">'
-				                     }
-				                     else if (plan.restCheck == 3){html += '"<td style ="background-color:yellow;">'
-				                     }
+				                    	 html += '<td style ="background-color:pink;">'}//出勤
+				                      else if (plan.restCheck == 1){html += '<td  id="request">'
+				                     }//申請中
+				                     else if (plan.restCheck == 3){html += '<td id ="changed">'
+				                     }//変更有
 
 				                     html+= '<a href="/user/udetail/'
 				                     + plan.planId + '">'
 				                     + dayCount + '<br>'
-				                     +plan.billName+'</a></td>'
+				                     +plan.billName+'</a>'
+					                     }
+
+
+
+				            		 html += '</td>'
 					               //日付カウント
 					                dayCount++
 					                //ループカウンタを初期化

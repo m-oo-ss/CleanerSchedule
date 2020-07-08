@@ -18,6 +18,5 @@ public class Plan {
 	private Time billStopTime;//勤務終了時間
 	private int restCheck;//休暇申請判定用
 	private int staffNumber;
-	private int dateId;
 	private String billMap;
 }
