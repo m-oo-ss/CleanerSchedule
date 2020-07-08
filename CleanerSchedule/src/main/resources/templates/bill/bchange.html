@@ -2,15 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-
 <title>ビル情報変更画面</title>
-
 </head>
-
 <body>
 	<div th:fragment="bchange_contents">
-		<form method="post" th:action="@{/bill/bcomp}" th:object="${signupForm}">
-			<table>
+		<form method="post" th:action="@{/bill/bcomp}" th:object="${bill}">
 				<table class="table table-bordered table-hover table-striped">
 
 					<caption>ビル情報</caption>

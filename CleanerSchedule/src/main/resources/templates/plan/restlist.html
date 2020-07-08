@@ -8,8 +8,6 @@
 
  <div th:fragment="restlist_contents">
  <table class="table table-bordered table-hover table-striped">
-
-
 <th>名前</th>
 <th>休み申請をしたい日</th>
 <th>ビルの名前</th>
@@ -31,8 +29,9 @@
 </form>
 
 	​​ <a th:href="@{'/plan/mtop'}">戻る</a>
-</div>
+	  <a th:href="${sendmail}">メール送信</a>
 
+</div>
 ​
 </body>
 </html>

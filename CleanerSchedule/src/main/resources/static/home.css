@@ -1,6 +1,7 @@
 @charset "UTF-8";
 body {
   padding-top: 50px;
+
 }
 
 .sidebar {
@@ -12,9 +13,10 @@ body {
 }
 
 .main {
-  padding-top: 50px;
+  padding-top: 60px;
   padding-left: 20px;
   position: fixed;
+  overflow: auto;
   display: block;
   top: 0px;
   bottom: 0;
@@ -33,6 +35,7 @@ table#list tr:nth-child(odd){
   background-color: #eee
 }
 
+<<<<<<< HEAD
 /*上の見出しを固定*/
 .plan thead th {
   /* 縦スクロール時に固定する */
@@ -108,5 +111,41 @@ table#list tr:nth-child(odd){
 /*１行おきに色をつける*/
 .plan table tr:nth-child(odd) td{
   background: #fffee4;
+=======
+th#days{
+	 background-color: #b4bacd
+
+}
+td#close{
+	 background-color: #ebebeb
+}
+td#nodata{
+	 background-color: pink
+}
+td#request{
+	 background-color: lightblue
+}
+td#changed{
+	 background-color: #fafa89
+}
+
+.topfixed{
+  position: sticky;
+  top: 50px;
+  background: #dedede;
+
+
+}
+.sidefixed{
+	  position: sticky;
+  left: 0;
+  background: #dedede;
+
+}
+table{	margin-top:10px;
+}
+#calendar{
+	margin-top:10px;
+>>>>>>> master
 }
 

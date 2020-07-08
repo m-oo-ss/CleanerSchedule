@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.schedule.domain.model.Plan;
 import com.example.demo.schedule.domain.model.Staff;
 import com.example.demo.schedule.domain.model.StaffForm;
+import com.example.demo.schedule.domain.service.AlertService;
 import com.example.demo.schedule.domain.service.PlanService;
 import com.example.demo.schedule.domain.service.StaffService;
 
@@ -25,7 +26,8 @@ public class StaffController {
 	private StaffService staffService;
 	@Autowired
 	private PlanService planService;
-
+	@Autowired
+	private AlertService alertService;
 
 	//スタッフの最初のページを表示、
 	@GetMapping("/staff/ssearch")
@@ -39,6 +41,14 @@ public class StaffController {
 		List<Staff> staffList = staffService.findAll();
 		//Modelにstaffリストを登録
 		model.addAttribute("staffList", staffList);
+
+
+        //新着件数表示をしたい。ただし一括で表示ができないので個別にいれて保留。
+		List<Plan> pList = alertService.getAlertList();
+        model.addAttribute("pList",pList.size());
+        //System.out.println(pList.size());
+
+
 		// homelayout.htmlに画面遷移
 		return "homelayout";
 
@@ -265,6 +275,16 @@ public class StaffController {
         model.addAttribute("id", staff.getStaffId());
         model.addAttribute("name", staff.getStaffName());
         model.addAttribute("address", staff.getStaffAddress());
+        model.addAttribute("mail", staff.getStaffMail());
+        model.addAttribute("tel", staff.getStaffTel());
+        model.addAttribute("start", staff.getStaffStart());
+
+        String strDate = staff.getStaffStop().toString();
+        if(strDate.equals("2200-12-31")) {
+            model.addAttribute("stop", "未定");
+        }else {
+            model.addAttribute("stop", staff.getStaffStop());
+        }
 
 		model.addAttribute("planList", planList);
 
@@ -272,6 +292,9 @@ public class StaffController {
         // sdetail.htmlに画面遷移
         return "homelayout";
     }
+
+
+
 
     //個人詳細画面に移動
     @GetMapping("/user/udetail/{pid}")
@@ -295,15 +318,18 @@ public class StaffController {
         model.addAttribute("bname", plan.getBillName());
         model.addAttribute("starttime", plan.getBillStartTime());
         model.addAttribute("stoptime", plan.getBillStopTime());
+        model.addAttribute("billmap",plan.getBillMap());
   //      model.addAttribute("check", plan.isRestCheck());
-
-
-
 
         // sdetail.htmlに画面遷移
         return "homelayout";
 
     }
+
+
+
+
+
 
     //Planテーブルのrest_checkをfalseに変換する
     @PostMapping(value = "/staff/sdetail/{sid}/{pid}")
