@@ -17,6 +17,7 @@ import com.example.demo.schedule.domain.model.Bill;
 import com.example.demo.schedule.domain.model.Owner;
 import com.example.demo.schedule.domain.model.Plan;
 import com.example.demo.schedule.domain.model.SignupForm;
+import com.example.demo.schedule.domain.service.AlertService;
 import com.example.demo.schedule.domain.service.BillService;
 import com.example.demo.schedule.domain.service.OwnerService;
 import com.example.demo.schedule.domain.service.PlanService;
@@ -29,7 +30,8 @@ public class BillController {
 	private OwnerService ownerService;
 	@Autowired
 	private PlanService planService;
-
+	@Autowired
+	private AlertService alertService;
 
 //	//サンプルページの表示
 //	@GetMapping("/sample")
@@ -51,6 +53,12 @@ public class BillController {
 		List<Bill> billList = billService.findAll();
 		//Modelにユーザーリストを登録
 		model.addAttribute("billList", billList);
+
+
+        //新着件数表示をしたいのですが。保留。
+		List<Plan> pList = alertService.getAlertList();
+        model.addAttribute("pList",pList.size());
+//        System.out.println(pList.size());
 
 		// homelayout.htmlに画面遷移
 		return "homelayout";
@@ -104,14 +112,39 @@ public class BillController {
 		Bill bill = billService.findOne(billId);
 
 		// 検索結果をModelに登録
-		model.addAttribute("id", bill.getBillId());
-		model.addAttribute("name", bill.getBillName());
-		model.addAttribute("address", bill.getBillAddress());
+		model.addAttribute("id", bill.getBillId());	//	ビルId
+		model.addAttribute("name", bill.getBillName());//ビル名前
+		model.addAttribute("address", bill.getBillAddress());//ビル住所
+//		model.addAttribute("owner_name", owner.getOwnerName());//オーナー名
+//		model.addAttribute("owner_tel", owner.getOwnerTel());//オーナー電話番号
+//		model.addAttribute("people", bill.getBillPeople());//ビルへの派遣人数
+//		model.addAttribute("sun", bill.getBillSun());//
+//		model.addAttribute("mon", bill.getBillMon());
+//		model.addAttribute("tue", bill.getBillTue());
+//		model.addAttribute("wed", bill.getBillWed());
+//		model.addAttribute("thu", bill.getBillThu());
+//		model.addAttribute("fri", bill.getBillFri());
+//		model.addAttribute("sat", bill.getBillSat());
 
-		// Userクラスをフォームクラスに変換
+		// Billクラスをフォームクラスに変換
 		form.setBillId(bill.getBillId()); //ユーザーID
-		form.setBillName(bill.getBillName()); //ユーザー名
-		form.setBillAddress(bill.getBillAddress()); //年齢
+		form.setBillName(bill.getBillName()); //ビル名前
+		form.setBillAddress(bill.getBillAddress()); //ビル住所
+//		form.setBillTel(bill.getBillTel()); //電話番号
+//		form.setOwnerName(owner.getOwnerName()); //オーナー名
+//		form.setOwnerTel(owner.getOwnerTel()); //オーナー電話番号
+//		form.setBillPeople(bill.getBillPeople());//派遣人数
+//		form.setBillSun(bill.getBillSun());//日
+//		form.setBillMon(bill.getBillMon());//月
+//		form.setBillTue(bill.getBillTue());//火
+//		form.setBillWed(bill.getBillWed());//水
+//		form.setBillWed(bill.getBillWed());//水
+//		form.setBillThu(bill.getBillThu());//
+//		form.setBillFri(bill.getBillFri());//
+//		form.setBillSat(bill.getBillSat());//
+//		form.setBillStartTime(bill.getBillStartTime());
+//		form.setBillStopTime(bill.getBillStopTime());
+
 
 		// Modelに登録
 		model.addAttribute("signupForm", form);
@@ -124,17 +157,31 @@ public class BillController {
 	@PostMapping(value = "/bill/bcomp", params = "update")
 
 	public String postBillChangeUpdate(@ModelAttribute Bill form, Model model) {
-
 		// コンテンツ部分にユーザー詳細を表示するための文字列を登録
 		model.addAttribute("contents", "bill/bcomp :: bcomp_contents");
 
 		Bill bill = new Bill();
 		// フォームクラスをbillクラスに変換 ↑の逆
-		bill.setBillId(form.getBillId()); //ユーザーID
-		bill.setBillName(form.getBillName()); //ユーザー名
-		bill.setBillAddress(form.getBillAddress()); //年齢
+		bill.setBillId(form.getBillId());
+		bill.setBillName(form.getBillName()); //ビル名
+		bill.setBillAddress(form.getBillAddress()); //住所
+//		bill.setBillTel(form.getBillTel()); //電話番号
+//		owner.setOwnerName(form.getOwnerName()); //オーナー名
+//		owner.setOwnerTel(form.getOwnerTel()); //オーナー電話番号
+//		bill.setBillPeople(form.getBillPeople());//派遣人数
+//		bill.setBillPeople(bill.getBillPeople());//派遣人数
+//		bill.setBillSun(form.getBillSun());//日
+//		bill.setBillMon(form.getBillMon());//月
+//		bill.setBillTue(form.getBillTue());//火
+//		bill.setBillWed(form.getBillWed());//水
+//		bill.setBillWed(form.getBillWed());//水
+//		bill.setBillThu(form.getBillThu());//
+//		bill.setBillFri(form.getBillFri());//
+//		bill.setBillSat(form.getBillSat());//
+//		bill.setBillStartTime(form.getBillStartTime());
+//		bill.setBillStopTime(form.getBillStopTime());
 
-		try {
+	try {
 			//更新実行
 			boolean result = billService.updateOne(bill);
 			if (result == true) {
@@ -148,7 +195,7 @@ public class BillController {
 		}
 
 		//ビル一一覧画面を表示
-		//
+
 		return getBillList(model);
 	}
 
@@ -169,31 +216,6 @@ public class BillController {
 		return "bdelete";
 	}
 
-	//確認画面に移動
-	//    @GetMapping("/bcomp")
-	//    public String getComplete(Model model) {
-	//
-	//        return "bcomp";
-	//    }
-
-////最後の確認画面に移動
-//	@PostMapping("/bill/bcomp")
-//	public String postDelete(
-//			Model model, @RequestParam("id") int billId) {
-//
-//		//削除実行
-//		boolean result = billService.deleteOne(billId);
-//		if (result == true) {
-//			model.addAttribute("result", "削除成功");
-//		} else {
-//			model.addAttribute("result", "削除失敗");
-//		}
-//
-//		//画面遷移
-//		return "bcomp";
-//
-//	}
-
 	//新規登録画面に移動
 	@GetMapping("/bill/bnew")
 	public String getNew(@ModelAttribute SignupForm form, Model model) {
@@ -203,12 +225,23 @@ public class BillController {
 
 		Bill bill = new Bill();
 		Owner owner = new Owner();
-		// Userクラスをフォームクラスに変換
+		// Billクラスをフォームクラスに変換
 		form.setBillName(bill.getBillName()); //ビル名
 		form.setBillAddress(bill.getBillAddress()); //ビル住所
 		form.setBillTel(bill.getBillTel()); //電話番号
 		form.setOwnerName(owner.getOwnerName()); //オーナー名
 		form.setOwnerTel(owner.getOwnerTel()); //オーナー電話番号
+		form.setBillPeople(bill.getBillPeople());//派遣人数
+		form.setBillSun(bill.getBillSun());//日
+		form.setBillMon(bill.getBillMon());//月
+		form.setBillTue(bill.getBillTue());//火
+		form.setBillWed(bill.getBillWed());//水
+		form.setBillWed(bill.getBillWed());//水
+		form.setBillThu(bill.getBillThu());//
+		form.setBillFri(bill.getBillFri());//
+		form.setBillSat(bill.getBillSat());//
+		form.setBillStartTime(bill.getBillStartTime());
+		form.setBillStopTime(bill.getBillStopTime());
 
 		model.addAttribute("signupForm", form);
 
@@ -243,6 +276,19 @@ public class BillController {
 		bill.setBillTel(form.getBillTel()); //電話番号
 		owner.setOwnerName(form.getOwnerName()); //オーナー名
 		owner.setOwnerTel(form.getOwnerTel()); //オーナー電話番号
+		bill.setBillPeople(form.getBillPeople());//派遣人数
+		bill.setBillPeople(bill.getBillPeople());//派遣人数
+		bill.setBillSun(form.getBillSun());//日
+		bill.setBillMon(form.getBillMon());//月
+		bill.setBillTue(form.getBillTue());//火
+		bill.setBillWed(form.getBillWed());//水
+		bill.setBillWed(form.getBillWed());//水
+		bill.setBillThu(form.getBillThu());//
+		bill.setBillFri(form.getBillFri());//
+		bill.setBillSat(form.getBillSat());//
+		bill.setBillStartTime(form.getBillStartTime());
+		bill.setBillStopTime(form.getBillStopTime());
+
 
 		//登録実行
 		boolean result = billService.insert(bill);

@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.schedule.domain.model.Bill;
+import com.example.demo.schedule.domain.model.Mail;
 import com.example.demo.schedule.domain.model.Plan;
 import com.example.demo.schedule.domain.model.SelectForm;
 import com.example.demo.schedule.domain.model.Staff;
+import com.example.demo.schedule.domain.service.AlertService;
 import com.example.demo.schedule.domain.service.BillService;
 import com.example.demo.schedule.domain.service.PlanService;
 import com.example.demo.schedule.domain.service.StaffService;
@@ -27,6 +29,8 @@ public class PlanController {
 	private StaffService staffService;
 	@Autowired
 	private PlanService planService;
+	@Autowired
+	private AlertService alertService;
 	//	@Autowired
 	//	private OwnerService ownerService;
 
@@ -42,9 +46,69 @@ public class PlanController {
 		List<Bill> billList = billService.findAll();
 		List<Staff> staffList = staffService.findAll();
 		List<Plan> planList = planService.findAll();
+
+		//メールアドレスのリストを取得
+		List<Mail> mailList = planService.findMail();
+		//forループを使ってメールアドレスをすべて出力
+		String sendmail1 = "";
+		for (int i=1; i<mailList.size(); ++i) {
+
+			String smail1 = (mailList.get(i).getStaffMail()+",");
+
+
+			sendmail1 += smail1;
+
+
+		}
+
+		System.out.println(sendmail1);
+
+		String mmail = (mailList.get(0).getStaffMail());
+
+
+		String sendmail ="";
+        //mailtoを使ってメーラーを起動するhtml文
+        sendmail += "mailto:"+mmail+"?bcc="+sendmail1+"&subject=今月のシフトです。&body=お疲れ様です。ご確認お願い致します。";
+
+
+
+
 		model.addAttribute("billList", billList);
 		model.addAttribute("staffList", staffList);
 		model.addAttribute("planList", planList);
+		//html文をmodelに格納
+        model.addAttribute("sendmail", sendmail);
+
+
+        System.out.println(sendmail);
+
+        List<Mail> rmailList = planService.findRmail();
+		//forループを使ってメールアドレスをすべて出力
+		String sendrmail1 = "";
+		for (int i=1; i<rmailList.size(); ++i) {
+
+			String srmail1 = (rmailList.get(i).getStaffMail()+",");
+
+
+			sendrmail1 += srmail1;
+
+
+		}
+
+		System.out.println(sendmail1);
+
+		String mrmail = (mailList.get(0).getStaffMail());
+
+
+		String sendrmail ="";
+        //mailtoを使ってメーラーを起動するhtml文
+        sendrmail += "mailto:"+mrmail+"?bcc="+sendrmail1+"&subject=勤務変更&body=勤務変更があります。ご確認ください。";
+
+		//html文をmodelに格納
+        model.addAttribute("sendmail", sendrmail);
+
+
+        System.out.println(sendrmail);
 
 		// スケジュール一覧に画面遷移
 		return "homelayout";

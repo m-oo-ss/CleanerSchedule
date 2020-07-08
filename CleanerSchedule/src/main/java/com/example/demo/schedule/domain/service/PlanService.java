@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.schedule.domain.model.Mail;
 import com.example.demo.schedule.domain.model.Plan;
 import com.example.demo.schedule.domain.model.SelectForm;
 import com.example.demo.schedule.domain.repository.PlanRepository;
@@ -94,4 +95,20 @@ public class PlanService {
 		}
 		return result;
 	}
+
+	// メールアドレス全件取得
+	public List<Mail> findMail() {
+
+		return planRepository.findMail();
+
+	}
+
+	// rest_check=3のメールアドレス全件取得
+	public List<Mail> findRmail() {
+
+		return planRepository.findRmail();
+
+	}
 }
+
+

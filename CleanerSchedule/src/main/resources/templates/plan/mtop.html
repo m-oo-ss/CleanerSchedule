@@ -14,14 +14,18 @@
 		<button id="next" class="btn btn-primary">次の月</button>
 		<div id="calendar"></div>
 
+  <a th:href="${sendmail}">一斉メール送信</a>
+    <a th:href="${sendrmail}">変更者メール送信</a>
+
+<!-- "${sendmail}" -->
 
 <script th:inline="javascript" charset="utf-8">
+
 /*<![CDATA[*/
 	let planList= /*[[ ${planList} ]]*/
 	let billList= /*[[ ${billList} ]]*/
 	let staffList= /*[[ ${staffList} ]]*/
 
-	/////////////////////////////////////////////
 
 	//日付関係
 	var date = new Date();	//現在

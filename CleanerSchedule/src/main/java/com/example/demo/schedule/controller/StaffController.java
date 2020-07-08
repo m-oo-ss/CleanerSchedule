@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.schedule.domain.model.Plan;
 import com.example.demo.schedule.domain.model.Staff;
 import com.example.demo.schedule.domain.model.StaffForm;
+import com.example.demo.schedule.domain.service.AlertService;
 import com.example.demo.schedule.domain.service.PlanService;
 import com.example.demo.schedule.domain.service.StaffService;
 
@@ -25,7 +26,8 @@ public class StaffController {
 	private StaffService staffService;
 	@Autowired
 	private PlanService planService;
-
+	@Autowired
+	private AlertService alertService;
 
 	//スタッフの最初のページを表示、
 	@GetMapping("/staff/ssearch")
@@ -39,6 +41,14 @@ public class StaffController {
 		List<Staff> staffList = staffService.findAll();
 		//Modelにstaffリストを登録
 		model.addAttribute("staffList", staffList);
+
+
+        //新着件数表示をしたい。ただし一括で表示ができないので個別にいれて保留。
+		List<Plan> pList = alertService.getAlertList();
+        model.addAttribute("pList",pList.size());
+        //System.out.println(pList.size());
+
+
 		// homelayout.htmlに画面遷移
 		return "homelayout";
 
@@ -308,6 +318,7 @@ public class StaffController {
         model.addAttribute("bname", plan.getBillName());
         model.addAttribute("starttime", plan.getBillStartTime());
         model.addAttribute("stoptime", plan.getBillStopTime());
+        model.addAttribute("billmap",plan.getBillMap());
   //      model.addAttribute("check", plan.isRestCheck());
 
         // sdetail.htmlに画面遷移
