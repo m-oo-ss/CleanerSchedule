@@ -10,9 +10,10 @@
 	<div th:fragment="mtop_contents">
 
 <p th:text=${result}></p>
+
 		<button id="prev" type="button">前の月</button>
 		<button id="next" type="button">次の月</button>
-		<div id="calendar" class="table-responsive"></div>
+		<div id="calendar" style="height:500px; width:1000px; overflow-y:scroll;"></div>
 
 
 <script th:inline="javascript" charset="utf-8">
@@ -29,7 +30,10 @@
 	var month = date.getMonth() +1	//現在の月
 
 	var week = ['日', '月', '火', '水', '木', '金', '土']
-	var items = ["ビル名","人数"]
+	//var items = ["ビル名","人数","勤務時間"]
+
+	var html = '';
+	html += '<h1 style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 0; left: 0; background: #ffffff; z-index: 6;">' + year  + '年' + month + '月</h1>'
 
 
 	function showCalendar(year, month) {
@@ -52,27 +56,39 @@
 		var startDay = startDate.getDay();	//今月初日の曜日
 
 
-		var html = '';
-		html += '<h1>' + year  + '年' + month + '月</h1>'
+
 		html += '<tr>'
+
 	//固定要素
-	for(var i = 0; i < 2; i++){
-		html += '<th rowspan =2 >' + items[i]; '</th>'
-	}
+	//for(var i = 0; i < 3; i++){
+		//html += '<th rowspan =2 >' + items[i]; '</th>'
+	//}
+		html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 0; left: -0.1rem; background: #d98719; z-index: 6;" rowspan =2 >'
+			 + "ビル名" + '</th>'
+
+		html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 0; left: 5.7rem; background: #ff7f50; z-index: 4;" rowspan =2 >'
+   		 + "人数" + '</th>'
+
+  	 	html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 0; left: 10.1rem; background: #fffacd; z-index: 4;" rowspan =2 >'
+       	 + "勤務時間" + '</th>'
+
 
 	//曜日
 	for(var i = startDay; i < (DAY_OF_MONTH+startDay); i++){
-		html += '<th>'+ week[i%7]; +'</th>'
+		html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 0;  background: #deb887; z-index: 3;">'+ week[i%7]; +'</th>'
 	}
 	html += '</tr>'
 
 	html += '<tr>'
 	//日付
 	for(var i = 1; i <= (DAY_OF_MONTH); i++){
-		html += '<th>'+ i +'</th>'
+		html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 3.5rem; background: #ff7f50; z-index: 2;">'+ i +'</th>'
+
 
 	}
+
 			html += '</tr>'//ここまでヘッダー部分
+
 
 
 	html += '<tr>'
@@ -88,9 +104,9 @@
 		]
 
 		//ビルの情報の列
-		html += '<td rowspan ='+ bill.billPeople +'>'+ bill.billName +'</td>'
-		html += '<td rowspan ='+ bill.billPeople +'>'+ bill.billPeople +'</td>'
-
+		html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; left: -0.1rem; background: #d98719; z-index: 4;" rowspan ='+ bill.billPeople +'>'+ bill.billName +'</th>'
+		html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; left: 5.7rem; background: #ff7f50; z-index: 3;" rowspan ='+ bill.billPeople +'>'+ bill.billPeople +'</th>'
+		html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; left: 10.1rem; background: #fffacd; z-index: 2;" rowspan ='+ bill.billPeople +'>' + bill.billStartTime.slice(0,5) + '～' + bill.billStopTime.slice(0,5) + '</th>'
 			//ビルの人数分繰り返す
 			for(var j = 1; j <= bill.billPeople; j++){
 				//td追加（日毎）
@@ -130,6 +146,7 @@
 			}	html += '</tr><tr>'
 		}
 	}
+
 				return html
 
 	}//function createCalendar終了

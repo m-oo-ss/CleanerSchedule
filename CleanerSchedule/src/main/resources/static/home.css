@@ -32,3 +32,81 @@ table#list{
 table#list tr:nth-child(odd){
   background-color: #eee
 }
+
+/*上の見出しを固定*/
+.plan thead th {
+  /* 縦スクロール時に固定する */
+  position: -webkit-sticky;
+  position: sticky;
+  /* 高さが変わらないよう改行させない */
+  white-space: nowrap;
+}
+
+.plan thead tr:nth-child(1) th {
+  top: 0;
+  background: #9dd;
+  z-index: 1;
+
+}
+.plan thead tr:nth-child(2) th {
+  top: 1.5rem; /* 2行目は1行目の高さの位置に固定する */
+  background: #9dd;
+  z-index: 1;
+
+}
+
+
+/*タテの見出しを固定*/
+.plan tbody　th{
+  /* 横スクロール時に固定する */
+  position: -webkit-sticky;
+  position: sticky;
+  /* 高さが変わらないよう改行させない */
+  white-space: nowrap;
+}
+
+.plan tbody tr:nth-child(1) th{
+  left: 0;
+  background: #fbcfcf;
+  z-index: 2;
+
+}
+.plan tbody tr:nth-child(2) th{
+  left: 1.5; /* 2行目は1行目の高さの位置に固定する */
+  background: #fbcfcf;
+  z-index: 2;
+}
+
+.plan tbody tr:nth-child(3) th{
+  left: 3; /* 3行目は1〜2行目の高さの位置に固定する */
+  background: #fbcfcf;
+  z-index: 2;
+}
+
+/*左上のマス*/
+.plan thead th:nth-of-type(1){
+  background: #fff;
+  z-index: 5;
+}
+
+
+
+/*外側の線だけを消すとき*/
+.plan table{
+  border: 0;
+}
+.plan td, .plan th{
+  border: 1px #eee solid;
+}
+.plan th{
+  border-left: 0;
+}
+.plan thead th{
+  border-top: 0;
+}
+
+/*１行おきに色をつける*/
+.plan table tr:nth-child(odd) td{
+  background: #fffee4;
+}
+

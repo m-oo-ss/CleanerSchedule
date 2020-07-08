@@ -3,10 +3,13 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
-<title>社員トップ画面</title>​
+
+<link rel="stylesheet" th:href="@{/static/home.css}">
+
+<title>社員トップ画面</title>
+​
 </head>
 <body>
-
 <div th:fragment="edit_contents">
 
 <button id="prev" type="button">前の月</button>
@@ -18,7 +21,7 @@
 <button type="submit" name="update">編集確定</button>
 
 
-<script th:inline="javascript">
+<script th:inline="javascript" charset="utf-8">
 
 
 
@@ -28,19 +31,20 @@
 	let billList = /*[[ ${billList} ]]*/
 	let staffList = /*[[ ${staffList} ]]*/
 
-const weeks = ['日', '月', '火', '水', '木', '金', '土']
-const date = new Date()
-let year = date.getFullYear()
-let month = date.getMonth() + 1
+var week = ['日', '月', '火', '水', '木', '金', '土']
+var date = new Date()
+var year = date.getFullYear()
+var month = date.getMonth() + 1
 const config = {
     show: 1,
 }
 
+
 function showCalendar(year, month) {
     for ( i = 0; i < config.show; i++) {
-        const calendarHtml = createCalendar(year, month)
+        const Html = createCalendar(year, month)
         const sec = document.createElement('section')
-        sec.innerHTML = calendarHtml
+        sec.innerHTML = Html
         document.querySelector('#calendar').appendChild(sec)
 
         month++
@@ -54,65 +58,62 @@ function showCalendar(year, month) {
 
 function createCalendar(year, month) {
 
-	const date = new Date();//現在
-//	 var selectDate = new Date(Date.getHours(),Date.getMinutes());
-	var hh = date.getHours();
-	var mm = date.getMinutes();
-	var selectDateStr = hh+"時"+ mm +"分";
+    var startDate = new Date(year, month - 1, 1) // 月の最初の日を取得
+    var endDate = new Date(year, month,  0) // 月の最後の日を取得
+    var endDayCount = endDate.getDate() // 月の末日
+    var lastMonthEndDate = new Date(year, month - 2, 0) // 前月の最後の日の情報
+    var lastMonthendDayCount = lastMonthEndDate.getDate() // 前月の末日
+    var startDay = startDate.getDay() // 月の最初の日の曜日を取得
+
+    var DAY_OF_MONTH = endDate.getDate();	//今月の日数
+    var DAY_OF_THE_WEEK = startDate.getDay();	//今月初日の曜日
+    var dayCount = 1 // 日にちのカウント
+    var Html = '' // HTMLを組み立てる変数
 
 
-    const startDate = new Date(year, month - 1, 1) // 月の最初の日を取得
-    const endDate = new Date(year, month,  0) // 月の最後の日を取得
-    const endDayCount = endDate.getDate() // 月の末日
-    const lastMonthEndDate = new Date(year, month - 2, 0) // 前月の最後の日の情報
-    const lastMonthendDayCount = lastMonthEndDate.getDate() // 前月の末日
-    const startDay = startDate.getDay() // 月の最初の日の曜日を取得
+    Html += '<h1>' + year  + '年' + month + '月</h1>'
 
-    const DAY_OF_MONTH = endDate.getDate();	//今月の日数
-    const DAY_OF_THE_WEEK = startDate.getDay();	//今月初日の曜日
-    let dayCount = 1 // 日にちのカウント
-    let Html = '' // HTMLを組み立てる変数
-
-//    var msd = Format(bill.billStartTime, "Short Time")
-//    dateToFormatTime(bill.billStartTime(), '%HH%時%mm%分%');
+    + '<div class="plan" style="height:200px; width:1000px; overflow-y:scroll;">'
+    + '<table class="table table-bordered table-striped text-nowrap">'
 
 
-    Html += '<h1>' + year  + '/' + month + '</h1>'
-
-    + '<div style="height:500px; width:1000px; overflow-y:scroll;">'
-    + '<table  border="1" style="border-collapse: collapse">'
-
-
-    + '<tr>'
-
-
-	Html += '<th>' + '出勤表' + '</th>'
-	Html += '<th>' + '' + '</th>'
-	Html += '<th>' + '' + '</th>'
-
-
-    // 日付の行を作成
-    for (let i = 1; i <= DAY_OF_MONTH; i++) {
-      Html += '<th>' + i + '</th>'
-    }
-
-	Html +='</tr>'
-
+   // + '<thead>'
     Html += '<tr>'
 
+    	//固定要素
+    	//for(var i = 0; i < 3; i++){
+    		Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 0; left: -0.1rem; background: #d98719; z-index: 6;" rowspan =2 >'
+    			 + "ビル名" + '</th>'
 
-    	Html += '<th>' + '' + '</th>'
-    	Html += '<th>' + '' + '</th>'
-    	Html += '<th>' + '' + '</th>'
+    		Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 0; left: 5.7rem; background: #ff7f50; z-index: 4;" rowspan =2 >'
+        		 + "人数" + '</th>'
 
-	//曜日
-	for(var i = DAY_OF_THE_WEEK; i < (endDayCount+DAY_OF_THE_WEEK); i++){
+        	Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 0; left: 10.1rem; background: #fffacd; z-index: 4;" rowspan =2 >'
+            	 + "勤務時間" + '</th>'
+    	//}
 
-		Html += '<th>' + weeks[i%7] + '</th>'
+    	//曜日
+    	for(var i = startDay; i < (DAY_OF_MONTH+startDay); i++){
+    		Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 0;  background: #deb887; z-index: 3;">'
+    			 + week[i%7]; +'</th>'
+    	}
+    	Html += '</tr>'
 
-	}
 
-    Html +='</tr>'
+    	Html += '<tr>'
+    	//日付
+    	for(var i = 1; i <= (DAY_OF_MONTH); i++){
+    		Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 3.5rem; background: #ff7f50; z-index: 2;">'
+    			 + i +'</th>'
+
+    	}
+
+    	Html += '</tr>'//ここまでヘッダー部分
+
+   // + '</thead>'
+    //+ '<tbody>'
+
+    Html += '<tr>'
 
     for (let bill of billList) {
 
@@ -139,13 +140,22 @@ function createCalendar(year, month) {
 	//  console.log(select);
 
 
-    	Html += '<tr>'
 
 
 
-    	Html += '<th rowspan ='+ bill.billPeople +'>'+ bill.billName +'</th>'
-		Html += '<th rowspan ='+ bill.billPeople +'>'+ bill.billPeople +'</th>'
-		Html += '<th rowspan ='+ bill.billPeople +'>' + bill.billStartTime.slice(0,5) + '～' + bill.billStopTime.slice(0,5) + '</th>'
+
+
+
+    	Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; left: -0.1rem; background: #d98719; z-index: 4;" rowspan ='
+    	     + bill.billPeople +'>'+ bill.billName +'</th>'
+		Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; left: 5.7rem; background: #ff7f50; z-index: 3;" rowspan ='
+		     + bill.billPeople +'>'+ bill.billPeople +'</th>'
+		//slice(0,5)は〇〇：〇〇：〇〇の時刻を0 1 2 3 4 5 6 7の順番を付けて0から4まで表示させる※5まで含まれないのが注意
+		Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; left: 10.1rem; background: #fffacd; z-index: 2;" rowspan ='
+		     + bill.billPeople +'>' + bill.billStartTime.slice(0,5) + '～' + bill.billStopTime.slice(0,5) + '</th>'
+
+
+
 
 
 			for(var j = 1; j <= bill.billPeople; j++){
@@ -197,16 +207,7 @@ function createCalendar(year, month) {
                              					flag = 1;
                 						}else{
                 		                	Html += '<select name ="selectForm">'
-                							Html += '<option selected'
-                								+ ' value= '
-                                				+ bill.billId//
-                                				+ ','
-                                				+ selectDateStr
-                                				+ ','
-                                				+ j
-                                				+ ','
-                                				+ plan.staffId
-                                				+ '>〇'
+                							Html += '<option selected value = "none,none,none,none">〇'
                              					+  plan.staffName
                              					+ '</option>'
                              					count = 0;
@@ -230,7 +231,7 @@ function createCalendar(year, month) {
 
 	               			Html += '<option'
                 				+ ' value= '
-                				+ bill.billId//
+                				+ bill.billId
                 				+ ','
                 				+ selectDateStr
                 				+ ','
@@ -245,11 +246,17 @@ function createCalendar(year, month) {
                 	Html += '</select>'
                 	Html += '</td>'
         		}//月末まで終わり
+
+
         		Html += '</tr>'
+
 			}//〇人目終わり
     }//ビル繰り返し終わり
 
+    //Html +=  '</tbody>'
     Html += '</table>'
+    	+ '</div>'
+
 
 
     return Html
@@ -257,7 +264,7 @@ function createCalendar(year, month) {
 }//createcalendar終わり
 
 function moveCalendar(e) {
-    document.querySelector('#calendar').innerHTML = ''
+    document.getElementById('calendar').innerHTML = ''
 
     if (e.target.id === 'prev') {
         month--
@@ -280,21 +287,16 @@ function moveCalendar(e) {
     showCalendar(year, month)
 }
 
-document.querySelector('#prev').addEventListener('click', moveCalendar)
-document.querySelector('#next').addEventListener('click', moveCalendar)
+document.getElementById('prev').addEventListener('click', moveCalendar)
+document.getElementById('next').addEventListener('click', moveCalendar)
 
-//document.addEventListener("click", function(e) {
-//    if(e.target.classList.contains("calendar_td")) {
-//        alert('クリックした人は' + 'Aさん' + 'です')
-//    }
-//})
+
 
 showCalendar(year, month)
 
 
 /*]]>*/
 </script>
-
 
 
 </form>

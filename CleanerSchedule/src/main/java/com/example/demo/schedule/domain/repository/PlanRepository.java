@@ -152,7 +152,9 @@ public class PlanRepository {
 			System.out.println(selected);
 			//String型配列contentsに"1,2020-01-01,2,3"をカンマ区切りで格納
 			String[] contents = selected.split(",", 0);
-			System.out.println(contents);
+            if(contents[0].equals("none")) {
+                continue;
+            }
 
 
 			rowNumber = jdbcTemplate.update(
