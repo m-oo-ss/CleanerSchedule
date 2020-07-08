@@ -218,4 +218,39 @@ public class PlanRepository {
 
 	}
 
+
+		//rest_check=3のメールアドレスの全件取得
+		public List<Mail> findRmail() {
+
+			//Staffテーブルからメールアドレスを取得
+			List<Map<String, Object>> getList = jdbcTemplate.queryForList(
+					"SELECT p.PLAN_ID, p.PLAN_DATE, p.STAFF_ID,p.BILL_ID,p.REST_CHECK,"
+							+ " b.BILL_NAME,"
+							+ " s.STAFF_NAME,"
+							+ " s.STAFF_MAIL"
+							+ " FROM PLAN p "
+							+ "INNER JOIN STAFF s on p.STAFF_ID = s.STAFF_ID "
+							+ "INNER JOIN BILL b on b.BILL_ID = p.BILL_ID"
+							+ " WHERE REST_CHECK = 3");			//メールアドレスを格納するmailList
+			List<Mail> rmailList = new ArrayList<>();
+			//forループを使ってメールアドレスをすべて格納
+			for (Map<String, Object> map : getList) {
+				//planインスタンスの生成
+				Mail mail = new Mail();
+				//データベースから取得したメールアドレスをplanインスタンスに格納
+				mail.setStaffMail((String) map.get("staff_mail"));
+				//mailインスタンスに格納したメールアドレスをmailListに格納
+				rmailList.add(mail);
+
+
+
+			}
+
+//			System.out.println(mailList);
+
+
+			return rmailList;
+
+	}
+
 }

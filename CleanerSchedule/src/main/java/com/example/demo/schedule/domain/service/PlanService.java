@@ -85,6 +85,13 @@ public class PlanService {
 		return planRepository.findMail();
 
 	}
+
+	// rest_check=3のメールアドレス全件取得
+	public List<Mail> findRmail() {
+
+		return planRepository.findRmail();
+
+	}
 }
 
 
