@@ -44,12 +44,9 @@ public class PlanController {
 		List<Bill> billList = billService.findAll();
 		List<Staff> staffList = staffService.findAll();
 		List<Plan> planList = planService.findAll();
+
 		//メールアドレスのリストを取得
 		List<Mail> mailList = planService.findMail();
-
-
-
-
 		//forループを使ってメールアドレスをすべて出力
 		String sendmail1 = "";
 		for (int i=1; i<mailList.size(); ++i) {
@@ -106,6 +103,34 @@ public class PlanController {
 	 		System.out.println("入っていない");
 
 			}
+
+			List<Plan> planList = planService.getRestList();
+			String sendmail1 = "";
+			for (int i=0; i<planList.size(); ++i) {
+
+				String smail1 = (planList.get(i).getStaffMail()+",");
+
+
+				sendmail1 += smail1;
+
+
+			}
+
+			System.out.println(sendmail1);
+
+
+			List<Mail> mailList = planService.findMail();
+			String mmail = (mailList.get(0).getStaffMail());
+
+
+			String sendmail ="";
+	        //mailtoを使ってメーラーを起動するhtml文
+	        sendmail += "mailto:"+mmail+"?bcc="+sendmail1+"&subject=休暇申請受付&body=お疲れ様です。休暇申請を受け付けました。ご確認ください。";
+
+	        model.addAttribute("sendmail", sendmail);
+
+
+	        System.out.println(sendmail);
 
 			// homelayout.htmlに画面遷移
 			return "homelayout";

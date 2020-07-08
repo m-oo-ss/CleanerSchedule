@@ -19,5 +19,5 @@ public class Plan {
 	private int restCheck;//休暇申請判定用
 	private int staffNumber;
 	private int dateId;
-//	private String staffMail; //従業員メールアドレス
+	private String staffMail; //従業員メールアドレス
 }

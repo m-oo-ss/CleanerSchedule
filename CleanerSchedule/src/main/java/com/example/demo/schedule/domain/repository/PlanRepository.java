@@ -101,7 +101,8 @@ public class PlanRepository {
 		List<Map<String, Object>> getList = jdbcTemplate.queryForList(
 				"SELECT p.PLAN_ID, p.PLAN_DATE, p.STAFF_ID,p.BILL_ID,p.REST_CHECK,"
 						+ " b.BILL_NAME,"
-						+ " s.STAFF_NAME"
+						+ " s.STAFF_NAME,"
+						+ " s.STAFF_MAIL"
 						+ " FROM PLAN p "
 						+ "INNER JOIN STAFF s on p.STAFF_ID = s.STAFF_ID "
 						+ "INNER JOIN BILL b on b.BILL_ID = p.BILL_ID"
@@ -124,6 +125,7 @@ public class PlanRepository {
 			plan.setRestCheck((Integer) map.get("rest_check"));//休み希望(falseに書き換わったものが休み希望)
 			plan.setBillName((String) map.get("bill_name"));//ビル名
 			plan.setStaffName((String) map.get("staff_name"));//スタッフ名
+			plan.setStaffMail((String) map.get("staff_mail"));
 
 			//結果返却用のListに追加
 			planList.add(plan);
