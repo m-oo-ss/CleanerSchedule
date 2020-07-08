@@ -220,6 +220,11 @@ function createCalendar(year, month) {
                 						if(plan.restCheck == 2){
      		    								option.setAttribute("selected","");
      		    								td.setAttribute("id","nodata")
+     		    								option.setAttribute("value", "none" + ','
+ 		    										+ "none" + ','
+ 		    										+ "none" +','
+ 		    										+ "none"
+         	          								+ ',none');
      		    								option.textContent ="--選択してください--"
                              					count = 0;
                              					flag = 1;
