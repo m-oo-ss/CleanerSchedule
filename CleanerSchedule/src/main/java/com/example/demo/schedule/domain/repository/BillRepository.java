@@ -31,14 +31,10 @@ public class BillRepository {
 			//Billインスタンスの生成
 			Bill bill = new Bill();
 
-//			Time startTime = bill.getBillStartTime();
-
 			// Billインスタンスに取得したデータをセットする
 			bill.setBillId((Integer) map.get("bill_id")); //ビルID
 			bill.setBillName((String) map.get("bill_name")); //ビル名
 			bill.setBillPeople((Integer) map.get("bill_people")); //ビルID
-//			SimpleDateFormat sdf1 = new SimpleDateFormat("h'時'mm'分'");
-//			String time = sdf1.format(startTime);
 			bill.setBillStartTime((java.sql.Time) map.get("bill_starttime"));//ビルID
 			bill.setBillStopTime((java.sql.Time) map.get("bill_stoptime"));
 			bill.setBillSun((Integer) map.get("bill_sunday")); //ビルID
