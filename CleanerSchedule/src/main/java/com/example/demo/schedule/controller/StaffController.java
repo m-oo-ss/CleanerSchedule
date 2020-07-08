@@ -275,6 +275,16 @@ public class StaffController {
         model.addAttribute("id", staff.getStaffId());
         model.addAttribute("name", staff.getStaffName());
         model.addAttribute("address", staff.getStaffAddress());
+        model.addAttribute("mail", staff.getStaffMail());
+        model.addAttribute("tel", staff.getStaffTel());
+        model.addAttribute("start", staff.getStaffStart());
+
+        String strDate = staff.getStaffStop().toString();
+        if(strDate.equals("2200-12-31")) {
+            model.addAttribute("stop", "未定");
+        }else {
+            model.addAttribute("stop", staff.getStaffStop());
+        }
 
 		model.addAttribute("planList", planList);
 
@@ -282,6 +292,9 @@ public class StaffController {
         // sdetail.htmlに画面遷移
         return "homelayout";
     }
+
+
+
 
     //個人詳細画面に移動
     @GetMapping("/user/udetail/{pid}")
@@ -308,13 +321,15 @@ public class StaffController {
         model.addAttribute("billmap",plan.getBillMap());
   //      model.addAttribute("check", plan.isRestCheck());
 
-
-
-
         // sdetail.htmlに画面遷移
         return "homelayout";
 
     }
+
+
+
+
+
 
     //Planテーブルのrest_checkをfalseに変換する
     @PostMapping(value = "/staff/sdetail/{sid}/{pid}")

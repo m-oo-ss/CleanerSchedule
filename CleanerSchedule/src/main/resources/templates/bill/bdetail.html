@@ -8,12 +8,27 @@
 	<div th:fragment="bdetail_contents">
 		<h1 th:text="${name}"></h1>
 
-   <div id="calendar" class="table-responsive"></div>
+   <div id="calendar"></div>
 		<button id="prev" type="button">前の月</button>
 		<button id="next" type="button">次の月</button>
 
 			<!-- 情報を書くテーブル -->
-		<table>
+		<table class="table table-bordered text-nowrap">
+		<tr><th>ビル名</th>
+		<th>住所</th>
+		<th>派遣人数</th>
+		<th>清掃曜日</th>
+		<th>オーナー名</th>
+		<th>連絡先</th>
+		</tr>
+
+		<tr><td th:text="${name}"></td>
+		<td th:text="${address}"></td>
+		<td th:text="${people}"></td>
+		<td id="billweek"></td>
+		<td th:text="${owner_name}"></td>
+		<td th:text="${owner_tel}"></td>
+		</tr>
 
 		</table>
 <a th:href="@{'/bill/bchange/' + ${id}}">情報変更 </a>
@@ -43,6 +58,8 @@
 			]
 
 
+
+
 	/////////////////////////////////////////////
 
 	//日付関係
@@ -52,14 +69,28 @@
 
 	var week = ['日', '月', '火', '水', '木', '金', '土']
 	var items = ["ビル名","人数"]
+/////////////////////ビル情報用
+	var weekStr ="";
+    var p = document.createElement('p')
 
+    for(var i=0 ; i<billweek.length ;i++){
 
+    	if(billweek[i] == 0){
+        	weekStr +=week[i]+"×\n"
+    	}else{
+        	weekStr +=week[i]+"〇\n"
+        	}
+    }
+	p.textContent=weekStr;
+    document.getElementById("billweek").appendChild(p)
+
+/////////////////////カレンダー表示用
 	function showCalendar(year, month) {
 
 	        const html = createCalendar(year, month)
 	        //tableタグの生成
 	        const sec = document.createElement('table')
-	        sec.setAttribute("class","table table-bordered table-striped text-nowrap")
+	        sec.setAttribute("class","table table-bordered text-nowrap")
 	        sec.innerHTML = html
 	        //id=calendarのタグを親としてsec(htmlを入れたtableタグ)を挿入
 	        document.getElementById("calendar").appendChild(sec)
@@ -69,11 +100,10 @@
 	function createCalendar(year, month) {
 		var endDate = new Date(year,month,0);	//今月末日 0は前月の末日
 		var startDate = new Date(year,month-1,1);	//今月初日
-		console.log(endDate,startDate);
 		var DAY_OF_MONTH = endDate.getDate();	//今月の日数
 		var startDay = startDate.getDay();	//今月初日の曜日
-		var dayCount = 1 // 日にちのカウント
-		var planDayCount = 1 // 日にちのカウント()
+		var dayCount = 1 // 日にちのカウント（日付用）
+		var planDayCount = 1 // 日にちのカウント(スタッフ用)
 
 
 
@@ -89,7 +119,7 @@
 
 	//曜日
 	for(var i = 0 ; i < (week.length); i++){
-		html += '<th>'+ week[i]; +'</th>'
+		html += '<th id="days">'+ week[i]; +'</th>'
 	}
 			html += '</tr>'//ここまでヘッダー部分
 
@@ -120,24 +150,26 @@
 				        //wが奇数の時シフト
 				        else{
 							for(var j = 1; j <= billPeople; j++){
-
 				        	 for (let d = 0; d < 7; d++) {
 
-									console.log(planDayCount);
 
 			        			  if (w == 1 && d < startDay) {
 						                // 1行目で1日の曜日の前
 						                  html += '<td class="is-disabled"></td>'
 						           continue;
-			        			  }
+			        			  }else if(planDayCount > DAY_OF_MONTH) {
+						                // 末尾の日数を超えた
+						                   html += '<td class="is-disabled"></td>'
+						                planDayCount++
+						                continue;}
+
 									//曜日によってデータを格納できるか変更する
 									if(billweek[d] ==0){
-										html += '<td style="background-color:#EDF7FF;"></td>'
-										if(j == 1){
+										html += '<td id="close"></td>'
 											planDayCount++;
-										}
 										continue;
 									}
+
 									//plandaycountの時の日付を取得、yyyy-mm-dd文字型に変換
 									var selectDate = new Date(startDate.getFullYear(),startDate.getMonth(),planDayCount);
 									var yy =selectDate.getFullYear();
@@ -146,27 +178,42 @@
 
 									var selectDateStr = yy+"-"+ mm +"-"+ dd;
 
-
+									var count = 0
 						        	for(var plan of planList){
+						        		count ++
 
 				        			  if(selectDateStr == plan.planDate && plan.billId== billId  && j == plan.staffNumber
 						            ){
-						                html += '<td><a href="/staff/sdetail/'+ plan.staffId + ' ">'
-										+ plan.staffName +'</a>'
+				        				  if(plan.restCheck ==1){
+				        					  html += '<td id ="request">'
+				        				  }else if(plan.restCheck ==2){
+				        					  html += '<td id="nodata">'
+				        				  }else if(plan.restCheck ==3){
+				        					  html += '<td id ="changed">'
+				        				  }else{
+				        					  html += '<td>'
+				        				  }
+
+						                html += '<a href="/staff/sdetail/'+ plan.staffId + ' ">'
+										 +plan.staffName+'</a>'
 						                html += '</td>'
-						                //1人目の時だけ日付をカウント
-						                	if(j == 1){
 						                		planDayCount++;
-											}
-						                	break;
+						                count = 0
 						            }
-					                  else{
-					                  continue;}
 
-
+						        		if(count >= planList.length){
+											html += '<td id="nodata">no data</td>'
+						                		planDayCount++;
+						        		}
 							        }//planList終わり
 
 						        }//1週刊おわりfor文終わり
+
+						        if(w==1 && j!=billPeople){
+							        planDayCount = 1
+						        }else if(j!=billPeople){
+						        	var planDayCount = planDayCount - 7
+						        }
 						        html += '</tr>'
 							}//jのfor文終わり
 

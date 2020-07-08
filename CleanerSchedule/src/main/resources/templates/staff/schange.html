@@ -4,24 +4,17 @@
 <meta charset="UTF-8">​
 <title>スタッフ情報変更画面</title>​
 </head>​
-
 <body>​
-<div th:fragment="schange_contents">
-​
+	<div th:fragment="schange_contents">
     <form method="post" th:action="@{/staff/scomp}" th:object="${staffForm}">​
-          <input type="hidden" class="form-control" th:field="*{staffId}"​
-            readonly="readonly" />​
-<table>
 				<table class="table table-bordered table-hover table-striped">
-
-					<caption>社員情報</caption>
+			<caption>社員情報</caption>
 					<tr>
 					    <th>項目</th>
 						<th>変更前</th>
 						<th>変更後</th>
 					</tr>
-                  <input type="hidden" class="form-control" th:field="*{staffId}"​
-                 readonly="readonly" />
+          <input type="hidden" th:field="*{staffId}"​ readonly="readonly" />​
         <tr>
         <th>名前</th>
         <td th:text="${name}"></td> ​
@@ -42,12 +35,6 @@
         <td th:text="${tel}"></td> <br>​
         <td><input type="text" th:field="*{staffTel} " minlength="9" maxlength="11"></td>
         </tr>
-
-        <!--  現出勤日数：<td th:text="${days}"></td> <br>​
-
-        新出勤日数​
-
-        <td><input type="text" ></td> <br> -->​
       <tr>
 ​      <th> 勤務終了日</th>
       <td th:text="${stop}"></td>
@@ -65,27 +52,31 @@
     </script>
      <!--   <td><input type="text" th:field="*{staffStop}" ></td> -->
       </tr>
-<!--          現シフトパターン：<td th:text="${shift}"></td> <br>​
-
-        新シフトパターン：月<input type="checkbox" name="Monday" value="text" id="shift">​
-
-                          火<input type="checkbox" name="Tuesday" value="text"id="shift">​
-
-                          水<input type="checkbox" name="Wednesday" value="text"id="shift">​
-
-                          木<input type="checkbox" name="Thursday" value="text"id="shift">​
-
-                          金<input type="checkbox" name="Friday" value="text"id="shift">​
-
-                          土<input type="checkbox" name="Saturday" value="text"id="shift">​
-
-                          日<input type="checkbox" name="Sunday" value="text"id="shift"> -->​
+​
 
 ​</table>
         <button  type="submit" name="update">​変更​</button>
 
-​
+​</form>
+
 
             </div>​
 </body>​
 </html>
+
+
+
+        <!--  現出勤日数：<td th:text="${days}"></td> <br>​
+
+        新出勤日数​
+
+        <td><input type="text" ></td> <br> -->
+
+        <!--          現シフトパターン：<td th:text="${shift}"></td> <br>​
+        新シフトパターン：月<input type="checkbox" name="Monday" value="text" id="shift">​
+                          火<input type="checkbox" name="Tuesday" value="text"id="shift">​
+                          水<input type="checkbox" name="Wednesday" value="text"id="shift">​
+                          木<input type="checkbox" name="Thursday" value="text"id="shift">​
+                          金<input type="checkbox" name="Friday" value="text"id="shift">​
+                          土<input type="checkbox" name="Saturday" value="text"id="shift">​
+                          日<input type="checkbox" name="Sunday" value="text"id="shift"> -->

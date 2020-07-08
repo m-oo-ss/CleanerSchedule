@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.schedule.domain.model.Mail;
 import com.example.demo.schedule.domain.model.Plan;
 import com.example.demo.schedule.domain.model.SelectForm;
 import com.example.demo.schedule.domain.repository.PlanRepository;
@@ -77,4 +78,37 @@ public class PlanService {
 		}
 		return result;
 	}
+
+
+
+	//rest_checkの値を1に変換（変更確認）
+	public boolean restCheckConfirm(int staffId) {
+
+		// 判定用変数
+		boolean result = false;
+
+		// １件更新
+		int rowNumber = planRepository.restCheckConfirm(staffId);
+		if (rowNumber > 0) {
+			// update成功
+			result = true;
+		}
+		return result;
+	}
+
+	// メールアドレス全件取得
+	public List<Mail> findMail() {
+
+		return planRepository.findMail();
+
+	}
+
+	// rest_check=3のメールアドレス全件取得
+	public List<Mail> findRmail() {
+
+		return planRepository.findRmail();
+
+	}
 }
+
+
