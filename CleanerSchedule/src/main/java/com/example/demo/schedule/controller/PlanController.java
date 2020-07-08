@@ -80,7 +80,7 @@ public class PlanController {
 
         System.out.println(sendmail);
 
-		List<Mail> rmailList = planService.findRmail();
+        List<Mail> rmailList = planService.findRmail();
 		//forループを使ってメールアドレスをすべて出力
 		String sendrmail1 = "";
 		for (int i=1; i<rmailList.size(); ++i) {
