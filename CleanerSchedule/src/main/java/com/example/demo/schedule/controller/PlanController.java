@@ -47,6 +47,14 @@ public class PlanController {
 		List<Staff> staffList = staffService.findAll();
 		List<Plan> planList = planService.findAll();
 
+
+	     //新着件数表示をしたいのですが。保留。
+		List<Plan> pList = alertService.getAlertList();
+	    model.addAttribute("pList",pList.size());
+//	    System.out.println(pList.size());
+
+
+
 		//メールアドレスのリストを取得
 		List<Mail> mailList = planService.findMail();
 		//forループを使ってメールアドレスをすべて出力
