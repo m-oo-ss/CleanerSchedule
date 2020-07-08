@@ -79,6 +79,37 @@ public class PlanController {
 		//html文をmodelに格納
         model.addAttribute("sendmail", sendmail);
 
+
+        System.out.println(sendmail);
+
+        List<Mail> rmailList = planService.findRmail();
+		//forループを使ってメールアドレスをすべて出力
+		String sendrmail1 = "";
+		for (int i=1; i<rmailList.size(); ++i) {
+
+			String srmail1 = (rmailList.get(i).getStaffMail()+",");
+
+
+			sendrmail1 += srmail1;
+
+
+		}
+
+		System.out.println(sendmail1);
+
+		String mrmail = (mailList.get(0).getStaffMail());
+
+
+		String sendrmail ="";
+        //mailtoを使ってメーラーを起動するhtml文
+        sendrmail += "mailto:"+mrmail+"?bcc="+sendrmail1+"&subject=勤務変更&body=勤務変更があります。ご確認ください。";
+
+		//html文をmodelに格納
+        model.addAttribute("sendmail", sendrmail);
+
+
+        System.out.println(sendrmail);
+
 		// スケジュール一覧に画面遷移
 		return "homelayout";
 
