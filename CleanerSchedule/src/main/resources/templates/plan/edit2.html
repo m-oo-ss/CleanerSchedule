@@ -228,6 +228,7 @@ function createCalendar(year, month) {
      		    								option.textContent ="--選択してください--"
                              					count = 0;
                              					flag = 1;
+                             					var restStaff = plan.staffId;
 
 
                 						}else {
@@ -243,6 +244,7 @@ function createCalendar(year, month) {
                              					flag = 1;
                              					if(plan.restCheck == 1){
          		    								td.setAttribute("id","request")
+                                 					var restStaff = plan.staffId;
                         						}
                 						}
 
