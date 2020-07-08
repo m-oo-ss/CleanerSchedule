@@ -190,6 +190,83 @@ bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_frid
 VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
 1,1,1,0,1,1,1, 3);
 
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルE','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+INSERT INTO bill (bill_name, bill_address,bill_tel, bill_starttime, bill_stoptime, bill_people,
+bill_sunday, bill_monday, bill_tuesday, bill_wednesday, bill_thursday, bill_friday, bill_saturday, owner_id)
+
+VALUES('ビルA','糟屋郡新宮町','06055556666','8:00:00','22:00:00',1,
+1,1,1,0,1,1,1, 3);
+
+
 /*スケジュールテーブルサンプルデータ*/
 
 INSERT INTO plan (plan_date,bill_id ,staff_id , date_id, staff_number)

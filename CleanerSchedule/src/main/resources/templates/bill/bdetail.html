@@ -8,12 +8,27 @@
 	<div th:fragment="bdetail_contents">
 		<h1 th:text="${name}"></h1>
 
-   <div id="calendar" class="table-responsive"></div>
+   <div id="calendar"></div>
 		<button id="prev" type="button">前の月</button>
 		<button id="next" type="button">次の月</button>
 
 			<!-- 情報を書くテーブル -->
-		<table>
+		<table class="table table-bordered text-nowrap">
+		<tr><th>ビル名</th>
+		<th>住所</th>
+		<th>派遣人数</th>
+		<th>清掃曜日</th>
+		<th>オーナー名</th>
+		<th>連絡先</th>
+		</tr>
+
+		<tr><td th:text="${name}"></td>
+		<td th:text="${address}"></td>
+		<td th:text="${people}"></td>
+		<td id="billweek"></td>
+		<td th:text="${owner_name}"></td>
+		<td th:text="${owner_tel}"></td>
+		</tr>
 
 		</table>
 <a th:href="@{'/bill/bchange/' + ${id}}">情報変更 </a>
@@ -43,6 +58,8 @@
 			]
 
 
+
+
 	/////////////////////////////////////////////
 
 	//日付関係
@@ -52,8 +69,22 @@
 
 	var week = ['日', '月', '火', '水', '木', '金', '土']
 	var items = ["ビル名","人数"]
+/////////////////////ビル情報用
+	var weekStr ="";
+    var p = document.createElement('p')
 
+    for(var i=0 ; i<billweek.length ;i++){
 
+    	if(billweek[i] == 0){
+        	weekStr +=week[i]+"×\n"
+    	}else{
+        	weekStr +=week[i]+"〇\n"
+        	}
+    }
+	p.textContent=weekStr;
+    document.getElementById("billweek").appendChild(p)
+
+/////////////////////カレンダー表示用
 	function showCalendar(year, month) {
 
 	        const html = createCalendar(year, month)
@@ -159,6 +190,8 @@
 				        					  html += '<td id="nodata">'
 				        				  }else if(plan.restCheck ==3){
 				        					  html += '<td id ="changed">'
+				        				  }else{
+				        					  html += '<td>'
 				        				  }
 
 						                html += '<a href="/staff/sdetail/'+ plan.staffId + ' ">'

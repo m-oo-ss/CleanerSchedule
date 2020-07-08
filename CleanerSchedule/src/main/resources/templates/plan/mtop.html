@@ -10,9 +10,9 @@
 	<div th:fragment="mtop_contents">
 
 <p th:text=${result}></p>
-		<button id="prev" type="button">前の月</button>
-		<button id="next" type="button">次の月</button>
-		<div id="calendar" class="table-responsive"></div>
+		<div id="calendar">
+		<button id="prev" class="btn btn-primary">前の月</button>
+		<button id="next" class="btn btn-primary">次の月</button></div>
 
 
 <script th:inline="javascript" charset="utf-8">
@@ -38,8 +38,14 @@
 	        const sec = document.createElement('table')
 	        sec.setAttribute("class","table table-bordered table-striped text-nowrap")
 	        sec.innerHTML = html
+
+	        var h1 = document.createElement('h1')
+	        h1.textContent =year +"年"+month+"月"
+	        document.getElementById("calendar").appendChild(h1)
+
 	        //id=calendarのタグを親としてsec(htmlを入れたtableタグ)を挿入
 	        document.getElementById("calendar").appendChild(sec)
+
 	}
 
 
@@ -52,25 +58,25 @@
 
 
 		var html = '';
-		html += '<h1>' + year  + '年' + month + '月</h1>'
+
 		html += '<tr>'
 	//固定要素
 	for(var i = 0; i < 2; i++){
 		html += '<th rowspan =2 >' + items[i]; '</th>'
 	}
+		//日付
+		for(var i = 1; i <= (DAY_OF_MONTH); i++){
+			html += '<th class="topfixed">'+ i +'</th>'
 
-	//曜日
-	for(var i = startDay; i < (DAY_OF_MONTH+startDay); i++){
-		html += '<th>'+ week[i%7]; +'</th>'
-	}
+		}
+
 	html += '</tr>'
 
 	html += '<tr>'
-	//日付
-	for(var i = 1; i <= (DAY_OF_MONTH); i++){
-		html += '<th>'+ i +'</th>'
-
-	}
+		//曜日
+		for(var i = startDay; i < (DAY_OF_MONTH+startDay); i++){
+			html += '<th>'+ week[i%7]; +'</th>'
+		}
 			html += '</tr>'//ここまでヘッダー部分
 
 
@@ -87,8 +93,8 @@
 		]
 
 		//ビルの情報の列
-		html += '<td rowspan ='+ bill.billPeople +'>'+ bill.billName +'</td>'
-		html += '<td rowspan ='+ bill.billPeople +'>'+ bill.billPeople +'</td>'
+		html += '<th class="sidefixed" rowspan ='+ bill.billPeople +'>'+ bill.billName +'</th>'
+		html += '<th rowspan ='+ bill.billPeople +'>'+ bill.billPeople +'</th>'
 
 			//ビルの人数分繰り返す
 			for(var j = 1; j <= bill.billPeople; j++){

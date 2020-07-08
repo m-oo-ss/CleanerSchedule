@@ -9,13 +9,14 @@
 	​
 
 	<div th:fragment="ssearch_contents">
+	<h1>従業員一覧</h1>
 
-		<h3>検索したい社員名を入力</h3>
+		<p></p>
 		​
 
 		<form th:action="@{/staff/slist}" th:object="${staffForm}"
 			method="post">
-			​ <input type="search" name="search" placeholder="名前">​
+			​ <input type="search" name="search" placeholder="検索したい従業員名を入力">​
 			<button type="submit">検索</button>
 					</form>
 			<br> <a class="btn btn-primary" th:href="@{'/staff/snew'}">新規社員登録</a>​
@@ -34,7 +35,8 @@
 		//id=listがついているタグをlistTableという名前で指定
     	var listTable = document.getElementById("list");
     	var table = document.createElement('table')
-    	table.setAttribute("class","table table-bordered table-hover " )
+    	table.setAttribute("class","table table-bordered table-hover table-striped" )
+    				var tbody = document.createElement('tbody')
     	//スタッフリストをまわす
         for(var staff of staffList){
 
@@ -68,7 +70,7 @@
 			td.appendChild(a);
 			tr.appendChild(td);
 
-			var tbody = document.createElement('tbody')
+
 			tbody.appendChild(tr);
 			table.appendChild(tbody);
 			listTable.appendChild(table);

@@ -6,16 +6,14 @@
 <title>社員トップ画面</title>​
 </head>
 <body>
-
 <div th:fragment="edit_contents">
-
-<button id="prev" type="button">前の月</button>
-<button id="next" type="button">次の月</button>
 <form method="post" th:action="@{/plan/mtop}" th:object="${selectForm}" >
-<div id="calendar" class="table-responsive"></div>
+<div id="calendar" >
+<button id="prev" class="btn btn-primary">前の月</button>
+<button id="next" class="btn btn-primary">次の月</button></div>
 
 
-<button type="submit" name="update">編集確定</button>
+<button class="btn btn-outline-dark" type="submit" name="update">編集確定</button>
 
 
 <script th:inline="javascript">
@@ -54,7 +52,7 @@ function createCalendar(year, month) {
 
     	//h1要素の生成
     	var h1 = document.createElement('h1');
-    	h1.textContent = year  + '/' + month;
+    	h1.textContent = year  + '年' + month+'月';
     	calendar.appendChild(h1);
 
      	var table = document.createElement('table');
@@ -74,6 +72,7 @@ function createCalendar(year, month) {
  	var tr = document.createElement('tr');
  	for(var i=0 ; i< info.length ; i++){
  	 	var th = document.createElement('th');
+
  	 	th.textContent = info[i];
  	 	th.setAttribute("rowspan",2);
     	tr.appendChild(th);
@@ -82,6 +81,7 @@ function createCalendar(year, month) {
     // 日付の行を作成
     for (let i = 1; i <= DAY_OF_MONTH; i++) {
  	 	var th = document.createElement('th');
+	 	th.setAttribute("class", "topfixed")
 	 	th.textContent = i;
   	tr.appendChild(th);
     }
@@ -91,6 +91,7 @@ function createCalendar(year, month) {
 	//曜日
 	for(var i = DAY_OF_THE_WEEK; i < (endDayCount+DAY_OF_THE_WEEK); i++){
  	 	var th = document.createElement('th');
+
 	 	th.textContent = weeks[i%7];
   	tr.appendChild(th);
 	}
@@ -114,6 +115,7 @@ function createCalendar(year, month) {
 	 	var tr = document.createElement('tr');
 
  	 	var th = document.createElement('th');
+ 	 	th.setAttribute("class", "sidefixed")
  	 	th.textContent = bill.billName;
  	 	th.setAttribute("rowspan",bill.billPeople);
     	tr.appendChild(th);
