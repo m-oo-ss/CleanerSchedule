@@ -155,13 +155,7 @@ public class PlanRepository {
 
 			//String型配列contentsに"1,2020-01-01,2,3"をカンマ区切りで格納
 			String[] contents = selected.split(",", 0);
-<<<<<<< HEAD
-            if(contents[0].equals("none")) {
-                continue;
-            }
 
-
-=======
 			if(contents[0].equals("none")) {
 				continue;
 			}
@@ -180,7 +174,7 @@ public class PlanRepository {
 						);
 
 			}else {
->>>>>>> master
+
 			rowNumber = jdbcTemplate.update(
 					"UPDATE plan"
 							+ " SET"
