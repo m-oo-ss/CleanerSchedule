@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.schedule.domain.model.Bill;
@@ -145,5 +146,44 @@ public class PlanController {
 		//mtopに戻る
 		return getList(model);
 	}
+
+
+
+	   //個人詳細画面に移動(変更の確認をする)
+    @PostMapping(value="/staff/sdetail/{id}" , params = "update")
+    public String postComfirm(Model model,
+            //PathVariableをつけると渡されてきたパス(URL)の値を引数の変数に入れられる
+            @PathVariable("id") int staffId) {
+        // コンテンツ部分にユーザー詳細を表示するための文字列を登録
+        model.addAttribute("contents", "staff/sdetail :: sdetail_contents");
+
+        //1件検索
+
+        Staff staff = staffService.findOne(staffId);
+        Boolean result = planService.restCheckConfirm(staffId);
+
+		List<Plan> planList = planService.findAll();
+
+        // 検索結果をModelに登録
+        model.addAttribute("id", staff.getStaffId());
+        model.addAttribute("name", staff.getStaffName());
+        model.addAttribute("address", staff.getStaffAddress());
+        model.addAttribute("mail", staff.getStaffMail());
+        model.addAttribute("tel", staff.getStaffTel());
+        model.addAttribute("start", staff.getStaffStart());
+
+        String strDate = staff.getStaffStop().toString();
+        if(strDate.equals("2200-12-31")) {
+            model.addAttribute("stop", "未定");
+        }else {
+            model.addAttribute("stop", staff.getStaffStop());
+        }
+
+		model.addAttribute("planList", planList);
+
+
+        // sdetail.htmlに画面遷移
+        return "homelayout";
+    }
 
 }

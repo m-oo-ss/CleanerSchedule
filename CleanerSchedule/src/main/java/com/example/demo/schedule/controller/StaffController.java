@@ -283,6 +283,9 @@ public class StaffController {
         return "homelayout";
     }
 
+
+
+
     //個人詳細画面に移動
     @GetMapping("/user/udetail/{pid}")
     public String getUdetail(Model model,
@@ -307,13 +310,15 @@ public class StaffController {
         model.addAttribute("stoptime", plan.getBillStopTime());
   //      model.addAttribute("check", plan.isRestCheck());
 
-
-
-
         // sdetail.htmlに画面遷移
         return "homelayout";
 
     }
+
+
+
+
+
 
     //Planテーブルのrest_checkをfalseに変換する
     @PostMapping(value = "/staff/sdetail/{sid}/{pid}")

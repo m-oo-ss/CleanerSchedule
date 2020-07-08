@@ -77,4 +77,21 @@ public class PlanService {
 		}
 		return result;
 	}
+
+
+
+	//rest_checkの値を1に変換（変更確認）
+	public boolean restCheckConfirm(int staffId) {
+
+		// 判定用変数
+		boolean result = false;
+
+		// １件更新
+		int rowNumber = planRepository.restCheckConfirm(staffId);
+		if (rowNumber > 0) {
+			// update成功
+			result = true;
+		}
+		return result;
+	}
 }

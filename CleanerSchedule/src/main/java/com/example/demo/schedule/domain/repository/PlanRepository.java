@@ -189,4 +189,18 @@ public class PlanRepository {
 		return rowNumber;
 	}
 
+
+
+	//変更確認restCheckを0に変更
+	public int restCheckConfirm(int staffId) throws DataAccessException {
+		//
+		int rowNumber = jdbcTemplate.update(
+				"UPDATE PLAN set REST_CHECK = 0 "
+						+ " WHERE REST_CHECK=3"
+						+ " and STAFF_ID=?",
+						staffId
+						);
+		return rowNumber;
+	}
+
 }
