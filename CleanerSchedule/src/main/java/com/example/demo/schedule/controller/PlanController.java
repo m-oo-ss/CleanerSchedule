@@ -93,7 +93,7 @@ public class PlanController {
         List<Mail> rmailList = planService.findRmail();
 		//forループを使ってメールアドレスをすべて出力
 		String sendrmail1 = "";
-		for (int i=1; i<rmailList.size(); ++i) {
+		for (int i=0; i<rmailList.size(); ++i) {
 
 			String srmail1 = (rmailList.get(i).getStaffMail()+",");
 
@@ -113,7 +113,7 @@ public class PlanController {
         sendrmail += "mailto:"+mrmail+"?bcc="+sendrmail1+"&subject=勤務変更&body=勤務変更があります。ご確認ください。";
 
 		//html文をmodelに格納
-        model.addAttribute("sendmail", sendrmail);
+        model.addAttribute("sendrmail", sendrmail);
 
 
         System.out.println(sendrmail);
@@ -149,6 +149,33 @@ public class PlanController {
 	 		System.out.println("入っていない");
 
 			}
+			List<Plan> planList = planService.getRestList();
+			String sendmail1 = "";
+			for (int i=0; i<planList.size(); ++i) {
+
+				String smail1 = (planList.get(i).getStaffMail()+",");
+
+
+				sendmail1 += smail1;
+
+
+			}
+
+			System.out.println(sendmail1);
+
+
+			List<Mail> mailList = planService.findMail();
+			String mmail = (mailList.get(0).getStaffMail());
+
+
+			String sendmail ="";
+	        //mailtoを使ってメーラーを起動するhtml文
+	        sendmail += "mailto:"+mmail+"?bcc="+sendmail1+"&subject=休暇申請受付&body=お疲れ様です。休暇申請を受け付けました。ご確認ください。";
+
+	        model.addAttribute("sendmail", sendmail);
+
+
+	        System.out.println(sendmail);
 
 			// homelayout.htmlに画面遷移
 			return "homelayout";
