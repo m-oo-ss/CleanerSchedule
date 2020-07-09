@@ -60,16 +60,15 @@
 <input type="checkbox" id="sample2" class="my_check_box" />
 <label for="sample2">土</label>
 
-
 		       </tr>
               	<tr>
 		       <th class="active co-sm-2">掃除時間始まり</th>
-         <td><input type="text"th:field="*{billStartTime}"></td>
+         <td><input type="time" name="example" step="1" value="00:00:00" required th:field="*{billStartTime}"></td>
 
                </tr>
                <tr>
                <th class="active co-sm-2">掃除時間終わり</th>
-           <td><input type="text"th:field="*{billStopTime}"></td>
+           <td><input type="time" name="example" step="1" value="00:00:00" required th:field="*{billStopTime}"></td>
 
                </tr>
 			</table>
