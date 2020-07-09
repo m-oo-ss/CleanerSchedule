@@ -47,6 +47,14 @@ public class PlanController {
 		List<Staff> staffList = staffService.findAll();
 		List<Plan> planList = planService.findAll();
 
+
+	     //新着件数表示をしたいのですが。保留。
+		List<Plan> pList = alertService.getAlertList();
+	    model.addAttribute("pList",pList.size());
+//	    System.out.println(pList.size());
+
+
+
 		//メールアドレスのリストを取得
 		List<Mail> mailList = planService.findMail();
 		//forループを使ってメールアドレスをすべて出力
@@ -122,8 +130,17 @@ public class PlanController {
 		public String getRestList(Model model) {
 			// コンテンツ部分にユーザー詳細を表示するための文字列を登録
  			model.addAttribute("contents", "plan/restlist :: restlist_contents");
-			// スタッフ一覧の生成
-			try {
+
+
+
+ 	        //新着件数表示をしたいのですが。保留。
+ 			List<Plan> pList = alertService.getAlertList();
+ 	        model.addAttribute("pList",pList.size());
+// 	        System.out.println(pList.size());
+
+
+ 			// スタッフ一覧の生成
+ 			try {
 
  			List<Plan> planList = planService.getRestList();
  			model.addAttribute("planList", planList);
