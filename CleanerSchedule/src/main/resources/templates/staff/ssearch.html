@@ -16,7 +16,7 @@
 
 		<form th:action="@{/staff/slist}" th:object="${staffForm}"
 			method="post">
-			​ <input type="search" name="search" placeholder="検索したい従業員名を入力">​
+			​ <input type="search" name="search" placeholder="検索したい従業員名を入力" required>​
 			<button type="submit">検索</button>
 					</form>
 			<br> <a class="btn btn-primary" th:href="@{'/staff/snew'}">新規社員登録</a>​
