@@ -22,15 +22,9 @@
 			<br> <a class="btn btn-primary" th:href="@{'/staff/snew'}">新規社員登録</a>​
 
 <div id = "list" class="table-responsive">
-
-			<table  class="table table-bordered table-hover table-striped" id ="list">
-			<tr><th>従業員名</th><th>住所</th><th>電話番号</th><th>メールアドレス</th></tr>
-
 </div>
 
-
-
-		<script th:inline="javascript" charset="utf-8">
+<script th:inline="javascript" charset="utf-8">
 
 /*<![CDATA[*/
     let staffList= /*[[ ${staffList} ]]*/
@@ -39,6 +33,22 @@
     	var table = document.createElement('table')
     	table.setAttribute("class","table table-bordered table-hover table-striped" )
     				var tbody = document.createElement('tbody')
+
+        			var tr = document.createElement('tr');
+			    	var th = document.createElement('th');
+			    	th.textContent ="氏名"
+			    	tr.appendChild(th)
+			    	var th = document.createElement('th');
+			    	th.textContent ="住所"
+			    	tr.appendChild(th)
+			    	var th = document.createElement('th');
+			    	th.textContent ="電話番号"
+			    	tr.appendChild(th)
+			    	var th = document.createElement('th');
+			    	th.textContent ="メールアドレス"
+			    	tr.appendChild(th)
+			    	tbody.appendChild(tr);
+
     	//スタッフリストをまわす
         for(var staff of staffList){
 
@@ -74,10 +84,11 @@
 
 
 			tbody.appendChild(tr);
-			table.appendChild(tbody);
-			listTable.appendChild(table);
 
         }
+					table.appendChild(tbody);
+					listTable.appendChild(table);
+
 /*]]>*/
 </script>​
 
