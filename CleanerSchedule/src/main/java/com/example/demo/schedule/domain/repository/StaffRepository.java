@@ -51,14 +51,14 @@ public class StaffRepository {
 						+ " staff_address = ?,"
 						+ " staff_mail = ?,"
 						+ " staff_tel = ?,"
-						+ " staff_start = ?,"
+
 						+ " staff_stop = ?"
 						+ " WHERE staff_id = ?",
 				staff.getStaffName(),
 				staff.getStaffAddress(),
 				staff.getStaffMail(),
 				staff.getStaffTel(),
-				staff.getStaffStart(),
+
 				staff.getStaffStop(),
 				staff.getStaffId()
 
@@ -76,16 +76,14 @@ public class StaffRepository {
 				+ " staff_address,"
 				+ " staff_mail, "
 				+ " staff_tel, "
-				+ " staff_start, "
-				+ " staff_stop)"
-				+ " VALUES(?, ?, ?, ?, ?, ?)",
+				+ " staff_start )"
+				+ " VALUES(?, ?, ?, ?, ?, )",
 				//staff.getStaffId(),
 				staff.getStaffName(),
 				staff.getStaffAddress(),
 				staff.getStaffMail(),
 				staff.getStaffTel(),
-				staff.getStaffStart(),
-				staff.getStaffStop()
+				staff.getStaffStart()
 		//                  staff.getShiftId()
 		);
 
