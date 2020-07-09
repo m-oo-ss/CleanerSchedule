@@ -74,13 +74,15 @@ public class StaffRepository {
 		int rowNumber = jdbcTemplate.update("INSERT INTO staff("
 				+ "staff_name,"
 				+ " staff_address,"
+				+ " staff_pass,"
 				+ " staff_mail, "
 				+ " staff_tel, "
 				+ " staff_start )"
-				+ " VALUES(?, ?, ?, ?, ?, )",
+				+ " VALUES(?, ?, ?, ?, ?, ?, )",
 				//staff.getStaffId(),
 				staff.getStaffName(),
 				staff.getStaffAddress(),
+				staff.getStaffPass(),
 				staff.getStaffMail(),
 				staff.getStaffTel(),
 				staff.getStaffStart()
