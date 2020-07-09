@@ -67,7 +67,7 @@ private StaffController staffController;
 
         }else {
 
-             model.addAttribute("error", "エラー");
+             model.addAttribute("error", "名前とパスワードが一致しません");
              return "login";
         }
 
