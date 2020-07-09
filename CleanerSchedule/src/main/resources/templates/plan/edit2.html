@@ -56,6 +56,7 @@ function createCalendar(year, month) {
     	//h1要素の生成
     	var h1 = document.createElement('h1');
     	h1.textContent = year  + '年' + month+'月';
+    	h1.setAttribute("class","all");
     	calendar.appendChild(h1);
 
      	var table = document.createElement('table');
@@ -243,7 +244,7 @@ function createCalendar(year, month) {
 
 
                 						}else {
-
+                							td.setAttribute("id","normal")
  		    								option.setAttribute("selected","");
  		    								option.setAttribute("value", "none" + ','
  		    										+ "none" + ','

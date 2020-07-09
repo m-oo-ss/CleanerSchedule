@@ -8,7 +8,7 @@
 	<div th:fragment="bdetail_contents">
 		<h1 th:text="${name}"></h1>
 
-   <div id="calendar"></div>
+   <div id="table"></div>
 		<button id="prev" type="button">前の月</button>
 		<button id="next" type="button">次の月</button>
 
@@ -93,7 +93,7 @@
 	        sec.setAttribute("class","table table-bordered text-nowrap")
 	        sec.innerHTML = html
 	        //id=calendarのタグを親としてsec(htmlを入れたtableタグ)を挿入
-	        document.getElementById("calendar").appendChild(sec)
+	        document.getElementById("table").appendChild(sec)
 	}
 
 
@@ -111,7 +111,7 @@
 
 		var h1 = document.createElement('h1');
 		h1.textContent = year  + '年' + month + '月';
-		document.getElementById("calendar").appendChild(h1)
+		document.getElementById("table").appendChild(h1)
 
 		html += '<tr>'
 	//固定要素
