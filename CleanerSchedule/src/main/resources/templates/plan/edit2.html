@@ -16,7 +16,7 @@
 </div>
 
 
-<button class="btn btn-outline-dark" type="submit" name="update">編集確定</button>
+<button class="btn btn-danger" type="submit" name="update">編集確定</button>
 
 
 <script th:inline="javascript">
@@ -272,12 +272,14 @@ function createCalendar(year, month) {
     			            	}
 
 							}//プランリスト内に条件に合ったものがあればflag=1になるのでプランリスト中断
+
 							var dateStaff = [];
 							for (plan of planList){
-								 if(plan.planDate == selectDateStr){
+								 if(plan.planDate == selectDateStr || plan.planDate == selectDateStr2){
 									   dateStaff.push(plan.staffId);
 								 }
 							}
+							console.log(restStaff)
 					///////////////////////////////////////////従業員の選択肢
 							//従業員数の分だけ繰り返す
 	                		for (var staff of staffList) {
@@ -305,16 +307,17 @@ function createCalendar(year, month) {
                       	   }//if(dateStaffにいない人)終わり
                 		}//for文休みスタッフ選択肢に格納終わり
 
-                		if(index != -1){var option = document.createElement('option');
+						var option = document.createElement('option');
+                			option.setAttribute("disabled","")
 							option.textContent ="--以下出勤予定者--"
 							    sel.appendChild(option);
-                		}
+
 
 						//従業員数の分だけ繰り返す
                 		for (var staff of staffList) {
              		    	var option = document.createElement('option');
 						//出勤予定スタッフの表示
-					  	if(dateStaff.indexOf( staff.staffId ) != -1 && staff.staffId != restStaff){ //出勤予定者リストにいる&&
+					  	if(dateStaff.indexOf( staff.staffId ) != -1 && staff.staffId != restStaff){ //出勤予定者リストにいる&& restStaffになっていない
           				if(setFlag == 1){
 								option.setAttribute("value", bill.billId + ','
 										+ selectDateStr + ','
@@ -405,7 +408,7 @@ function selectCheck(select){
 	//一度全ての要素をデフォルトの色に設定
 	for(var i = 0; i < elements.length; i ++){
 		var parent = $(elements[i]).parent();
-		if(parent[0].style.backgroundColor=="pink"){
+		if(parent[0].style.backgroundColor=="orange"){
 			console.log("白色")
     		parent[0].style.backgroundColor="";
 		}
@@ -413,7 +416,7 @@ function selectCheck(select){
 	//重複している要素の色を格納
 	for(var i = 0; i < indexRed.length; i++){
 		var parent = $(elements[indexRed[i]]).parent(); //indexRed番目のelements(selectタグ)の親を指定
-		parent[0].style.backgroundColor="pink";
+		parent[0].style.backgroundColor="orange";
 	}
 
 
