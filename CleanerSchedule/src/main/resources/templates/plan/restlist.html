@@ -24,14 +24,28 @@
             </tr>
         </table>
 
- <form method="post" th:action="@{/plan/edit}">
+ <form method="post" th:action="@{/plan/edit}"onsubmit="return mail()">
  <button type="submit"  name="restcheck" > スケジュール編集</button>
 </form>
 
 	​​ <a th:href="@{'/plan/mtop'}">戻る</a>
-	  <a th:href="${sendmail}">メール送信</a>
+	<!--   <a th:href="${sendmail}">メール送信</a> -->
+
+<script th:inline="javascript" charset="utf-8">
+
+/*<![CDATA[*/
+let sendmail= /*[[ ${sendmail} ]]*/
+
+	function mail(){
+
+		location.href = sendmail
+	}
+
+	/*]]>*/
+	 </script>
 
 </div>
 ​
 </body>
 </html>
+
