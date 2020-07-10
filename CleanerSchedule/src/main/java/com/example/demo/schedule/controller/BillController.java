@@ -84,7 +84,7 @@ public class BillController {
 		model.addAttribute("name", bill.getBillName());
 		model.addAttribute("address", bill.getBillAddress());
 		model.addAttribute("owner_name", owner.getOwnerName());
-		model.addAttribute("owner_tel", owner.getOwnerName());
+		model.addAttribute("owner_tel", owner.getOwnerTel());
 		model.addAttribute("people", bill.getBillPeople());
 		model.addAttribute("sun", bill.getBillSun());
 		model.addAttribute("mon", bill.getBillMon());
@@ -236,10 +236,9 @@ public class BillController {
 		form.setBillMon(bill.getBillMon());//月
 		form.setBillTue(bill.getBillTue());//火
 		form.setBillWed(bill.getBillWed());//水
-		form.setBillWed(bill.getBillWed());//水
-		form.setBillThu(bill.getBillThu());//
-		form.setBillFri(bill.getBillFri());//
-		form.setBillSat(bill.getBillSat());//
+		form.setBillThu(bill.getBillThu());//木
+		form.setBillFri(bill.getBillFri());//金
+		form.setBillSat(bill.getBillSat());//土
 		form.setBillStartTime(bill.getBillStartTime());
 		form.setBillStopTime(bill.getBillStopTime());
 
@@ -277,18 +276,15 @@ public class BillController {
 		owner.setOwnerName(form.getOwnerName()); //オーナー名
 		owner.setOwnerTel(form.getOwnerTel()); //オーナー電話番号
 		bill.setBillPeople(form.getBillPeople());//派遣人数
-		bill.setBillPeople(bill.getBillPeople());//派遣人数
 		bill.setBillSun(form.getBillSun());//日
 		bill.setBillMon(form.getBillMon());//月
 		bill.setBillTue(form.getBillTue());//火
-		bill.setBillWed(form.getBillWed());//水
 		bill.setBillWed(form.getBillWed());//水
 		bill.setBillThu(form.getBillThu());//
 		bill.setBillFri(form.getBillFri());//
 		bill.setBillSat(form.getBillSat());//
 		bill.setBillStartTime(form.getBillStartTime());
 		bill.setBillStopTime(form.getBillStopTime());
-
 
 		//登録実行
 		boolean result = billService.insert(bill);
@@ -304,6 +300,7 @@ public class BillController {
 		} else {
 			model.addAttribute("result", "登録失敗");
 		}
+
 
 		//画面遷移
 		return getBillList(model);
