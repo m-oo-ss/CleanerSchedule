@@ -9,8 +9,8 @@
 		<h1 th:text="${name}"></h1>
 
    <div id="calendar"></div>
-		<button id="prev" type="button">前の月</button>
-		<button id="next" type="button">次の月</button>
+		<button id="prev" type="button" class="btn btn-primary">前の月</button>
+		<button id="next" type="button" class="btn btn-primary">次の月</button>
 
 			<!-- 情報を書くテーブル -->
 		<table class="table table-bordered text-nowrap">
@@ -31,7 +31,7 @@
 		</tr>
 
 		</table>
-<a th:href="@{'/bill/bchange/' + ${id}}">情報変更 </a>
+<a th:href="@{'/bill/bchange/' + ${id}}" class="btn btn-primary">情報変更 </a>
 
 		<a th:href="@{'/bill/blist'}">一覧に戻る</a>
 <!-- 以下Script -->

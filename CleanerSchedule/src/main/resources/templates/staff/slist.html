@@ -14,17 +14,75 @@
     <div th:fragment="slist_contents">
         <h1>検索結果</h1>
 
-        <table class="table table-bordered table-hover table-striped">
-			 <tr><th>従業員名</th><th>住所</th><th>電話番号</th></tr>
-            	<tr th:each="staff : ${staffList}">
-                <td><a th:href="@{'/staff/sdetail/'+${staff.staffId}}">
-                  <p th:text="${staff.staffName}"></p></a></td>
-                  <td th:text="${staff.staffAddress}"></td>
-                  <td th:text="${staff.staffTel}"></td>
+<div id = "list" class="table-responsive">
+</div>
+<script th:inline="javascript" charset="utf-8">
+
+/*<![CDATA[*/
+    let staffList= /*[[ ${staffList} ]]*/
+		//id=listがついているタグをlistTableという名前で指定
+    	var listTable = document.getElementById("list");
+    	var table = document.createElement('table')
+    	table.setAttribute("class","table table-bordered table-hover table-striped" )
+    				var tbody = document.createElement('tbody')
+
+        			var tr = document.createElement('tr');
+			    	var th = document.createElement('th');
+			    	th.textContent ="氏名"
+			    	tr.appendChild(th)
+			    	var th = document.createElement('th');
+			    	th.textContent ="住所"
+			    	tr.appendChild(th)
+			    	var th = document.createElement('th');
+			    	th.textContent ="電話番号"
+			    	tr.appendChild(th)
+			    	var th = document.createElement('th');
+			    	th.textContent ="メールアドレス"
+			    	tr.appendChild(th)
+			    	tbody.appendChild(tr);
+
+    	//スタッフリストをまわす
+        for(var staff of staffList){
+
+        	//tr td a要素の生成
+        	var tr = document.createElement('tr');
+        	var td = document.createElement('td');
+        	var a = document.createElement('a');
+        	//hrefに@{'/staff'~}を登録
+			a.setAttribute("href","/staff/sdetail/"+staff.staffId );
+        	//aタグの<a>ここに入れる文字を指定</a>
+			a.textContent = staff.staffName;
+			//親のtdタグに子のaタグを入れる
+			td.appendChild(a);
+			//親のtrタグに子のtdタグを入れる
+			tr.appendChild(td);
+
+			//2列目住所
+        	var td = document.createElement('td');
+			td.textContent = staff.staffAddress;
+			tr.appendChild(td);
+
+			//3列目住所
+        	var td = document.createElement('td');
+			td.textContent = staff.staffTel;
+			tr.appendChild(td);
+			//4列目メール
+        	var td = document.createElement('td');
+        	var a = document.createElement('a');
+			a.setAttribute("href","mailto:" + staff.staffMail);
+			a.textContent = staff.staffMail;
+			td.appendChild(a);
+			tr.appendChild(td);
 
 
-            </tr>
-        </table>
+			tbody.appendChild(tr);
+
+        }
+					table.appendChild(tbody);
+					listTable.appendChild(table);
+
+/*]]>*/
+</script>​
 
 </body>
 </html>
