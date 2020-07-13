@@ -3,10 +3,13 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
-<title>社員トップ画面</title>​
+
+<link rel="stylesheet" th:href="@{/static/home.css}">
+
+<title>社員トップ画面</title>
+​
 </head>
 <body>
-
 <div th:fragment="edit_contents">
 
 <button id="prev" type="button">前の月</button>
@@ -18,7 +21,7 @@
 <button type="submit" name="update">編集確定</button>
 
 
-<script th:inline="javascript">
+<script th:inline="javascript" charset="utf-8">
 
 
 
@@ -28,18 +31,34 @@
 	let billList = /*[[ ${billList} ]]*/
 	let staffList = /*[[ ${staffList} ]]*/
 
+<<<<<<< HEAD
+var week = ['日', '月', '火', '水', '木', '金', '土']
+var date = new Date()
+var year = date.getFullYear()
+var month = date.getMonth() + 1
+const config = {
+    show: 1,
+}
+=======
 const weeks = ['日', '月', '火', '水', '木', '金', '土']
 const date = new Date()
 let year = date.getFullYear()
 let month = date.getMonth() + 1
 
 
+>>>>>>> master
+
 
 function showCalendar(year, month) {
+<<<<<<< HEAD
+    for ( i = 0; i < config.show; i++) {
+        const Html = createCalendar(year, month)
+=======
 
 	const calendarHtml = createCalendar(year, month)
+>>>>>>> master
         const sec = document.createElement('section')
-        sec.innerHTML = calendarHtml
+        sec.innerHTML = Html
         document.querySelector('#calendar').appendChild(sec)
 
 
@@ -47,6 +66,19 @@ function showCalendar(year, month) {
 
 function createCalendar(year, month) {
 
+<<<<<<< HEAD
+    var startDate = new Date(year, month - 1, 1) // 月の最初の日を取得
+    var endDate = new Date(year, month,  0) // 月の最後の日を取得
+    var endDayCount = endDate.getDate() // 月の末日
+    var lastMonthEndDate = new Date(year, month - 2, 0) // 前月の最後の日の情報
+    var lastMonthendDayCount = lastMonthEndDate.getDate() // 前月の末日
+    var startDay = startDate.getDay() // 月の最初の日の曜日を取得
+
+    var DAY_OF_MONTH = endDate.getDate();	//今月の日数
+    var DAY_OF_THE_WEEK = startDate.getDay();	//今月初日の曜日
+    var dayCount = 1 // 日にちのカウント
+    var Html = '' // HTMLを組み立てる変数
+=======
 	const date = new Date();//現在
 
     const startDate = new Date(year, month - 1, 1) // 月の最初の日を取得
@@ -63,17 +95,32 @@ function createCalendar(year, month) {
 
 
 
+>>>>>>> master
 
 
-    Html += '<h1>' + year  + '/' + month + '</h1>'
+    Html += '<h1>' + year  + '年' + month + '月</h1>'
 
+<<<<<<< HEAD
+    + '<div class="plan" style="height:200px; width:1000px; overflow-y:scroll;">'
+    + '<table class="table table-bordered table-striped text-nowrap">'
+=======
 //    + '<div style="height:500px; width:1000px; overflow-y:scroll;">'
     + '<table  class="table table-bordered table-striped text-nowrap">'
+>>>>>>> master
 
     var mm =("0"+ (month) ).slice(-2);
     var dateStr = year +"-"+ mm +"-01";
     index = planList.findIndex(x => x.planDate==dateStr);
 
+<<<<<<< HEAD
+   // + '<thead>'
+    Html += '<tr>'
+
+    	//固定要素
+    	//for(var i = 0; i < 3; i++){
+    		Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 0; left: -0.1rem; background: #d98719; z-index: 6;" rowspan =2 >'
+    			 + "ビル名" + '</th>'
+=======
     //表示した月の初日がプランリストになければbutton表示
     if(index == -1){
   //  	 Html += '<button type="button">先月のスケジュールを参照</button>'
@@ -85,24 +132,45 @@ function createCalendar(year, month) {
     Html += '<th rowspan=2>人数</th>'
    	Html += '<th rowspan=2>時間</th>'
 
+>>>>>>> master
+
+    		Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 0; left: 5.7rem; background: #ff7f50; z-index: 4;" rowspan =2 >'
+        		 + "人数" + '</th>'
+
+        	Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 0; left: 10.1rem; background: #fffacd; z-index: 4;" rowspan =2 >'
+            	 + "勤務時間" + '</th>'
+    	//}
+
+<<<<<<< HEAD
+    	//曜日
+    	for(var i = startDay; i < (DAY_OF_MONTH+startDay); i++){
+    		Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 0;  background: #deb887; z-index: 3;">'
+    			 + week[i%7]; +'</th>'
+    	}
+    	Html += '</tr>'
 
 
-    // 日付の行を作成
-    for (let i = 1; i <= DAY_OF_MONTH; i++) {
-      Html += '<th>' + i + '</th>'
-    }
+    	Html += '<tr>'
+    	//日付
+    	for(var i = 1; i <= (DAY_OF_MONTH); i++){
+    		Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 3.5rem; background: #ff7f50; z-index: 2;">'
+    			 + i +'</th>'
 
+    	}
+=======
 	Html +='</tr>'
     Html += '<tr>'
 
 	//曜日
 	for(var i = DAY_OF_THE_WEEK; i < (endDayCount+DAY_OF_THE_WEEK); i++){
+>>>>>>> master
 
-		Html += '<th>' + weeks[i%7] + '</th>'
+    	Html += '</tr>'//ここまでヘッダー部分
 
-	}
+   // + '</thead>'
+    //+ '<tbody>'
 
-    Html +='</tr>'
+    Html += '<tr>'
 
     for (let bill of billList) {
 
@@ -118,13 +186,28 @@ function createCalendar(year, month) {
 
 
 
-    	Html += '<tr>'
 
 
 
+<<<<<<< HEAD
+
+
+
+    	Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; left: -0.1rem; background: #d98719; z-index: 4;" rowspan ='
+    	     + bill.billPeople +'>'+ bill.billName +'</th>'
+		Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; left: 5.7rem; background: #ff7f50; z-index: 3;" rowspan ='
+		     + bill.billPeople +'>'+ bill.billPeople +'</th>'
+		//slice(0,5)は〇〇：〇〇：〇〇の時刻を0 1 2 3 4 5 6 7の順番を付けて0から4まで表示させる※5まで含まれないのが注意
+		Html += '<th style="position: -webkit-sticky; position: sticky; white-space: nowrap; left: 10.1rem; background: #fffacd; z-index: 2;" rowspan ='
+		     + bill.billPeople +'>' + bill.billStartTime.slice(0,5) + '～' + bill.billStopTime.slice(0,5) + '</th>'
+
+
+
+=======
     	Html += '<th rowspan ='+ bill.billPeople +'>'+ bill.billName +'</th>'
 		Html += '<th rowspan ='+ bill.billPeople +'>'+ bill.billPeople +'</th>'
 		Html += '<th rowspan ='+ bill.billPeople +'>' + (bill.billStartTime).slice(0,5) + '～' + (bill.billStopTime).slice(0,5) + '</th>'
+>>>>>>> master
 
 
 			for(var j = 1; j <= bill.billPeople; j++){
@@ -229,10 +312,15 @@ function createCalendar(year, month) {
                              					count = 0;
                              					flag = 1;
                 						}else{
+<<<<<<< HEAD
+                		                	Html += '<select name ="selectForm">'
+                							Html += '<option selected value = "none,none,none,none">〇'
+=======
 
 //                							Html += '<td>'
 //                		                	Html += '<select name ="selectForm">'
                 							Html += '<option selected value="none,none,none,none,none">〇'
+>>>>>>> master
                              					+  plan.staffName
                              					+ '</option>'
                              					count = 0;
@@ -297,11 +385,17 @@ function createCalendar(year, month) {
                 	Html += '</select>'
                 	Html += '</td>'
         		}//月末まで終わり
+
+
         		Html += '</tr>'
+
 			}//〇人目終わり
     }//ビル繰り返し終わり
 
+    //Html +=  '</tbody>'
     Html += '</table>'
+    	+ '</div>'
+
 
 
     return Html
@@ -320,7 +414,7 @@ function selectCheck(){
 
 
 function moveCalendar(e) {
-    document.querySelector('#calendar').innerHTML = ''
+    document.getElementById('calendar').innerHTML = ''
 
     if (e.target.id === 'prev') {
         month--
@@ -342,8 +436,9 @@ function moveCalendar(e) {
     showCalendar(year, month)
 }
 
-document.querySelector('#prev').addEventListener('click', moveCalendar)
-document.querySelector('#next').addEventListener('click', moveCalendar)
+document.getElementById('prev').addEventListener('click', moveCalendar)
+document.getElementById('next').addEventListener('click', moveCalendar)
+
 
 
 showCalendar(year, month)
@@ -351,7 +446,6 @@ showCalendar(year, month)
 
 /*]]>*/
 </script>
-
 
 
 </form>

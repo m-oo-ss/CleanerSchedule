@@ -59,6 +59,7 @@ function createCalendar(year, month) {
     	//h1要素の生成
     	var h1 = document.createElement('h1');
     	h1.textContent = year  + '年' + month+'月';
+    	h1.setAttribute("class","all");
     	calendar.appendChild(h1);
 
      	var table = document.createElement('table');
@@ -76,13 +77,28 @@ function createCalendar(year, month) {
 
 
  	var tr = document.createElement('tr');
- 	for(var i=0 ; i< info.length ; i++){
+ 	//for(var i=0 ; i< info.length ; i++){
  	 	var th = document.createElement('th');
 
- 	 	th.textContent = info[i];
+ 	 	th.textContent = "ビル名";
+ 	 	th.setAttribute("class","allfixed");
  	 	th.setAttribute("rowspan",2);
     	tr.appendChild(th);
- 	}
+
+    	var th = document.createElement('th');
+
+ 	 	th.textContent = "人数";
+ 	 	th.setAttribute("class","allfixed2");
+ 	 	th.setAttribute("rowspan",2);
+    	tr.appendChild(th);
+
+    	var th = document.createElement('th');
+
+ 	 	th.textContent = "勤務時間";
+ 	 	th.setAttribute("class","allfixed3");
+ 	 	th.setAttribute("rowspan",2);
+    	tr.appendChild(th);
+ 	//}
 
     // 日付の行を作成
     for (let i = 1; i <= DAY_OF_MONTH; i++) {
@@ -97,7 +113,7 @@ function createCalendar(year, month) {
 	//曜日
 	for(var i = DAY_OF_THE_WEEK; i < (endDayCount+DAY_OF_THE_WEEK); i++){
  	 	var th = document.createElement('th');
-
+ 	 	th.setAttribute("class", "topfixed2")
 	 	th.textContent = weeks[i%7];
   	tr.appendChild(th);
 	}
@@ -127,11 +143,13 @@ function createCalendar(year, month) {
     	tr.appendChild(th);
 
     	var th = document.createElement('th');
+    	th.setAttribute("class", "sidefixed2")
  	 	th.textContent = bill.billPeople;
  	 	th.setAttribute("rowspan",bill.billPeople);
     	tr.appendChild(th);
 
     	var th = document.createElement('th');
+    	th.setAttribute("class", "sidefixed3")
  	 	th.textContent = (bill.billStartTime).slice(0,5) + '～' + (bill.billStopTime).slice(0,5);
  	 	th.setAttribute("rowspan",bill.billPeople);
     	tr.appendChild(th);
@@ -238,7 +256,7 @@ function createCalendar(year, month) {
 
 
                 						}else {
-
+                							td.setAttribute("id","normal")
  		    								option.setAttribute("selected","");
  		    								option.setAttribute("value", "none" + ','
  		    										+ "none" + ','

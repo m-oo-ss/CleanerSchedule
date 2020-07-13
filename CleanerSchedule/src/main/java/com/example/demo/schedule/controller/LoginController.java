@@ -33,7 +33,7 @@ private StaffController staffController;
      * POST用の処理（DB）.
      */
 
-    @PostMapping("/sample")
+    @PostMapping("/login")
     public String postDbRequest(@RequestParam("staffname") String name, @RequestParam("staffpass") String pass,Model model) {
 
  // コンテンツ部分にユーザー詳細を表示するための文字列を登録
@@ -45,24 +45,35 @@ private StaffController staffController;
         // １件検索
         Staff staff = loginService.findOne(name,pass);
 
+
+        if(staff != null) {
         // 検索結果をModelに登録
-        model.addAttribute("id", staff.getStaffId());
-        model.addAttribute("name", staff.getStaffName());
-        model.addAttribute("address", staff.getStaffAddress());
-        model.addAttribute("mail", staff.getStaffMail());
-        model.addAttribute("tel", staff.getStaffTel());
-        model.addAttribute("pass",staff.getStaffPass());
+        	model.addAttribute("id", staff.getStaffId());
+        	model.addAttribute("name", staff.getStaffName());
+        	model.addAttribute("address", staff.getStaffAddress());
+        	model.addAttribute("mail", staff.getStaffMail());
+        	model.addAttribute("tel", staff.getStaffTel());
+        	model.addAttribute("pass",staff.getStaffPass());
 
-        int id = staff.getStaffId();
+            int id = staff.getStaffId();
 
-        if(id == 1) {
-        // mdetail.html(管理側スケジュール詳細)に画面遷移
-        return planController.getList(model);
+            if(id == 1) {
+            // mdetail.html(管理側スケジュール詳細)に画面遷移
+            return planController.getList(model);
 
-        }else
-       // sdetail.html(従業員側スケジュール詳細)に画面遷移
-        return staffController.getDetail(model,id);
+            }else
+           // sdetail.html(従業員側スケジュール詳細)に画面遷移
+            return staffController.getDetail(model,id);
+
+        }else {
+
+             model.addAttribute("error", "名前とパスワードが一致しません");
+             return "login";
+        }
+
+
     }
+
 
 
 

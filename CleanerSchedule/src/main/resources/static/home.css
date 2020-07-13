@@ -16,7 +16,7 @@ body {
   padding-top: 60px;
   padding-left: 20px;
   position: fixed;
-  overflow: auto;
+  overflow-y: scroll;
   display: block;
   top: 0px;
   bottom: 0;
@@ -40,34 +40,134 @@ th#days{
 
 }
 td#close{
-	 background-color: #ebebeb
+	background-color: #ebebeb;
+	position: sticky;
+    top: 50px;
+    left: 0;
+    z-index: 1;
+
 }
 td#nodata{
-	 background-color: pink
+	 background-color: pink;
+	 	position: sticky;
+    top: 50px;
+    left: 0;
+    z-index: 1;
 }
 td#request{
-	 background-color: lightblue
+	 background-color: lightblue;
+	 	position: sticky;
+    top: 50px;
+    left: 0;
+    z-index: 1;
 }
 td#changed{
-	 background-color: #fafa89
+	 background-color: #fafa89;
+	 	position: sticky;
+    top: 50px;
+    left: 0;
+    z-index: 1;
+}
+td#normal{
+	position: sticky;
+    top: 50px;
+    left: 0;
+    z-index: 1;
+}
+
+.all{
+  position: sticky;
+  top: 0px;
+  left: 0;
+  background: #ffffff;
+  z-index: 6;
+}
+
+.allfixed{
+  position: sticky;
+  top: 40px;
+  left: 0;
+  background: #dedede;
+  z-index: 5;
+}
+
+.allfixed2{
+  position: sticky;
+  top: 40px;
+  left: 230px;
+  background: #dedede;
+  z-index: 4;
+}
+
+.allfixed3{
+  position: sticky;
+  top: 40px;
+  left: 274px;
+  background: #dedede;
+  z-index: 4;
 }
 
 .topfixed{
   position: sticky;
-  top: 50px;
+  top: 40px;
   background: #dedede;
+  z-index: 2;
 
 
 }
-.sidefixed{
-	  position: sticky;
-  left: 0;
+
+.topfixed2{
+  position: sticky;
+  top: 76px;
   background: #dedede;
+  z-index: 2;
+
+}
+.sidefixed{
+  position: sticky;
+  left: 0;
+  top: 50px;
+  background: #dedede;
+  z-index: 2;
+
+}
+
+.sidefixed2{
+  position: sticky;
+  left: 230px;
+  top: 50px;
+  background: #dedede;
+  z-index: 2;
+
+}
+
+.sidefixed3{
+  position: sticky;
+  left: 274px;
+  top: 50px;
+  background: #dedede;
+  z-index: 2;
 
 }
 table{	margin-top:10px;
 }
 #calendar{
+	overflow-y: scroll;
 	margin-top:10px;
+	height:700px;
+	width:1150px
+
 }
 
+
+/*線を全て消すとき*/
+#calendar table,
+#calendar td,
+#calendar th{
+  border: 0;
+}
+
+#table{
+
+
+}

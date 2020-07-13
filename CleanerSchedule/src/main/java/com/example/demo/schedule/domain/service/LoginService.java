@@ -18,22 +18,32 @@ public class LoginService {
 		// １件検索実行
 		Map<String, Object> map = loginRepository.findOne(name, pass);
 
+		if(map != null) {
 		// Mapから値を取得
-		int staffId = (Integer) map.get("staff_id");
-		String staffName = (String) map.get("staff_name");
-		String staffPass = (String) map.get("staff_pass");
+			int staffId = (Integer) map.get("staff_id");
+			String staffName = (String) map.get("staff_name");
+			String staffPass = (String) map.get("staff_pass");
 
-		if (pass.equals(staffPass)) {
 
-			Staff staff = new Staff();
+			if (pass.equals(staffPass)) {
 
-			staff.setStaffId(staffId);
-			staff.setStaffName(staffName);
-			staff.setStaffPass(staffPass);
+				Staff staff = new Staff();
 
-			return staff;
-		}
+				staff.setStaffId(staffId);
+				staff.setStaffName(staffName);
+				staff.setStaffPass(staffPass);
+
+				return staff;
+			}else {
+			System.out.println("パスワードの不一致\n入力パスワード:"+ pass);
+			return null;
+			}
+		}else {
+			System.out.println("該当名なし");
+
 		return null;
+
+		}
 
 	}
 

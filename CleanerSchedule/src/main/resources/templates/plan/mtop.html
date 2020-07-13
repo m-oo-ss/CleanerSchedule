@@ -10,9 +10,11 @@
 	<div th:fragment="mtop_contents">
 
 <p th:text=${result}></p>
+
 		<button id="prev" class="btn btn-primary">前の月</button>
 		<button id="next" class="btn btn-primary">次の月</button>
 		<div id="calendar"></div>
+
 
   <a th:href="${sendmail}">一斉メール送信</a>
     <a th:href="${sendrmail}">変更者メール送信</a>
@@ -33,7 +35,10 @@
 	var month = date.getMonth() +1	//現在の月
 
 	var week = ['日', '月', '火', '水', '木', '金', '土']
-	var items = ["ビル名","人数"]
+	var items = ["ビル名","人数","勤務時間"]
+
+	var html = '';
+	html += '<h1 style="position: -webkit-sticky; position: sticky; white-space: nowrap; top: 0; left: 0; background: #ffffff; z-index: 6;">' + year  + '年' + month + '月</h1>'
 
 	function showCalendar(year, month) {
 
@@ -45,6 +50,7 @@
 
 	        var h1 = document.createElement('h1')
 	        h1.textContent =year +"年"+month+"月"
+	        h1.setAttribute("class","all");
 	        document.getElementById("calendar").appendChild(h1)
 
 	        //id=calendarのタグを親としてsec(htmlを入れたtableタグ)を挿入
@@ -63,11 +69,16 @@
 
 		var html = '';
 
+
 		html += '<tr>'
+
 	//固定要素
-	for(var i = 0; i < 2; i++){
-		html += '<th rowspan =2 >' + items[i]; '</th>'
-	}
+
+	//for(var i = 0; i < 2; i++){
+		html += '<th class="allfixed" rowspan =2 >' + "ビル名"+'</th>'
+		html += '<th class="allfixed2" rowspan =2 >' + "人数"+'</th>'
+		html += '<th class="allfixed3" rowspan =2 >' + "勤務時間"+'</th>'
+	//}
 		//日付
 		for(var i = 1; i <= (DAY_OF_MONTH); i++){
 			html += '<th class="topfixed">'+ i +'</th>'
@@ -79,9 +90,11 @@
 	html += '<tr>'
 		//曜日
 		for(var i = startDay; i < (DAY_OF_MONTH+startDay); i++){
-			html += '<th>'+ week[i%7]; +'</th>'
+			html += '<th class="topfixed2">'+ week[i%7]; +'</th>'
 		}
+
 			html += '</tr>'//ここまでヘッダー部分
+
 
 
 	html += '<tr>'
@@ -97,8 +110,10 @@
 		]
 
 		//ビルの情報の列
+
 		html += '<th class="sidefixed" rowspan ='+ bill.billPeople +'>'+ bill.billName +'</th>'
-		html += '<th rowspan ='+ bill.billPeople +'>'+ bill.billPeople +'</th>'
+		html += '<th class="sidefixed2" rowspan ='+ bill.billPeople +'>'+ bill.billPeople +'</th>'
+		html += '<th class="sidefixed3" rowspan ='+ bill.billPeople +'>'+ bill.billStartTime.slice(0,5)+'～'+bill.billStopTime.slice(0,5) +'</th>'
 
 			//ビルの人数分繰り返す
 			for(var j = 1; j <= bill.billPeople; j++){
@@ -135,6 +150,7 @@
 						}
 					var count = 0
 					}//日付、人数、ビルIDのif文終わり
+
 						if(count >= planList.length){
 							html += '<td id="nodata">no data</td>'
 								var count = 0
@@ -144,6 +160,7 @@
 			}	html += '</tr><tr>' //k
 		}//j
 	}//bill
+
 				return html
 
 	}//function createCalendar終了

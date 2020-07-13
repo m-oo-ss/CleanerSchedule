@@ -233,6 +233,7 @@ public class StaffController {
 //      staff.setStaffId(form.getStaffId()); //従業員ID
 		staff.setStaffName(form.getStaffName()); //従業員名
 		staff.setStaffAddress(form.getStaffAddress()); //従業員住所
+		staff.setStaffPass(form.getStaffPass());
 		staff.setStaffMail(form.getStaffMail()); //従業員メールアドレス
 		staff.setStaffTel(form.getStaffTel()); //従業員電話番号
 		staff.setStaffStart(form.getStaffStart()); //従業員勤務可能開始日

@@ -3,6 +3,7 @@ package com.example.demo.schedule.domain.repository;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -24,10 +25,16 @@ public class LoginRepository {
 				+ "FROM staff "
 				+ "WHERE staff.staff_name=?";
 
+		try {
+
 		// 検索実行
 		Map<String, Object> staff = jdbcTemplate.queryForMap(query, name);
 
 		return staff;
+
+		}catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 
 }

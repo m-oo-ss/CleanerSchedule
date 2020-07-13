@@ -45,20 +45,30 @@
 				<tr>
 				<th class="active co-sm-2">掃除日</th>
 			   <td>
-          <input type="checkbox" id="sample2" class="my_check_box" />
+
+<input type="checkbox" id="sample2" th:field="*{billSun}" th:value="1">
+<input type=hidden id="sample2" th:field="*{billSun}" th:value="0">
 <label for="sample2">日</label>
-<input type="checkbox" id="sample2" class="my_check_box"  />
+<input type="checkbox" id="sample2" th:field="*{billMon}" th:value="1">
+<input type=hidden id="sample2" th:field="*{billMon}" th:value="0">
 <label for="sample2">月</label>
-<input type="checkbox" id="sample2" class="my_check_box" />
+<input type="checkbox" id="sample2" th:field="*{billTue}" th:value="1">
+<input type=hidden id="sample2" th:field="*{billTue}" th:value="0">
 <label for="sample2">火</label>
-<input type="checkbox" id="sample2" class="my_check_box" />
+<input type="checkbox" id="sample2" th:field="*{billWed}" th:value="1">
+<input type=hidden id="sample2" th:field="*{billWed}" th:value="0">
 <label for="sample2">水</label>
-<input type="checkbox" id="sample2" class="my_check_box"  />
+<input type="checkbox" id="sample2" th:field="*{billThu}" th:value="1">
+<input type=hidden id="sample2" th:field="*{billThu}" th:value="0">
 <label for="sample2">木</label>
-<input type="checkbox" id="sample2" class="my_check_box" />
+<input type="checkbox" id="sample2" th:field="*{billFri}" th:value="1">
+<input type=hidden id="sample2" th:field="*{billFri}" th:value="0">
 <label for="sample2">金</label>
-<input type="checkbox" id="sample2" class="my_check_box" />
+<input type="checkbox" id="sample2" th:field="*{billSat}" th:value="1">
+<input type=hidden id="sample2" th:field="*{billSat}" th:value="0">
 <label for="sample2">土</label>
+
+
 
 		       </tr>
               	<tr>
@@ -74,16 +84,9 @@
 			</table>
 			<button type="submit" name="new" class="btn btn-primary">登録する</button>
 
-<script>
-$(function(){
-    $("#sample2").on("click", function (evt) {
-        //クリックされたチェックボックスのステータスを取得
-        //3 項演算子で true なら 1 に、false なら 0 に変換
-        chk_status = $(this).prop('checked') ? 1 : 0;
+<button type="submit" name="new">登録する</button>
 
-    });
-});
-</script>
+
 
 		</form>
 
