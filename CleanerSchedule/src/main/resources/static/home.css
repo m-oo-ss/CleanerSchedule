@@ -77,7 +77,7 @@ td#normal{
 
 .all{
   position: sticky;
-  top: 15px;
+  top: 0px;
   left: 0;
   background: #ffffff;
   z-index: 6;
@@ -85,7 +85,7 @@ td#normal{
 
 .allfixed{
   position: sticky;
-  top: 50px;
+  top: 40px;
   left: 0;
   background: #dedede;
   z-index: 5;
@@ -93,7 +93,7 @@ td#normal{
 
 .allfixed2{
   position: sticky;
-  top: 50px;
+  top: 40px;
   left: 230px;
   background: #dedede;
   z-index: 4;
@@ -101,7 +101,7 @@ td#normal{
 
 .allfixed3{
   position: sticky;
-  top: 50px;
+  top: 40px;
   left: 274px;
   background: #dedede;
   z-index: 4;
@@ -109,7 +109,7 @@ td#normal{
 
 .topfixed{
   position: sticky;
-  top: 50px;
+  top: 40px;
   background: #dedede;
   z-index: 2;
 
@@ -118,7 +118,7 @@ td#normal{
 
 .topfixed2{
   position: sticky;
-  top: 86px;
+  top: 76px;
   background: #dedede;
   z-index: 2;
 
