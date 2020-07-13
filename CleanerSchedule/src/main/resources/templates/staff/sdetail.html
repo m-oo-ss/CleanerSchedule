@@ -9,8 +9,8 @@
 	  <h1 th:text="${name}"></h1>
   <div id="table" ></div>
 		<form method="post" th:action="@{'/staff/sdetail/'+${id} }"  id="confirm">
-		<button id="prev" type="button">前の月</button>
-		<button id="next" type="button">次の月</button>
+		<button id="prev" type="button" class="btn btn-primary">前の月</button>
+		<button id="next" type="button" class="btn btn-primary">次の月</button>
 
 
 				</form>
@@ -35,7 +35,7 @@
 
 
 		</table>
- <td><a th:href="@{'/staff/schange/'+ ${id}}">情報変更する </a></td>
+ <td><a th:href="@{'/staff/schange/'+ ${id}}" class="btn btn-primary">情報変更する </a></td>
 	<!-- 以下Script -->
 		<script th:inline="javascript" charset="utf-8">
 /*<![CDATA[*/

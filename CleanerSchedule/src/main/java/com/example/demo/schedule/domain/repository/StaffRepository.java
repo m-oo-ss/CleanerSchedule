@@ -118,6 +118,8 @@ public class StaffRepository {
 			staff.setStaffName((String) map.get("staff_name")); //スタッフ名
 			staff.setStaffAddress((String) map.get("staff_address")); //スタッフ住所
 			staff.setStaffTel((String) map.get("staff_tel"));//スタッフ電話番号
+			staff.setStaffMail((String) map.get("staff_mail"));//スタッフ電話番号
+
 			//結果返却用のListに追加
 			staffList.add(staff);
 		}

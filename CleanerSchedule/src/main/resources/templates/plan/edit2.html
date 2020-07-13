@@ -10,13 +10,15 @@
 
 <button id="prev" class="btn btn-primary">前の月</button>
 <button id="next" class="btn btn-primary">次の月</button>
+<div id="alert"></div>
+
 <form method="post" th:action="@{/plan/mtop}" th:object="${selectForm}" >
 <div id="calendar">
 
 </div>
 
 
-<button class="btn btn-outline-dark" type="submit" name="update">編集確定</button>
+<button class="btn btn-danger" type="submit" name="update" onClick="return checks()">編集確定</button>
 
 
 <script th:inline="javascript">
@@ -34,6 +36,7 @@ let year = date.getFullYear()
 let month = date.getMonth() + 1
 
 var calendar = document.getElementById('calendar');
+
 
 function createCalendar(year, month) {
 
@@ -154,10 +157,11 @@ function createCalendar(year, month) {
 
 
 
-
 			for(var j = 1; j <= bill.billPeople; j++){
 
         		for (var d = 1; d <= DAY_OF_MONTH; d++) {
+
+
 
      			if(billweek[(d+DAY_OF_THE_WEEK-1)%7] ==0){
      		    	var td = document.createElement('td');
@@ -167,7 +171,7 @@ function createCalendar(year, month) {
 					}//曜日によって格納できるか判定
 
      		    	var td = document.createElement('td');
-
+					td.setAttribute("id","")
      		    	var sel = document.createElement('select');
      		    	sel.setAttribute("name","selectForm")
 					sel.setAttribute("onChange","selectCheck(this)");
@@ -212,6 +216,7 @@ function createCalendar(year, month) {
             								&& j == plan.staffNumber
             								&& bill.billId == plan.billId){
                     						if(plan.restCheck == 2){
+     		    								td.setAttribute("id","nodata")
                                  					continue;
                     						}else{
      		    								option.setAttribute("selected","");
@@ -237,16 +242,17 @@ function createCalendar(year, month) {
         								&& bill.billId == plan.billId){
                 						if(plan.restCheck == 2){
      		    								option.setAttribute("selected","");
+     		    								option.setAttribute("id","rest")
      		    								td.setAttribute("id","nodata")
      		    								option.setAttribute("value", "none" + ','
  		    										+ "none" + ','
  		    										+ "none" +','
  		    										+ "none"
-         	          								+ ',none');
+         	          								+ ',rest');
      		    								option.textContent ="--選択してください--"
                              					count = 0;
                              					flag = 1;
-                             					var restStaff = plan.staffId;
+
 
 
                 						}else {
@@ -262,7 +268,7 @@ function createCalendar(year, month) {
                              					flag = 1;
                              					if(plan.restCheck == 1){
          		    								td.setAttribute("id","request")
-                                 					var restStaff = plan.staffId;
+
                         						}
                 						}
 
@@ -290,12 +296,23 @@ function createCalendar(year, month) {
     			            	}
 
 							}//プランリスト内に条件に合ったものがあればflag=1になるのでプランリスト中断
+
 							var dateStaff = [];
+							var restStaff = [];
 							for (plan of planList){
-								 if(plan.planDate == selectDateStr){
+								 if(plan.planDate == selectDateStr || plan.planDate == selectDateStr2){
 									   dateStaff.push(plan.staffId);
+									   if(plan.restCheck == 1 || plan.restCheck ==2){
+										   restStaff.push(plan.staffId);
+									   }
 								 }
 							}
+
+
+
+
+
+
 					///////////////////////////////////////////従業員の選択肢
 							//従業員数の分だけ繰り返す
 	                		for (var staff of staffList) {
@@ -323,16 +340,17 @@ function createCalendar(year, month) {
                       	   }//if(dateStaffにいない人)終わり
                 		}//for文休みスタッフ選択肢に格納終わり
 
-                		if(index != -1){var option = document.createElement('option');
+						var option = document.createElement('option');
+                			option.setAttribute("disabled","")
 							option.textContent ="--以下出勤予定者--"
 							    sel.appendChild(option);
-                		}
+
 
 						//従業員数の分だけ繰り返す
                 		for (var staff of staffList) {
              		    	var option = document.createElement('option');
 						//出勤予定スタッフの表示
-					  	if(dateStaff.indexOf( staff.staffId ) != -1 && staff.staffId != restStaff){ //出勤予定者リストにいる&&
+					  	if(dateStaff.indexOf( staff.staffId ) != -1 &&  restStaff.indexOf( staff.staffId ) == -1){ //出勤予定者リストにいる&& restStaffになっていない
           				if(setFlag == 1){
 								option.setAttribute("value", bill.billId + ','
 										+ selectDateStr + ','
@@ -371,11 +389,58 @@ function createCalendar(year, month) {
 	    calendar.appendChild(table);
 
 
+	    var tds = document.getElementsByTagName("td");
+	    var request =[];
+	    var rest =[];
+
+	    for(var td of tds){
+	    	console.log(td.id)
+	    	if(td.id=="request"){
+	    		request.push(1)
+
+	    	}else if(td.id=="rest"){
+	    		rest.push(2)
+	    	}
+	    }
+
+	    var p = document.createElement('p');
+	    if(request.length > 0){
+	    	console.log("request")
+	    	p.textContent ="承認待ち"+request.length+"件"
+		    p.style.fontcolor ="lightblue"
+	    }
+	    var p = document.createElement('p');
+
+	    if(rest.length > 0){
+	    	p.textContent ="勤務者無し"+ rest.length+"件"
+		    p.style.fontcolor ="pink"
+	    }
+	    console.log(request.length)
+	    document.getElementById('alert').appendChild(p);
+
+
 
 
 
 
 }//createcalendar終わり
+
+
+function checks(){
+	var tds = document.getElementsByTagName("td");
+
+
+	for(var td of tds){
+		if(td.style.backgroundColor=="orange"){
+
+			alert("重複があります。修正してください。");
+			return false;
+		}
+	}
+
+}
+
+
 
 ////////////////////////////重複
 
@@ -418,12 +483,10 @@ function selectCheck(select){
 		}
 	}
 
-
-
 	//一度全ての要素をデフォルトの色に設定
 	for(var i = 0; i < elements.length; i ++){
 		var parent = $(elements[i]).parent();
-		if(parent[0].style.backgroundColor=="pink"){
+		if(parent[0].style.backgroundColor=="orange"){
 			console.log("白色")
     		parent[0].style.backgroundColor="";
 		}
@@ -431,11 +494,13 @@ function selectCheck(select){
 	//重複している要素の色を格納
 	for(var i = 0; i < indexRed.length; i++){
 		var parent = $(elements[indexRed[i]]).parent(); //indexRed番目のelements(selectタグ)の親を指定
-		parent[0].style.backgroundColor="pink";
+		parent[0].style.backgroundColor="orange";
 	}
 
 
 	}
+
+
 }
 
 
@@ -469,6 +534,9 @@ document.querySelector('#next').addEventListener('click', moveCalendar)
 
 
 createCalendar(year, month)
+
+
+
 
 
 /*]]>*/

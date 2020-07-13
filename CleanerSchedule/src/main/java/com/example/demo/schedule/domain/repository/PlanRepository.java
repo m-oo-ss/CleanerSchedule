@@ -151,7 +151,6 @@ public class PlanRepository {
 		int rowNumber = 0;
 		//selectformに入っている要素を取り出して変数selectに格納：なくなるまで繰り返し
 		for (String selected : selectform.getSelectForm()) {
-			System.out.println(selected);
 
 			//String型配列contentsに"1,2020-01-01,2,3"をカンマ区切りで格納
 			String[] contents = selected.split(",", 0);

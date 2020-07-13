@@ -27,7 +27,7 @@
 				<tr>
 
 					<th class="active col-sm-2">電話番号</th>
-					<td><input type="text" th:field="*{billTel}" minlength="9" maxlength="11"></td>
+					<td><input type="tel" th:field="*{billTel}"pattern="\d{9,}"title="半角数字のみ"></td>
 				</tr>
 				<tr>
 
@@ -36,7 +36,7 @@
 				</tr>
 				<tr>
 					<th class="active col-sm-2">オーナー電話番号</th>
-					<td><input type="text" th:field="*{ownerTel}" minlength="9" maxlength="11"></td>
+					<td><input type="tel" th:field="*{ownerTel}" pattern="\d{9,}"title="半角数字のみ"></td>
 				</tr>
 				<tr>
 				<th class="active co-sm-2">派遣人数</th>
@@ -82,6 +82,7 @@
 
                </tr>
 			</table>
+			<button type="submit" name="new" class="btn btn-primary">登録する</button>
 
 <button type="submit" name="new">登録する</button>
 

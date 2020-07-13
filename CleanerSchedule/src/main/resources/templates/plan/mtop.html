@@ -143,7 +143,8 @@
         	 			html +=  '<td id="nodata">勤務者が居ません</td>'
 						}else{
 							if(plan.restCheck == 3){html += '<td id="changed">'}
-							else{html += '<td id="normal">'}
+							else if(plan.restCheck == 1){html += '<td id="request">'}
+							else{html += '<td>'}
 							html+= '<a href="/staff/sdetail/'+ plan.staffId + ' ">'
 								+plan.staffName +'</a></td>'
 						}
