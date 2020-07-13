@@ -102,7 +102,7 @@ public class StaffRepository {
 						+ "FROM staff"
 						+ " WHERE (staff_name LIKE '%" + StaffName + "%')"
 						+ "and"
-						+"(staff_id is not 1)");
+						+"(not staff_id=1)");
 
 		// 検索結果返却用の変数
 		List<Staff> staffList = new ArrayList<Staff>();
@@ -135,7 +135,8 @@ public class StaffRepository {
 		//staffテーブルのデータを全件取得
 		List<Map<String, Object>> getList = jdbcTemplate.queryForList(
 				"SELECT*FROM staff "
-						+ "WHERE staff_Id is not 1");
+						+ "WHERE not staff_Id=1"
+						);
 		//結果返却用の変数
 		List<Staff> staffList = new ArrayList<>();
 		//取得したデータを返却用のListに格納していく
