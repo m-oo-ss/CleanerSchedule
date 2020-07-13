@@ -22,18 +22,20 @@ private StaffController staffController;
    /**
      * ログイン画面のGETメソッド用処理.
      */
-    @GetMapping("/login")
+    @GetMapping("login")
     public String getLogin(Model model) {
 
         //login.htmlへ画面遷移
         return "login";
     }
 
+
+
     /**
      * POST用の処理（DB）.
      */
 
-    @PostMapping("/sample")
+    @PostMapping("sample")
     public String postDbRequest(@RequestParam("staffname") String name, @RequestParam("staffpass") String pass,Model model) {
 
  // コンテンツ部分にユーザー詳細を表示するための文字列を登録
