@@ -59,7 +59,7 @@ public class PlanController {
 		List<Mail> mailList = planService.findMail();
 		//forループを使ってメールアドレスをすべて出力
 		String sendmail1 = "";
-		for (int i=1; i<mailList.size(); ++i) {
+		for (int i=1; i<mailList.size()-1; ++i) {
 
 			String smail1 = (mailList.get(i).getStaffMail()+",");
 
@@ -69,7 +69,7 @@ public class PlanController {
 
 		}
 
-		System.out.println(sendmail1);
+		//System.out.println(sendmail1);
 
 		String mmail = (mailList.get(0).getStaffMail());
 
@@ -88,7 +88,7 @@ public class PlanController {
         model.addAttribute("sendmail", sendmail);
 
 
-        System.out.println(sendmail);
+        //System.out.println(sendmail);
 
         List<Mail> rmailList = planService.findRmail();
 		//forループを使ってメールアドレスをすべて出力
@@ -103,7 +103,7 @@ public class PlanController {
 
 		}
 
-		System.out.println(sendmail1);
+		//System.out.println(sendmail1);
 
 		String mrmail = (mailList.get(0).getStaffMail());
 
@@ -116,7 +116,7 @@ public class PlanController {
         model.addAttribute("sendrmail", sendrmail);
 
 
-        System.out.println(sendrmail);
+        //System.out.println(sendrmail);
 
 		// スケジュール一覧に画面遷移
 		return "homelayout";

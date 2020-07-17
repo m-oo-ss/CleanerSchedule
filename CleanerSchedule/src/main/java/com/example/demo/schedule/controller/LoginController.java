@@ -35,7 +35,7 @@ private StaffController staffController;
      * POST用の処理（DB）.
      */
 
-    @PostMapping("/login")
+    @PostMapping("sample")
     public String postDbRequest(@RequestParam("staffname") String name, @RequestParam("staffpass") String pass,Model model) {
 
  // コンテンツ部分にユーザー詳細を表示するための文字列を登録

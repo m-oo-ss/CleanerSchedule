@@ -8,7 +8,7 @@
 	<div th:fragment="bdetail_contents">
 		<h1 th:text="${name}"></h1>
 
-   <div id="calendar"></div>
+   <div id="table"></div>
 		<button id="prev" type="button" class="btn btn-primary">前の月</button>
 		<button id="next" type="button" class="btn btn-primary">次の月</button>
 
@@ -229,7 +229,7 @@
 	}//function createCalendar終了
 
 	function moveCalendar(e) {
-	    document.getElementById('calendar').innerHTML = ''
+	    document.getElementById('table').innerHTML = ''
 
 	    if (e.target.id === 'prev') {
 	        month--

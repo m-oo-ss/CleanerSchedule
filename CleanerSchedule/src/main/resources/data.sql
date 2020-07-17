@@ -62,7 +62,7 @@ VALUES(6,1,0,1,1,1,1,1);
 
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start, shift_id)
 
-VALUES ('管理太郎','福岡市中央区','aaaa@ggg.kkk','09090909090','pass1','2020-06-15',1);
+VALUES ('高岡克弥','福岡市中央区','k.takaoka@jrkyushu01.onmicrosoft.com','09090909090','pass1','2020-06-15',1);
 
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('岡部日菜乃','京都府綾部市金河内町2-15-5金河内町レジデンス113','ookabe@cejpila.dmg.nh','777926919','YBslqqpS','2020-06-15');
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('浜野浩志','広島県三次市三和町上板木2-15-5三和町上板木アパート313','kouji_hamano@muonuqcx.id','821921497','r_SAJno7','2020-06-15');
@@ -85,7 +85,7 @@ INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, 
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('越智美樹子','奈良県磯城郡田原本町大網2-20-3大網ロイヤルパレス119','oochi@eyxpuodrmt.cy','74608247','NluEV2tN','2020-06-15');
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('菊地裕人','愛知県長久手市岩作元門3-13-15','hiroto759@qjkvleyer.uk','532054757','9CX1DXGz','2020-06-15');
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('山脇里香','鹿児島県薩摩川内市中郷町4-19-19','rikayamawaki@posk.fb','986158402','veeIGINW','2020-06-15');
-INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('矢野長次郎','群馬県伊勢崎市境伊与久2-20-3境伊与久ランド411','uyano@utxmwpy.kppp.wvo','279156466','XsEIzmKx','2020-06-15');
+INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('一宮魁斗','群馬県伊勢崎市境伊与久2-20-3境伊与久ランド411','yanotyo716@gmail.com','279156466','XsEIzmKx','2020-06-15');
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('半田優太','山口県下松市来巻1-16-13','Yuuta_Handa@oojkw.hxix.ett','837725563','9h_OBL5D','2020-06-15');
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('小口久子','石川県白山市鴇ケ谷1-20-16','hisako_oguchi@oqohnw.wv','765003040','aZ5hkwI6','2020-06-15');
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('片野柚花','愛媛県今治市にぎわい広場4-19-6ヴィレッジにぎわい広場211','Yuzuka_Katano@lnuboxpdv.tmnou.dc','898612944','TCvzTDAy','2020-06-15');
@@ -152,7 +152,7 @@ INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, 
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('福岡信幸','鹿児島県薩摩川内市鹿島町藺牟田1-16-13鹿島町藺牟田マンション216','repaczpnobuyuki4141@wcfqiqmwu.nas','993739828','RU9SZCoB','2020-06-15');
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('早川英司','富山県高岡市醍醐1-20-16','sp-jquip-cohkjeiji84329@mpceexnksj.gbobq.ubx','767214121','87he72cE','2020-06-15');
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('大西健次','熊本県下益城郡美里町遠野3-13-16遠野ヒル203','kenji9509@nwrukxeo.kjw','96795527','18B61v3F','2020-06-15');
-INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('長谷部重行','滋賀県大津市大石淀町4-19-20ザ大石淀町209','shigeyuki_hasebe@wcpwzis.yzfjk.ptp','740295357','AdLHzpao','2020-06-15');
+INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('大濱碧','滋賀県大津市大石淀町4-19-20ザ大石淀町209','m.oohama@jrkyushu01.onmicrosoft.com','740295357','AdLHzpao','2020-06-15');
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('坂口葉月','島根県松江市大海崎町2-20-4コート大海崎町118','hazuki_sakaguchi@qxuwq.cs','852485345','H9pduYJy','2020-06-15');
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('柳田利幸','長野県飯田市主税町3-13-16主税町タウン319','toshiyukiyanagida@uwawgibk.tqzn.gks','269899630','ZDx2CTFu','2020-06-15');
 INSERT INTO staff(staff_name, staff_address, staff_mail, staff_tel, staff_pass, staff_start)VALUES ('井上金治','鹿児島県姶良市加治木町港町4-19-20加治木町港町グランド305','kinji88361@qvpkmvuhva.awjsr.ah','991244671','kt0YxZ2S','2020-06-15');
